@@ -1,5 +1,6 @@
 <template>
     <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <div class="bg-red-500 p-4">errors: {{ errors }}</div>
       <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
           Create an account
@@ -12,6 +13,9 @@
           <div>
             <label for="email" class="label">Your email</label>
             <input id="email" v-model="email" type="email" class="input" />
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.email">{{ errors.email[0] }}</span>
+            </p>
           </div>
           <div>
             <label for="password" class="label">Password</label>
@@ -30,7 +34,7 @@
               </div>
             </div>
             <p v-if="errors" class="input-error">
-              <span v-if="errors.password">{{ errors.password }}</span>
+              <span v-if="errors.password">{{ errors.password[0] }}</span>
             </p>
           </div>
           <button type="submit" class="btn-default">Create an account</button>
@@ -66,7 +70,7 @@ export default {
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
-          this.errors = err,
+          this.errors = err.response.data.errors
           console.log(err)
         })
     }

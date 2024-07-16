@@ -38,13 +38,16 @@
       <div class="my-4 md:my-5 lg:my-12 md:col-span-2 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
         <!-- change profile pic -->
         <div class="mb-4">
-          <h2 class="title"> Password Information </h2>
+          <h2 class="title"> Password Information </h2> errors: {{ errors }}
         </div>
         <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updatePassword">
           <div class="grid gap-2 sm:gap-6 grid-cols-2">
             <div class="col-span-2">
               <label for="current_password" class="label">Current Password</label>
               <input id="current_password" v-model="current_password" type="password" class="input" placeholder="********" required />
+              <p v-if="errors" class="input-error">
+                <span v-if="errors.current_password">{{ errors.current_password[0] }}</span>
+              </p>
             </div> 
           <div class="col-span-2">
             <label for="password" class="label">New Password</label>
@@ -61,6 +64,12 @@
                   <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                 </svg>
               </div>
+              <p v-if="errors" class="input-error">
+                <span v-if="!errors.password && !errors.current_password">{{ errors }}</span>
+              </p>
+              <p v-if="errors" class="input-error">
+                <span v-if="errors.password">{{ errors.password[0] }}</span>
+              </p>
             </div>
           </div>
           </div>
@@ -101,7 +110,8 @@ export default {
       current_password: '',
       password: '',
       showpassord: false,
-      message: ''
+      message: '',
+      errors: null
     }
   },
   
@@ -123,8 +133,8 @@ export default {
           name: this.name,
           id: this.user.id
         })
-        .then(() => {
-          this.message = "profile updated"
+        .then((res) => {
+          this.message = res.data.message
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
@@ -134,15 +144,18 @@ export default {
     updatePassword () {
       this.$store
         .dispatch('password', {
+          current_password: this.current_password,
           password: this.password,
           id: this.user.id
         })
-        .then((response) => {
-          this.message = "password updated"
+        .then((res) => {
+          this.message = res.data.message
           this.$router.push({ name: 'profile' })
+          // this.$router.push({ name: 'profile' })
         })
         .catch(err => {
           console.log(err)
+          this.errors = err.response.data.errors
         })
     }
   }

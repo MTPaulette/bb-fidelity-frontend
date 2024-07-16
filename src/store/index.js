@@ -37,7 +37,7 @@ export default new Vuex.Store({
 
     clearUserData () {
       localStorage.removeItem('user')
-      // location.reload()
+      location.reload()
     }
   },
 
@@ -46,7 +46,6 @@ export default new Vuex.Store({
       return axios
         .post('/login', credentials)
         .then(({ data }) => {
-          console.log("hhhhhhhhhhhhhhhhhh")
           commit('setUserData', data)
           return data
         })
@@ -81,17 +80,19 @@ export default new Vuex.Store({
     profile ({ commit }, credentials) {
       return axios
         .put('/profile', credentials)
-        .then(({ data }) => {
-          // this.state.user = data.user
-          // localStorage.setItem('user', JSON.stringify(data.user))
-          console.log(this.state.user)
+        //.then(({ data }) => {
+          //this.state.user = data.user
+          //localStorage.setItem('user', JSON.stringify(data))
+          //console.log(data)
+          //console.log(this.state.user)
+          //location.reload()
 
-        })
+        //})
     },
 
     password ({ commit }, credentials) {
       return axios
-        .put('/profile', credentials)
+        .put('/password', credentials)
     },
 
     logout ({ commit }) {

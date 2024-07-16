@@ -30,7 +30,7 @@ const router = createRouter({
           path: "/login",
           name: "login",
           component: Login,
-          beforeEnter: alreadyLogged,
+          // beforeEnter: alreadyLogged,
         },
       ],
     },
@@ -77,9 +77,22 @@ const router = createRouter({
   ]
 })
 
+function alreadyLogged() {
+  if(localStorage.getItem('user')) {
+    router.push({ name: 'profile'})
+    return
+  }
+  router.push({ name: 'login'})
+}
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
+
+  if(to.name === 'login') {
+    if(loggedIn) {
+      next('/home')
+    }
+  }
 
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
     next('/login')

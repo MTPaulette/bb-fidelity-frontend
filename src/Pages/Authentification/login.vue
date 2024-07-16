@@ -9,6 +9,7 @@
           <div>
             <label for="email" class="label">Email address</label>
             <input id="email" v-model="email" type="email" class="input" />
+            <p v-if="form.errors.email" class="input-error">{{ form.errors.email }}</p>
           </div> 
           <div>
             <label for="password" class="label">Password</label>
@@ -26,7 +27,7 @@
                 </svg>
               </div>
             </div>
-            <!-- <p v-if="form.errors.password" class="input-error">{{ form.errors.password }}</p> -->
+            <p v-if="form.errors.password" class="input-error">{{ form.errors.password }}</p>
           </div>
           <button type="submit" class="btn-default">Login</button>
           <div class="flex justify-between items-center text-sm font-light">
