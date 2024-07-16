@@ -1,0 +1,233 @@
+<template>
+  <div v-if="this.message !=''">
+    <FlashAlert :message="this.message" />
+  </div>
+  <div class="relative overflow-x-auto">
+    <div class="block sm:flex sm:justify-between sm:items-center py-3">
+      <div class="flex items-center">
+        <div class="relative">
+          <SearchBar placeholder="Search for users" />
+        </div>
+        <div>
+          <button id="dropdownActionButton" data-dropdown-toggle="dropdownDotsHorizontal" class="inline-flex mt-2 ml-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+            </svg>
+          </button>
+        
+          <!-- Dropdown menu -->
+          <div id="dropdownDotsHorizontal" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>
+              </li>
+            </ul>
+            <div class="py-1">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex mt-5 sm:mt-0">
+        <div>
+          <Button label="add user" hasicon rounded btn small>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </svg>
+          </Button>
+        </div>
+
+        <a href="/export/users" class="ml-2">
+          <Button label="export" hasicon rounded light small>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+            </svg>
+          </Button>
+        </a>
+      </div>
+    </div>
+
+
+    <table class="w-full text-sm text-left my-5">
+      <thead class="text-xs uppercase bg-secondary ">
+        <tr>
+          <th scope="col" class="p-4">
+            <div class="flex items-center">
+              <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="checkbox-all-search" class="sr-only">checkbox</label>
+            </div>
+          </th>
+          <th scope="col" class="px-6 py-2.5">
+            Name
+          </th>
+          <th scope="col" class="px-6 py-2.5">
+            point
+          </th>
+          <th scope="col" class="px-6 py-2.5">
+            role
+          </th>
+          <th scope="col" class="px-6 py-2.5">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users.users.data" :key="user.id" class="border-b border-gray-100 hover:bg-highlight">
+          <td class="w-4 p-4">
+            <div class="flex items-center">
+              <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+            </div>
+          </td>
+          <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
+            <div class="pl-3">
+              
+          <p @click="showProfile(user.id)" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">
+           p: {{user.name}}
+          </p>
+              <router-link :to="`user/${user.id}`" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">{{ user.name }}</router-link>
+              <div class="font-light font-[roboto] text-black-white">{{ user.email }}</div>
+            </div>  
+          </th>
+          <td class="px-6 py-2.5">
+            <div v-if="user.point>0">
+              <div class="btn-success p-2">{{ user.point }} Point</div>
+            </div>
+            <div v-else>
+              <div class="btn-danger p-2">{{ user.point }} Point</div>
+            </div>
+          </td>
+          <td class="px-6 py-2.5">
+            <div v-if="user.role_id==1">
+              Admin (Entreprise)
+            </div>
+            <div v-else>
+              client
+            </div>
+          </td>
+          <td>
+          <div class="px-6 py-2.5 flex justify-between w-full ">
+            <div @click="editForm(user)">
+              <button class="rounde-lg btn-extrasmall btn-success ml-2">
+                crediter
+              </button>
+            </div>
+
+            <div class="mx-1" @click="editFormMalus(user)">
+              <button class="rounde-lg btn-extrasmall btn-danger">
+                debiter
+              </button>
+            </div>
+          </div>
+          <div v-if="edit == user.id">
+            <form class="relative w-full" @submit.prevent="update(user)">
+            <div class="">
+              <label for="delta" class="label">bonus</label>
+              <input id="delta" type="number" name="delta" v-model="point" class="input"  />
+            </div>
+        <div class="flex items-center p-6 space-x-2 border-t border-color rounded-b dark:border-gray-600">
+          <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Save all</button>
+        </div>
+      </form>
+    </div>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div v-if="users.users.data.length" class="w-full flex mt-8 mb-12">
+    <pagination :links="users.users.links" />
+  </div>
+</template>
+
+<script>
+import FlashAlert from '@/Components/FlashAlert.vue'
+import { ref } from 'vue'
+import pagination from '@/Components/paginationTable.vue'
+import Button from '@/Components/button.vue'
+import SearchBar from '@/Components/searchBar.vue'
+
+
+export default {
+  components: {
+    pagination,
+    FlashAlert,
+    SearchBar
+  },
+  data() {
+    return {
+      point: 0,
+      malus: false,
+      message: ''
+    }
+  },
+  setup() {
+const edit = ref(null)
+const malus = ref(false)
+    return {
+      edit,
+      malus
+    }
+  },
+
+  computed: {
+    users() {
+      return JSON.parse(localStorage.getItem('users'))
+      // return JSON.parse(localStorage.getItem('users'))
+    },
+  },
+
+  mounted() {
+    this.$store.dispatch("getAllUsers");
+  },
+
+  methods: {
+    editForm (user) {
+      this.edit = user.id
+    },
+    editFormMalus (user) {
+      this.edit = user.id
+      this.malus = true
+    },
+    update (user) {
+      this.malus = this.malus,
+      this.$store
+        .dispatch('updatePoint', {
+          malus: this.malus,
+          point: this.point,
+          id: user.id
+        })
+        .then(() => {
+          this.message = "User's point updated"
+          // location.reload()
+        })
+        .catch(err => {
+          console.log(err)
+        }),
+      this.malus = false
+      this.edit = null
+    },
+    showProfile (id) {
+      this.$store
+        .dispatch('showProfile', {
+          id: id
+        })
+        .then(() => {
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
+}
+
+</script>
