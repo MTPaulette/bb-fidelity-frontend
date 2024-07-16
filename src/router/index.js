@@ -4,6 +4,7 @@ import Login from '../Pages/Authentification/login.vue'
 import Register from '../Pages/Authentification/register.vue'
 import Profile from '../Pages/Dashboard/User/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
+import User from '../Pages/Dashboard/User/Show.vue'
 import Services from '../Pages/Dashboard/Service/Index.vue'
 import Index from '../Pages/Dashboard/Index.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
@@ -50,6 +51,12 @@ const router = createRouter({
           path: "/users",
           name: "users",
           component: Users,
+        },
+        {
+          path: "/user/:id",
+          name: "user",
+          component: User,
+          props: true
         },
         {
           path: "/services",

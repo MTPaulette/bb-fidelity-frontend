@@ -76,9 +76,6 @@
         <tr v-for="user in users.data" :key="user.id" class="border-b border-gray-100 hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
-              <p @click="showProfile(user.id)" class="font-light text-pink-500 hover:text-gray-500" title="see user profil">
-                {{user.name}}
-              </p>
               <router-link :to="`user/${user.id}`" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">{{ user.name }}</router-link>
               <div class="font-light font-[roboto] text-black-white">{{ user.email }}</div>
             </div>  
@@ -158,7 +155,7 @@ export default {
       point: 0,
       malus: false,
       message: '',
-      errors: null
+      errors: null,
     }
   },
   setup() {
@@ -208,17 +205,6 @@ export default {
         })
       this.malus = false
       // this.edit = null
-    },
-    showProfile (id) {
-      this.$store
-        .dispatch('showProfile', {
-          id: id
-        })
-        .then(() => {
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 }

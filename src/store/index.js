@@ -121,14 +121,14 @@ export default new Vuex.Store({
         .put('/updatePoint', credentials)
     },
 
-    showProfile ({ commit }, credentials) {
+    showUser ({ commit }, credentials) {
       console.log("bbbbbbbbbbbbbbbbbbbbbbb")
       console.log(credentials.id)
       return axios
         .get('/user/'+credentials.id)
-        .then(({ data }) => {
-          commit('setAllUsersData', data)
-        })
+        // .then(({ data }) => {
+        //   commit('setAllUsersData', data)
+        // })
     },
   },
 
