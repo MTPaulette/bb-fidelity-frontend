@@ -16,7 +16,7 @@
 
 <script setup>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
-import ListUser from '@/Components/User/ListUser.vue'
+import ListUser from '@/Components/List/User.vue'
 
 // defineProps({
 //   users: Object,

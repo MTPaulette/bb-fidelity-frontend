@@ -142,6 +142,7 @@ export default {
         })
     },
     updatePassword () {
+      this.errors = null
       this.$store
         .dispatch('password', {
           current_password: this.current_password,

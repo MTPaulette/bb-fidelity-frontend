@@ -9,7 +9,9 @@
           <div>
             <label for="email" class="label">Email address</label>
             <input id="email" v-model="email" type="email" class="input" />
-            <p v-if="form.errors.email" class="input-error">{{ form.errors.email }}</p>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.email">{{ errors.email[0] }}</span>
+            </p>
           </div> 
           <div>
             <label for="password" class="label">Password</label>
@@ -27,7 +29,9 @@
                 </svg>
               </div>
             </div>
-            <p v-if="form.errors.password" class="input-error">{{ form.errors.password }}</p>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.password">{{ errors.password[0] }}</span>
+            </p>
           </div>
           <button type="submit" class="btn-default">Login</button>
           <div class="flex justify-between items-center text-sm font-light">
@@ -49,12 +53,14 @@ export default {
     return {
       email: '',
       password: '',
-      showpassord: false
+      showpassord: false,
+      errors: null
     }
   },
 
   methods: {
     login () {
+      this.errors = null
       this.$store
         .dispatch('login', {
           email: this.email,
@@ -64,6 +70,7 @@ export default {
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
+          this.errors = err.response.data.errors
           console.log(err)
         })
     }

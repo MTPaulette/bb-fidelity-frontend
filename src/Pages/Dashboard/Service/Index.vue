@@ -16,7 +16,7 @@
 
 <script setup>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
-import ListService from '@/Components/Service/ListService.vue'
+import ListService from '@/Components/List/Service.vue'
 
 </script>
 

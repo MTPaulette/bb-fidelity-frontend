@@ -3,8 +3,8 @@ import Home from '../Components/Home.vue'
 import Login from '../Pages/Authentification/login.vue'
 import Register from '../Pages/Authentification/register.vue'
 import Profile from '../Pages/Dashboard/User/Profile.vue'
-import Users from '../Pages/Dashboard/User/List.vue'
-import Services from '../Pages/Dashboard/Service/List.vue'
+import Users from '../Pages/Dashboard/User/Index.vue'
+import Services from '../Pages/Dashboard/Service/Index.vue'
 import Index from '../Pages/Dashboard/Index.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
@@ -37,22 +37,22 @@ const router = createRouter({
     {
       path: '',
       component: DashboardLayout,
+      meta: {
+        auth: true
+      },
       children: [
         {
           path: "/profile",
           name: "profile",
-          meta: {
-            auth: true
-          },
           component: Profile,
         },
         {
-          path: "/user",
+          path: "/users",
           name: "users",
           component: Users,
         },
         {
-          path: "/service",
+          path: "/services",
           name: "services",
           component: Services,
         },

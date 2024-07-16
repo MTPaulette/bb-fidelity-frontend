@@ -80,7 +80,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="service in services.services.data" :key="service.id" class="border-b border-gray-100 hover:bg-highlight">
+        <tr v-for="service in services.data" :key="service.id" class="border-b border-gray-100 hover:bg-highlight">
           <td class="w-4 p-4">
             <div class="flex items-center">
               <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -123,7 +123,11 @@
         </tr>
       </tbody>
     </table>
-
+  <!-- <div v-if="services">
+    <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
+      <pagination :links="services.links" />
+    </div>
+  </div> -->
 </template>
 
 
@@ -151,11 +155,11 @@ export default {
       return JSON.parse(localStorage.getItem('user')).user
     },
     services() {
-      return JSON.parse(localStorage.getItem('services'))
+      return JSON.parse(localStorage.getItem('services')).servives
     },
   },
 
-  mounted() {
+  created() {
     this.$store.dispatch("getAllServices");
   },
 

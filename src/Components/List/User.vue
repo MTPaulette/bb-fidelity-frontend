@@ -1,9 +1,12 @@
 <template>
+  <div v-if="this.message !=''">
+    <FlashAlert :message="this.message" />
+  </div>
   <div class="relative overflow-x-auto">
     <div class="block sm:flex sm:justify-between sm:items-center py-3">
       <div class="flex items-center">
         <div class="relative">
-          <SearchBar placeholder="Search for services" />
+          <SearchBar placeholder="Search for users" />
         </div>
         <div>
           <button id="dropdownActionButton" data-dropdown-toggle="dropdownDotsHorizontal" class="inline-flex mt-2 ml-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
@@ -26,21 +29,21 @@
               </li>
             </ul>
             <div class="py-1">
-              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete Service</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
             </div>
           </div>
         </div>
       </div>
       <div class="flex mt-5 sm:mt-0">
         <div>
-          <Button label="add service" hasicon rounded btn small>
+          <Button label="add user" hasicon rounded btn small>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
               <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
             </svg>
           </Button>
         </div>
 
-        <a href="/export/services" class="ml-2">
+        <a href="/export/users" class="ml-2">
           <Button label="export" hasicon rounded light small>
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
               <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
@@ -50,23 +53,19 @@
         </a>
       </div>
     </div>
-  </div>
 
-  <table class="w-full text-sm text-left my-5">
+
+    <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary ">
-        <!-- <thead class="text-xs text-gray-500 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"> -->
         <tr>
           <th scope="col" class="px-6 py-2.5">
             Name
           </th>
-          <!-- <th scope="col" class="px-6 py-2.5">
-            email
-          </th> -->
           <th scope="col" class="px-6 py-2.5">
-            price/point
+            point
           </th>
           <th scope="col" class="px-6 py-2.5">
-            description
+            role
           </th>
           <th scope="col" class="px-6 py-2.5">
             Action
@@ -74,44 +73,75 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="service in services.data" :key="service.id" class="border-b border-gray-100 hover:bg-highlight">
+        <tr v-for="user in users.data" :key="user.id" class="border-b border-gray-100 hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
-              <router-link :to="`service/${service.id}`" class="font-light"><span class="text-black-white font-semibold"> {{ service.name }}</span></router-link>
+              <p @click="showProfile(user.id)" class="font-light text-pink-500 hover:text-gray-500" title="see user profil">
+                {{user.name}}
+              </p>
+              <router-link :to="`user/${user.id}`" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">{{ user.name }}</router-link>
+              <div class="font-light font-[roboto] text-black-white">{{ user.email }}</div>
             </div>  
           </th>
           <td class="px-6 py-2.5">
-            {{ service.price }}
+            <div v-if="user.point>0">
+              <div class="text-success p-2">{{ user.point }} Point</div>
+            </div>
+            <div v-else>
+              <div class="text-green-500 p-2">{{ user.point }} Point</div>
+            </div>
           </td>
           <td class="px-6 py-2.5">
-            {{ service.description }}
+            <div v-if="user.role_id==1">
+              Admin (Entreprise)
+            </div>
+            <div v-else>
+              client
+            </div>
           </td>
           <td>
-            <div class="px-6 py-2.5 flex justify-between w-full ">
-              <div @click="buy(service.id)">
-                <!-- Modal toggle -->
-                <Button label="acheter" type="submit" hasicon rounded btn extrasmall>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                  </svg>
-                </Button>
-              </div>
+          <div class="px-6 py-2.5 flex justify-between w-full">
+            <!-- <div class="px-6 py-2.5 flex justify-between w-full " v-if="edit != user.id"> -->
+            <div @click="editForm(user)">
+              <button class="rounde-lg btn-extrasmall btn-success ml-2">
+                crediter
+              </button>
             </div>
+
+            <div class="mx-1" @click="editFormMalus(user)">
+              <button class="rounde-lg btn-extrasmall btn-danger">
+                debiter
+              </button>
+            </div>
+          </div>
+          <div v-if="edit == user.id">
+            <form class="relative w-full my-2" @submit.prevent="update(user)">
+              <div class="">
+                <label for="delta" class="sr-only">bonus</label>
+                <input id="delta" type="number" name="delta" v-model="point" class="input" />
+              </div>
+              <p v-if="errors" class="input-error">
+                <span v-if="errors">{{ errors }}</span>
+              </p>
+              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled:opacity-60 disabled:cursor-not-allowed" :disabled="point<=0">Save</button>
+            </form>
+          </div>
           </td>
         </tr>
       </tbody>
     </table>
-  <div v-if="services">
-    <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
-      <pagination :links="services.links" />
+  </div>
+
+  <div v-if="users">
+    <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
+      <pagination :links="users.links" />
     </div>
   </div>
 </template>
 
-
 <script>
 import FlashAlert from '@/Components/FlashAlert.vue'
+import { ref } from 'vue'
 import pagination from '@/Components/paginationTable.vue'
 import Button from '@/Components/button.vue'
 import SearchBar from '@/Components/searchBar.vue'
@@ -125,33 +155,66 @@ export default {
   },
   data() {
     return {
-      message: ''
+      point: 0,
+      malus: false,
+      message: '',
+      errors: null
+    }
+  },
+  setup() {
+    const edit = ref(null)
+    const malus = ref(false)
+    return {
+      edit,
+      malus
     }
   },
 
   computed: {
-    user() {
-      return JSON.parse(localStorage.getItem('user')).user
-    },
-    services() {
-      return JSON.parse(localStorage.getItem('services')).services
+    users() {
+      return JSON.parse(localStorage.getItem('users')).users
     },
   },
 
   created() {
-    this.$store.dispatch("getAllServices");
+    this.$store.dispatch("getAllUsers");
   },
 
   methods: {
+    editForm (user) {
+      this.edit = user.id
+    },
+    editFormMalus (user) {
+      this.edit = user.id
+      this.malus = true
+    },
     update (user) {
+      this.errors = null
+      this.malus = this.malus,
       this.$store
-        .dispatch('updateService', {
-          service_id: this.service,
-          id: user.id,
+        .dispatch('updatePoint', {
+          malus: this.malus,
+          point: this.point,
+          id: user.id
+        })
+        .then((res) => {
+          this.message = res.data.message
+          this.$router.push({ name: 'users' })
+          // location.reload()
+        })
+        .catch(err => {
+          console.log(err)
+          this.errors = err.response.data.errors
+        })
+      this.malus = false
+      // this.edit = null
+    },
+    showProfile (id) {
+      this.$store
+        .dispatch('showProfile', {
+          id: id
         })
         .then(() => {
-          this.message = "User buy this service"
-          // location.reload()
         })
         .catch(err => {
           console.log(err)
@@ -159,4 +222,5 @@ export default {
     }
   }
 }
+
 </script>

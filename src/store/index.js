@@ -96,7 +96,6 @@ export default new Vuex.Store({
     },
 
     logout ({ commit }) {
-          console.log("bbbbbbbbbbbbbbbbbbbbbbb")
       commit('clearUserData')
     },
 
