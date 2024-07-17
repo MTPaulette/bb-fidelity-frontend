@@ -73,7 +73,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users.data" :key="user.id" class="border-b border-gray-100 hover:bg-highlight">
+        <tr v-for="user in users.data" :key="user.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
               <router-link :to="`user/${user.id}`" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">{{ user.name }}</router-link>

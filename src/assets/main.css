@@ -61,7 +61,7 @@
   
   .title {
     /* @apply my-6 sm:my-8 font-[roboto] font-bold text-2xl md:text-3xl text-gray-800 dark:text-gray-100 */
-    @apply text-xl md:text-2xl font-bold font-[roboto] leading-tight tracking-tight text-black-white
+    @apply text-2xl md:text-3xl font-bold font-[roboto] leading-tight tracking-tight text-black-white
   }
 
   .subtitle {
@@ -74,7 +74,7 @@
   }
 
   .border-color {
-    @apply border-[#dadce0] dark:border-[#cf62f0]
+    @apply border-gray-100 dark:border-gray-600
   }
 
   /* use for main */
@@ -94,7 +94,7 @@
 
   /* use for selected icon bg */
   .bg-highlight {
-    @apply bg-teal-200 dark:bg-teal-700
+    @apply bg-teal-200 dark:bg-teal-800
   }
 
   .bg-accentuate {

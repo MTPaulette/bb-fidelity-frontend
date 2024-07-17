@@ -122,13 +122,16 @@ export default new Vuex.Store({
     },
 
     showUser ({ commit }, credentials) {
-      console.log("bbbbbbbbbbbbbbbbbbbbbbb")
-      console.log(credentials.id)
       return axios
         .get('/user/'+credentials.id)
         // .then(({ data }) => {
         //   commit('setAllUsersData', data)
         // })
+    },
+
+    showService ({ commit }, credentials) {
+      return axios
+        .get('/service/'+credentials.id)
     },
   },
 

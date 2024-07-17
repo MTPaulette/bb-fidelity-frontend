@@ -74,7 +74,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="service in services.data" :key="service.id" class="border-b border-gray-100 hover:bg-highlight">
+        <tr v-for="service in services.data" :key="service.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
               <router-link :to="`service/${service.id}`" class="font-light"><span class="text-black-white font-semibold"> {{ service.name }}</span></router-link>

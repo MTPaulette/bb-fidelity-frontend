@@ -44,14 +44,14 @@
           <ul id="dropdown-article" class="hidden py-2 space-y-2">
             <li>
               <router-link
-                to="/service" class="pl-11 item-dropdown"
+                to="/services" class="pl-11 item-dropdown"
               >
                 Services
               </router-link>
             </li>
             <li>
               <router-link
-                to="/create/service" class="pl-11 item-dropdown"
+                to="/service/create" class="pl-11 item-dropdown"
               >
                 New service
               </router-link>
