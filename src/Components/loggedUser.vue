@@ -4,39 +4,59 @@
       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
     </svg>
   </button>
-  <div id="user-dropdown" class="z-20 hidden my-4 overflow-x-hidden max-w-xs px-4 py-3 divide-y divide-[#dadce0] dropdown text-sm">
+  <div id="user-dropdown" class="z-20 hidden my-4 overflow-x-hidden max-w-xs p-2 divide-y divide-[#dadce0] dropdown text-sm">
     <div v-if="user" class="px-4 py-3">
-      <span class="block text-accentuate">role {{ user.role_id }}</span>
-      <span class="block text-accentuate">point: {{ user.point }}</span>
-      <span class="block text-accentuate">{{ user.name }}</span>
-      <span class="block font-medium truncate">{{ user.email }}</span>
+      <p class="text-accentuate" v-if="user.role_id === 1"> Admin </p>
+      <p class="font-light text-accentuate">{{ user.name }}</p>
+      <p class="w-full truncate">{{ user.email }}</p>
     </div>
     <ul class="py-2" aria-labelledby="user-menu-button">
       <li v-if="user">
-        <router-link to="/dashboard" class="block px-4 py-2 hover:text-accentuate hover:bg-highlight">Dashboard</router-link>
+        <router-link to="/profile" class="px-4 py-2 item-dropdown" title="see profile">Profile</router-link>
       </li>
       <li v-else>
-        <router-link to="/login" class="block px-4 py-2 hover:text-accentuate hover:bg-highlight">Login</router-link>
-      </li>
-      <li>
-        <router-link to="#" class="block px-4 py-2 hover:text-accentuate hover:bg-highlight">Reglages</router-link>
+        <router-link to="/login" class="px-4 py-2 item-dropdown">Login</router-link>
       </li>
       <li v-if="user">
-        <router-link to="/logout" method="DELETE" as="btn" class="block px-4 py-2 hover:text-accentuate hover:bg-highlight">Deconnexion</router-link>
+        <button type="button" @click="logout()" class="flex items-center w-full px-4 py-2 hover:text-danger">Deconnexion</button>
       </li>
     </ul>
   </div>
 </template>
 
 
-<script>
+<script setup>
+import { onMounted } from 'vue'
+import {
+  initDropdowns
+} from 'flowbite'
 
+onMounted(() => {
+  initDropdowns();
+})
+</script>
+
+
+<script>
 export default {
   computed: {
     user() {
-      return JSON.parse(localStorage.getItem('user'))
+      return JSON.parse(localStorage.getItem('user')).user
     },
   },
+
+  methods: {
+    logout () {
+      this.$store
+        .dispatch('logout')
+        .then(() => {
+          this.$router.push({ name: 'login' })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }
 }
 </script>
 

@@ -38,7 +38,7 @@
       <div class="my-4 md:my-5 lg:my-12 md:col-span-2 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
         <!-- change profile pic -->
         <div class="mb-4">
-          <h2 class="title"> Password Information </h2> errors: {{ errors }}
+          <h2 class="title"> Password Information </h2>
         </div>
         <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updatePassword">
           <div class="grid gap-2 sm:gap-6 grid-cols-2">

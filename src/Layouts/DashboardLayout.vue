@@ -2,7 +2,7 @@
   <div>
     <Sidebar />
   
-    <div class="bg-default p-4 sm:ml-52 xl:ml-64 mt-14">
+    <div class="p-4 sm:ml-52 xl:ml-64 mt-14">
       <router-view />
       <Footer />
     </div>

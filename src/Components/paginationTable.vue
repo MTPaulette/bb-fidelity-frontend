@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-
 defineProps({
   links: Array,
 })

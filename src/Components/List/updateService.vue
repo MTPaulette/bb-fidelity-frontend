@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import Button from '@/Components/button.vue'
+import Button from '@/Components/Button.vue'
 import { useForm } from '@inertiajs/vue3'
 import { ref } from 'vue'
 

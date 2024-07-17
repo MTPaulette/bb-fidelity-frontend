@@ -56,7 +56,7 @@
 
 
     <table class="w-full text-sm text-left my-5">
-      <thead class="text-xs uppercase bg-secondary ">
+      <thead class="text-xs uppercase bg-secondary">
         <tr>
           <th scope="col" class="px-6 py-2.5">
             Name
@@ -82,10 +82,10 @@
           </th>
           <td class="px-6 py-2.5">
             <div v-if="user.point>0">
-              <div class="text-success p-2">{{ user.point }} Point</div>
+              <div class="text-green-500 p-2">{{ user.point }}</div>
             </div>
             <div v-else>
-              <div class="text-green-500 p-2">{{ user.point }} Point</div>
+              <div class="text-danger p-2">{{ user.point }}</div>
             </div>
           </td>
           <td class="px-6 py-2.5">
@@ -131,7 +131,7 @@
 
   <div v-if="users">
     <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
-      <pagination :links="users.links" />
+      <Pagination :links="users.links" />
     </div>
   </div>
 </template>
@@ -139,14 +139,14 @@
 <script>
 import FlashAlert from '@/Components/FlashAlert.vue'
 import { ref } from 'vue'
-import pagination from '@/Components/paginationTable.vue'
-import Button from '@/Components/button.vue'
-import SearchBar from '@/Components/searchBar.vue'
+import Pagination from '@/Components/PaginationTable.vue'
+import Button from '@/Components/Button.vue'
+import SearchBar from '@/Components/SearchBar.vue'
 
 
 export default {
   components: {
-    pagination,
+    Pagination,
     FlashAlert,
     SearchBar
   },

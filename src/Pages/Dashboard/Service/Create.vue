@@ -46,7 +46,7 @@
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import updateService from '@/Components/List/updateService.vue'
-import Button from '@/Components/button.vue'
+import Button from '@/Components/Button.vue'
 import { useForm, router } from '@inertiajs/vue3'
 
 

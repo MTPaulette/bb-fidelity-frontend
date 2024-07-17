@@ -197,8 +197,8 @@
     @apply bg-sheet-200 text-white
   }
 
-  .sidebar-item-dropdown {
-    @apply flex items-center w-full p-2 text-gray-600 transition duration-75 rounded-lg pl-11 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700
+  .item-dropdown {
+    @apply flex items-center w-full p-2 transition duration-75 rounded-lg hover:text-accentuate hover:bg-highlight
     /* @apply flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 */
   }
 }

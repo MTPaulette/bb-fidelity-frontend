@@ -104,7 +104,7 @@
     </table>
   <div v-if="services">
     <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
-      <pagination :links="services.links" />
+      <Pagination :links="services.links" />
     </div>
   </div>
 </template>
@@ -112,14 +112,14 @@
 
 <script>
 import FlashAlert from '@/Components/FlashAlert.vue'
-import pagination from '@/Components/paginationTable.vue'
-import Button from '@/Components/button.vue'
-import SearchBar from '@/Components/searchBar.vue'
+import Pagination from '@/Components/PaginationTable.vue'
+import Button from '@/Components/Button.vue'
+import SearchBar from '@/Components/SearchBar.vue'
 
 
 export default {
   components: {
-    pagination,
+    Pagination,
     FlashAlert,
     SearchBar
   },

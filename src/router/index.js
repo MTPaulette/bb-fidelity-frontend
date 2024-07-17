@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../Components/Home.vue'
-import Login from '../Pages/Authentification/login.vue'
-import Register from '../Pages/Authentification/register.vue'
+import Login from '../Pages/Authentification/Login.vue'
+import Register from '../Pages/Authentification/Register.vue'
+import Reset from '../Pages/Authentification/Reset.vue'
 import Profile from '../Pages/Dashboard/User/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
@@ -31,7 +32,11 @@ const router = createRouter({
           path: "/login",
           name: "login",
           component: Login,
-          // beforeEnter: alreadyLogged,
+        },
+        {
+          path: "/reset",
+          name: "reset",
+          component: Reset,
         },
       ],
     },
@@ -83,14 +88,6 @@ const router = createRouter({
     // }
   ]
 })
-
-function alreadyLogged() {
-  if(localStorage.getItem('user')) {
-    router.push({ name: 'profile'})
-    return
-  }
-  router.push({ name: 'login'})
-}
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
