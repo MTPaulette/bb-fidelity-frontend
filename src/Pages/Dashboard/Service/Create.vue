@@ -22,24 +22,39 @@
         <div>
           <label for="name" class="label">Name</label>
           <input id="name" v-model="name" type="text" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.name">{{ errors.name[0] }}</span>
+          </p>
         </div>
         <div>
           <label for="price" class="label">Price (FCFA)</label>
           <input id="price" v-model="price" type="price" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.price">{{ errors.price[0] }}</span>
+          </p>
         </div>
         <div>
           <label for="point" class="label">Bonus Point</label>
           <input id="point" v-model="point" type="number" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.point">{{ errors.point[0] }}</span>
+          </p>
         </div>
         <div>
           <label for="validity" class="label">Validity</label>
           <input id="validity" v-model="validity" type="text" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.validity">{{ errors.validity[0] }}</span>
+          </p>
         </div>
         <div>
           <label for="service" class="label">Description</label>
           <textarea v-model="description" rows="4" class="text-area mb-4" placeholder="new service..." />
-          <button type="submit" class="btn-base btn-default">Create</button>
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.description">{{ errors.description[0] }}</span>
+          </p>
         </div>
+          <button type="submit" class="btn-base btn-default">Create</button>
       </form>
     </div>
   </div>
@@ -55,13 +70,19 @@ export default {
     FlashAlert
   },
 
+  computed: {
+    user_id() {
+      return JSON.parse(localStorage.getItem('user')).user.id
+    },
+  },
+
   data() {
     return {
       name: null,
       price: '1000',
-      point: '0',
+      point: '10',
       validity: '1 hour',
-      description: null,
+      description: "Ce forfait donne droit a une heure de temps dans l'espace open space.",
       message: '',
       errors: null,
     }
@@ -76,14 +97,17 @@ export default {
         price: this.price,
         point: this.point,
         validity: this.validity,
-        description: this.description
+        description: this.description,
+        user_id: this.user_id
       })
       .then((res) => {
         this.message = res.data.message
+        this.errors = res.response.data.errors
         // this.$router.push({ name: 'profile' })
       })
       .catch(err => {
         this.errors = err.response.data.errors
+        console.log(err)
       })
     }
   }

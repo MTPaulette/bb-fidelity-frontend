@@ -12,9 +12,9 @@
             </div>
         </div>
         <div class="my-3">
-          <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.price }} month </span></p>
+          <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
           <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} FCFA </span></p>
-          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.price }} Point(s) </span></p>
+          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.point }} Point(s) </span></p>
         </div>
         <!-- <p class="text-accentuate"> {{ service.price }} FCFA</p>
         <p class="text-green-500">{{ service.price }} point(s)</p> -->
@@ -26,17 +26,6 @@
           </router-link>
           <router-link :to="`service/buy/${service.id}`" class="btn-base btn-success rounded-lg ms-2">Acheter</router-link>
         </div>
-        
-      <!-- new service -->
-      <div class="fixed z-40 bottom-14 right-2.5">
-        <router-link class="flex justify-end mb-4" to="service/create">
-          <button class="bg-white p-2 text-xs rounded-full border-[6px] border-purple-500 shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="btn-default-2" viewBox="0 0 16 16">
-                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>
-          </button>
-        </router-link>
-      </div>
     </div>
 </template>
 

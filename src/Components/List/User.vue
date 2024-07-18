@@ -62,7 +62,7 @@
             Name
           </th>
           <th scope="col" class="px-6 py-2.5">
-            point
+            balance
           </th>
           <th scope="col" class="px-6 py-2.5">
             role
@@ -81,11 +81,11 @@
             </div>  
           </th>
           <td class="px-6 py-2.5">
-            <div v-if="user.point>0">
-              <div class="text-green-500 p-2">{{ user.point }}</div>
+            <div v-if="user.balance>0">
+              <div class="text-green-500 p-2">{{ user.balance }}</div>
             </div>
             <div v-else>
-              <div class="text-danger p-2">{{ user.point }}</div>
+              <div class="text-danger p-2">{{ user.balance }}</div>
             </div>
           </td>
           <td class="px-6 py-2.5">
@@ -126,12 +126,12 @@
             <form class="relative w-full my-2" @submit.prevent="update(user)">
               <div class="">
                 <label for="delta" class="sr-only">bonus</label>
-                <input id="delta" type="number" name="delta" v-model="point" class="input" />
+                <input id="delta" type="number" name="delta" v-model="balance" class="input" />
               </div>
               <p v-if="errors" class="input-error">
                 <span v-if="errors">{{ errors }}</span>
               </p>
-              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled:opacity-60 disabled:cursor-not-allowed" :disabled="point<=0">Save</button>
+              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled:opacity-60 disabled:cursor-not-allowed" :disabled="balance<=0">Save</button>
             </form>
           </div>
           </td>
@@ -163,7 +163,7 @@ export default {
   },
   data() {
     return {
-      point: 0,
+      balance: 0,
       malus: false,
       message: '',
       errors: null,
@@ -200,9 +200,9 @@ export default {
       this.errors = null
       this.malus = this.malus,
       this.$store
-        .dispatch('updatePoint', {
+        .dispatch('updateBalance', {
           malus: this.malus,
-          point: this.point,
+          balance: this.balance,
           id: user.id
         })
         .then((res) => {

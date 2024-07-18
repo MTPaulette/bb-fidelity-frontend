@@ -116,9 +116,9 @@ export default new Vuex.Store({
     },
 
 
-    updatePoint ({ commit }, credentials) {
+    updateBalance ({ commit }, credentials) {
       return axios
-        .put('/updatePoint', credentials)
+        .put('/updateBalance', credentials)
     },
 
     showUser ({ commit }, credentials) {
@@ -136,7 +136,7 @@ export default new Vuex.Store({
 
     createService ({ commit }, credentials) {
       return axios
-        .post('/service/create/', credentials)
+        .post('/service/store/', credentials)
     },
   },
 

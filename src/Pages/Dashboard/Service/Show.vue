@@ -5,21 +5,24 @@
       <h1 class="my-6 sm:my-8 title"> Service id {{ id }} Informations </h1>
     </div>
     <div class="w-full bg-default border border-color rounded-lg shadow">
-      <div class="flex flex-col items-center py-10">
+      <div class="flex flex-col items-centerr p-6 md:p-12">
         <!-- <img class="w-24 h-24 mb-3 shadow-lg rounded-full" src="./../../../assets/s.png"> -->
         <div>
-          <svg class="w-24 h-24 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
+          <svg class="w-24 h-24 mb-5 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
             <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z"/>
           </svg>
         </div>
 
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black-white">{{ service.name }}</h5>
-        <div class="my-3">
-          <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.price }} month </span></p>
+        <h5 class="mb-2 text-2xl uppercase font-bold tracking-tight text-black-white">{{ service.name }}</h5>
+        <div class="mt-3 mb-5">
+          <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
           <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} FCFA </span></p>
-          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.price }} Point(s) </span></p>
+          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.point }} Point(s) </span></p>
         </div>
-        <p class="mb-3 text-secondary h-12">{{ service.description }}</p>
+        <div>
+          Description: <br />
+          <p class="mt-1 mb-3 text-secondary text-justify">{{ service.description }}</p>
+        </div>
         <p class="mb-3 text-xs font-light">Created at {{ formatDate(service.created_at) }}</p>
         <p class="mb-3 text-xs font-light">Updated at {{ formatDate(service.updated_at) }}</p>
         
