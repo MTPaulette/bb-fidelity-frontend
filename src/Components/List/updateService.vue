@@ -5,7 +5,7 @@
         <li 
           v-for="service in services" 
           :key="service.id"
-          class="mb-2.5 pb-3 border-b my-border-gray"
+          class="mb-2.5 pb-3 border-b border-color"
         >
           <div class="flex justify-between items-center px-1">
             <span>{{ service.name }}</span>

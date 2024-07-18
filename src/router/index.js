@@ -6,8 +6,9 @@ import Reset from '../Pages/Authentification/Reset.vue'
 import Profile from '../Pages/Dashboard/User/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
-import Service from '../Pages/Dashboard/Service/Show.vue'
 import Services from '../Pages/Dashboard/Service/Index.vue'
+import Service from '../Pages/Dashboard/Service/Show.vue'
+import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import Index from '../Pages/Dashboard/Index.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
@@ -59,12 +60,6 @@ const router = createRouter({
           component: Users,
         },
         {
-          path: "/service/:id",
-          name: "service",
-          component: Service,
-          props: true
-        },
-        {
           path: "/user/:id",
           name: "user",
           component: User,
@@ -74,6 +69,18 @@ const router = createRouter({
           path: "/services",
           name: "services",
           component: Services,
+        },
+        {
+          path: "/service/:id",
+          name: "service",
+          component: Service,
+          props: true
+        },
+        {
+          path: "/service/create",
+          name: "service.create",
+          component: ServiceCreate,
+          props: true
         },
         {
           path: "/dashboard",

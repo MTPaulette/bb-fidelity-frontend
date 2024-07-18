@@ -6,7 +6,7 @@
     </div>
 
 
-    <div class="w-full px-3 py-5 h-auto my-border-gray rounded-lg shadow">
+    <div class="w-full px-3 py-5 h-auto border-color rounded-lg shadow">
       <div class="">
         <ListUser />
       </div>

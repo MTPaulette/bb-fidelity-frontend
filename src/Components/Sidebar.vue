@@ -3,16 +3,6 @@
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 sm:w-52 xl:w-64 h-screen pt-16 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
       <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
-        <li v-if="user.role_id === 1">
-          <router-link
-            to="/category" class="flex items-center w-full p-2 hover:text-accentuate"
-          >
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" /><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
-            </svg>
-            <span class="ml-3">category</span>
-          </router-link>
-        </li>
 
         <!-- users list -->
          <li v-if="user.role_id === 1">

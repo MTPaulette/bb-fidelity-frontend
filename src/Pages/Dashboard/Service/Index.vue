@@ -13,41 +13,32 @@
         </ul>
     </div>
 
-    <div class="w-full px-3 py-5 h-auto my-border-gray rounded-lg shadow">
+    <div class="w-full h-auto">
+      <!-- <div class="w-full px-3 py-5 h-auto border-color rounded-lg shadow"> -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div v-for="service in services.data" :key="service.id" class="col-span-1">
+        <div v-for="service in services" :key="service.id" class="col-span-1">
           <ServiceCard :service="service"/>
         </div>
       </div>
     </div>
-      <div v-if="services">
-        <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
-          <Pagination :links="services.links" />
-        </div>
-      </div>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import ServiceCard from '@/Components/Card/Service.vue'
-import Pagination from '@/Components/PaginationTable.vue'
 
 
 export default {
   components: {
     Breadcrumb,
-    Pagination,
     ServiceCard
   },
 
   computed: {
     services() {
       return JSON.parse(localStorage.getItem('services')).services
-    },
-    user_role() {
-      return JSON.parse(localStorage.getItem('user')).user.user_role
-    },
+    }
   },
 
   created() {

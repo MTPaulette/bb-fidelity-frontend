@@ -1,71 +1,92 @@
 <template>
-  <DashboardLayout>
-    <Breadcrumb link1="dashboard" link2="new service" />
+  <div>
+    <div v-if="this.message !=''">
+      <FlashAlert :message="this.message" />
+    </div>
+    <Breadcrumb link1="dashboard" link2="service" />
     <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> Add service </h1>
+      <h1 class="my-6 sm:my-8 title"> New Service  </h1>
     </div>
 
-    <div class="w-full px-4 py-5 h-auto border my-border-gray rounded-lg shadow">
-      <div class="grid grid-cols-1 md:grid-cols-5 md:gap-7 md:pl-7 md:pt-4 md:pb-8">
-        <div class="col-span-2 flex flex-col items-center justify-center">
-          <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
-            <p class="text-sm text-gray-500 dark:text-gray-400">
-              Check to the right. If the service that you find not exist, you can use the left textarea to
-              <span class="font-medium text-gray-800 dark:text-white">add new service</span>.
-              You can also use the trash icon to delete some service.
-            </p>
-          </div>
-
-          <!-- dark:bg-gray-700  -->
-          <form class="relative w-full" @submit.prevent="addNew">
-            <div>
-              <label for="name" class="label">Name</label>
-              <input id="name" v-model="form.name" type="text" class="input" />
-            </div>
-          <div>
-            <label for="price" class="label">Price</label>
-            <input id="price" v-model="form.price" type="price" class="input" />
-          </div>
-          <div>
-            <label for="service" class="block text-base font-medium text-gray-900 dark:text-white">service</label>
-            <textarea v-model="form.description" rows="4" class="text-area mb-4" placeholder="new service..." />
-            <button type="submit" class="btn-base btn-success rounded-lg">Add</button>
-          </div>
-          </form>
-        </div>
-        <div class="col-span-3 my-20 md:my-0 border-none md:border-l-2 md:my-border-gray md:pl-7">
-          {{ service }}
-          <updateService :services="services" @delete="deleteItem" />
-        </div>
+    <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
+      <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Check to the right. If the service that you find not exist, you can use the left textarea to
+          <span class="font-medium text-gray-800 dark:text-white">add new service</span>.
+          You can also use the trash icon to delete some service.
+        </p>
       </div>
+
+      <!-- dark:bg-gray-700  -->
+      <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="newService">
+        <div>
+          <label for="name" class="label">Name</label>
+          <input id="name" v-model="name" type="text" class="input" required />
+        </div>
+        <div>
+          <label for="price" class="label">Price (FCFA)</label>
+          <input id="price" v-model="price" type="price" class="input" required />
+        </div>
+        <div>
+          <label for="point" class="label">Bonus Point</label>
+          <input id="point" v-model="point" type="number" class="input" required />
+        </div>
+        <div>
+          <label for="validity" class="label">Validity</label>
+          <input id="validity" v-model="validity" type="text" class="input" required />
+        </div>
+        <div>
+          <label for="service" class="label">Description</label>
+          <textarea v-model="description" rows="4" class="text-area mb-4" placeholder="new service..." />
+          <button type="submit" class="btn-base btn-default">Create</button>
+        </div>
+      </form>
     </div>
-  </DashboardLayout>
+  </div>
 </template>
 
-<script setup>
-import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+<script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
-import updateService from '@/Components/List/updateService.vue'
-import Button from '@/Components/Button.vue'
-import { useForm, router } from '@inertiajs/vue3'
+import FlashAlert from '@/Components/FlashAlert.vue'
 
+export default {
+  components: {
+    Breadcrumb,
+    FlashAlert
+  },
 
-defineProps({
-  services: Object,
-})
+  data() {
+    return {
+      name: null,
+      price: '1000',
+      point: '0',
+      validity: '1 hour',
+      description: null,
+      message: '',
+      errors: null,
+    }
+  },
 
-const form = useForm({
-  name: '',
-  price: 0,
-  description: '',
-})
-
-const addNew = () => {
-  form.post('/service')
-  form.reset('service')
+  methods: {
+    newService () {
+      this.errors = null
+      this.$store
+      .dispatch('createService', {
+        name: this.name,
+        price: this.price,
+        point: this.point,
+        validity: this.validity,
+        description: this.description
+      })
+      .then((res) => {
+        this.message = res.data.message
+        // this.$router.push({ name: 'profile' })
+      })
+      .catch(err => {
+        this.errors = err.response.data.errors
+      })
+    }
+  }
 }
 
-const deleteItem = (i) => {
-  router.delete(`/service/${i}`)
-}
 </script>

@@ -2,7 +2,7 @@
   <div v-if="this.message !=''">
     <FlashAlert :message="this.message" />
   </div>
-  <div class="relative overflow-x-auto">
+  <div class="overflow-x-auto relative">
     <div class="block sm:flex sm:justify-between sm:items-center py-3">
       <div class="flex items-center">
         <div class="relative">
@@ -73,11 +73,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users.data" :key="user.id" class="border-b border-color hover:bg-highlight">
+        <tr v-for="user in users" :key="user.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
-              <router-link :to="`user/${user.id}`" class="font-light text-blue-500 hover:text-gray-500" title="see user profil">{{ user.name }}</router-link>
-              <div class="font-light font-[roboto] text-black-white">{{ user.email }}</div>
+              <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
+              <p class="font-light font-[roboto]">{{ user.email }}</p>
             </div>  
           </th>
           <td class="px-6 py-2.5">
@@ -97,16 +97,27 @@
             </div>
           </td>
           <td>
-          <div class="px-6 py-2.5 flex justify-between w-full">
+          <div class="px-6 py-2.5 flex w-full">
+            <div>
+              <router-link :to="`user/${user.id}`" class="btn-blue btn-extrasmall" title="voir profil client">
+                Profile
+              </router-link>
+            </div>
+            
+            <div class="mx-2">
+              <router-link :to="`user/${user.id}/historique`" class="btn-extrasmall btn-light" title="voir historique">
+                Historique
+              </router-link>
+            </div>
             <!-- <div class="px-6 py-2.5 flex justify-between w-full " v-if="edit != user.id"> -->
-            <div @click="editForm(user)">
-              <button class="rounde-lg btn-extrasmall btn-success ml-2">
+            <div @click="editForm(user)" class="mx-2">
+              <button class="btn-extrasmall btn-success">
                 crediter
               </button>
             </div>
 
-            <div class="mx-1" @click="editFormMalus(user)">
-              <button class="rounde-lg btn-extrasmall btn-danger">
+            <div @click="editFormMalus(user)">
+              <button class="btn-extrasmall btn-danger">
                 debiter
               </button>
             </div>
@@ -129,11 +140,11 @@
     </table>
   </div>
 
-  <div v-if="users">
+  <!-- <div v-if="users">
     <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
       <Pagination :links="users.links" />
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>

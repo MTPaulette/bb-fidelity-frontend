@@ -133,6 +133,11 @@ export default new Vuex.Store({
       return axios
         .get('/service/'+credentials.id)
     },
+
+    createService ({ commit }, credentials) {
+      return axios
+        .post('/service/create/', credentials)
+    },
   },
 
   getters : {
