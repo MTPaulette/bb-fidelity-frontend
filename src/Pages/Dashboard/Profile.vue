@@ -122,7 +122,7 @@ export default {
   },
   mounted() {
     if (!this.user) {
-      this.$router.back();
+      this.$router.push("/login");
     }
   },
 
@@ -135,7 +135,8 @@ export default {
         })
         .then((res) => {
           this.message = res.data.message
-          this.$router.push({ name: 'profile' })
+          this.$router.back()
+          // this.$router.push({ name: 'profile' })
         })
         .catch(err => {
           console.log(err)

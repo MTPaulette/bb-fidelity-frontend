@@ -12,6 +12,8 @@ import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
+import NotFound from '../Pages/NotFound.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -90,6 +92,17 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue')
     // }
+    
+    {
+      component: AuthentificationLayout,
+      children: [
+        {
+          path: '/:pathMatch(.*)*',
+          name: 'notFound',
+          component: NotFound
+        }
+      ]
+    },
   ],
 
   //saved actual position on page before leave it
