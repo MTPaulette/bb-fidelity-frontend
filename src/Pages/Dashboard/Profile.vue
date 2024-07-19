@@ -8,7 +8,6 @@
       <h1 class="my-6 sm:my-8 title"> Profile </h1>
     </div>
 
-
     <div class="w-full h-auto">
         <!-- general informations -->
         <div class="mt-4 md:mt-0 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
@@ -135,8 +134,9 @@ export default {
         })
         .then((res) => {
           this.message = res.data.message
-          this.$router.back()
-          // this.$router.push({ name: 'profile' })
+          setTimeout(() => {
+            this.message = ''
+          }, 5000)
         })
         .catch(err => {
           console.log(err)
@@ -152,7 +152,11 @@ export default {
         })
         .then((res) => {
           this.message = res.data.message
-          this.$router.push({ name: 'profile' })
+
+          //flashAlert will disappear after 1s
+          setTimeout(() => {
+            this.message = ''
+          }, 5000)
           // this.$router.push({ name: 'profile' })
         })
         .catch(err => {
