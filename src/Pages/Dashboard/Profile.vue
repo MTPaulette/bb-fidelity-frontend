@@ -14,7 +14,7 @@
           <div class="mb-4">
             <h2 class="title"> General Information </h2>
           </div>
-          <div class="p-4 mb-8 bg-secondary rounded-lg">vous avez: <span class="text-accentuate">{{ user.balance }} point(s)</span></div>
+          <div class="p-4 mb-8 bg-secondary rounded-lg">You have: <span class="text-accentuate">{{ user.balance }} point(s)</span></div>
           <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updateUserInformation">
             <div class="grid gap-2 sm:gap-6 grid-cols-2">
               <div>
@@ -28,7 +28,7 @@
             </div>
             
             <div class="mt-3">
-              <button type="submit" class="btn-default">Save</button>
+              <ButtonLoading :loading="loading" />
             </div>
           </form>
         </div>
@@ -82,11 +82,7 @@
               <li>Inclusion of at least one special character, e.g., ! @ # ?</li>
             </ul>
           </div>
-            
-          <div>
-            <button type="submit" class="btn-default">Save</button>
-          </div>
-          <!-- <button type="submit" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-mango font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-mango dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button> -->
+          <ButtonLoading :loading="loading" />
         </form>
       </div>
     </div>
@@ -96,11 +92,13 @@
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
+import ButtonLoading from '@/Components/ButtonLoading.vue'
 
 export default {
   components: {
     Breadcrumb,
     FlashAlert,
+    ButtonLoading,
   },
   data () {
     return {
@@ -110,6 +108,7 @@ export default {
       password: '',
       showpassord: false,
       message: '',
+      loading: false,
       errors: null
     }
   },
@@ -127,6 +126,7 @@ export default {
 
   methods: {
     updateUserInformation () {
+      this.loading = true
       this.$store
         .dispatch('profile', {
           name: this.name,
@@ -141,8 +141,11 @@ export default {
         .catch(err => {
           console.log(err)
         })
+        .finally(() => this.loading = false)
     },
+
     updatePassword () {
+      this.loading = true
       this.errors = null
       this.$store
         .dispatch('password', {
@@ -157,12 +160,12 @@ export default {
           setTimeout(() => {
             this.message = ''
           }, 5000)
-          // this.$router.push({ name: 'profile' })
         })
         .catch(err => {
           console.log(err)
           this.errors = err.response.data.errors
         })
+        .finally(() => this.loading = false)
     }
   }
 }

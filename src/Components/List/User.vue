@@ -131,7 +131,7 @@
               <p v-if="errors" class="input-error">
                 <span v-if="errors">{{ errors }}</span>
               </p>
-              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled:opacity-60 disabled:cursor-not-allowed" :disabled="balance<=0">Save</button>
+              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled" :disabled="balance<=0">Save</button>
             </form>
           </div>
           </td>

@@ -36,7 +36,7 @@
               <span v-if="errors.password">{{ errors.password[0] }}</span>
             </p>
           </div>
-          <button type="submit" class="btn-default">Create an account</button>
+          <ButtonLoading label="Create an account" :loading="loading" />
           <p class="text-sm font-light text-gray-500 dark:text-gray-400">
             Already have an account? <a href="/login" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login here</a>
           </p>
@@ -46,19 +46,26 @@
 </template>
 
 <script>
+import ButtonLoading from '@/Components/ButtonLoading.vue'
+
 export default {
+  components: {
+    ButtonLoading,
+  },
   data () {
     return {
       name: 'paulette',
       email: 'paulette@test.fr',
       password: '',
       showpassord: false,
+      loading: false,
       errors: null
     }
   },
 
   methods: {
     newUser () {
+      this.loading = true
       this.errors = null
       this.$store
         .dispatch('register', {
@@ -72,6 +79,7 @@ export default {
         .catch(err => {
           this.errors = err.response.data.errors
         })
+        .finally(() => this.loading = false)
     }
   }
 }

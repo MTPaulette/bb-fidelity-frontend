@@ -54,11 +54,7 @@
             <span v-if="errors.description">{{ errors.description[0] }}</span>
           </p>
         </div>
-          <button type="submit" class="inline-flex justify-center btn-base btn-default">
-            <svg class="h-4 w-4 mr-3" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-            </svg>Add new service
-          </button>
+        <ButtonLoading label="Create new service" :loading="loading" />
       </form>
     </div>
   </div>
@@ -67,11 +63,13 @@
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
+import ButtonLoading from '@/Components/ButtonLoading.vue'
 
 export default {
   components: {
     Breadcrumb,
-    FlashAlert
+    FlashAlert,
+    ButtonLoading
   },
 
   computed: {
@@ -88,12 +86,14 @@ export default {
       validity: '1 hour',
       description: "Ce forfait donne droit a une heure de temps dans l'espace open space.",
       message: '',
+      loading: false,
       errors: null,
     }
   },
 
   methods: {
     newService () {
+      this.loading = true
       this.errors = null
       this.$store
       .dispatch('createService', {
@@ -106,6 +106,12 @@ export default {
       })
       .then((res) => {
         this.message = res.data.message
+
+        //flashAlert will disappear after 1s
+        setTimeout(() => {
+          this.message = ''
+        }, 5000)
+        
         this.errors = res.response.data.errors
         // this.$router.push({ name: 'profile' })
       })
@@ -113,6 +119,7 @@ export default {
         this.errors = err.response.data.errors
         console.log(err)
       })
+      .finally(() => this.loading = false)
     }
   }
 }

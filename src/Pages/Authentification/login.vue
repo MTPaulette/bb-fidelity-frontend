@@ -33,7 +33,7 @@
               <span v-if="errors.password">{{ errors.password[0] }}</span>
             </p>
           </div>
-          <button type="submit" class="btn-default">Login</button>
+          <ButtonLoading label="Login" :loading="loading" />
           <div class="flex justify-between items-center text-sm font-light">
             <p>
               <a href="/register" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Register</a>
@@ -48,18 +48,25 @@
 </template>
 
 <script>
+import ButtonLoading from '@/Components/ButtonLoading.vue'
+
 export default {
+  components: {
+    ButtonLoading,
+  },
   data () {
     return {
       email: '',
       password: '',
       showpassord: false,
+      loading: false,
       errors: null
     }
   },
 
   methods: {
     login () {
+      this.loading = true
       this.errors = null
       this.$store
         .dispatch('login', {
@@ -73,6 +80,7 @@ export default {
           this.errors = err.response.data.errors
           console.log(err)
         })
+        .finally(() => this.loading = false)
     }
   }
 }
