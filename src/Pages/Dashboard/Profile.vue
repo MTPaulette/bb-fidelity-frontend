@@ -122,7 +122,7 @@ export default {
   },
   mounted() {
     if (!this.user) {
-      this.$router.push("/login");
+      this.$router.back();
     }
   },
 

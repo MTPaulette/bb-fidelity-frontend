@@ -9,7 +9,6 @@ import User from '../Pages/Dashboard/User/Show.vue'
 import Services from '../Pages/Dashboard/Service/Index.vue'
 import Service from '../Pages/Dashboard/Service/Show.vue'
 import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
-import Index from '../Pages/Dashboard/Index.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
@@ -43,7 +42,6 @@ const router = createRouter({
       ],
     },
     {
-      path: '',
       component: DashboardLayout,
       meta: {
         auth: true
@@ -82,14 +80,6 @@ const router = createRouter({
           component: ServiceCreate,
           props: true
         },
-        {
-          path: "/dashboard",
-          name: "index",
-          meta: {
-            auth: true
-          },
-          component: Index,
-        },
       ],
     },
     // {
@@ -100,23 +90,36 @@ const router = createRouter({
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue')
     // }
-  ]
+  ],
+
+  //saved actual position on page before leave it
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
+
+  //defsult active link style
+  linkExactActiveClass: 'text-accentuate bg-highlight'
 })
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
 
-  if(to.name === 'login') {
-    if(loggedIn) {
-      next('/home')
-    }
+  
+  // if user is already authenticated, redirect login to services page
+  if(to.name === 'login' && loggedIn) {
+    next({ name: 'home'})
   }
 
+  // check if the user is authenticated
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
-    next('/login')
-    return
+    next({ name: 'login'})
+  }else {
+    next()
   }
-  next()
 })
 
 

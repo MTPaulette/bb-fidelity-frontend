@@ -12,7 +12,7 @@
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           Check to the right. If the service that you find not exist, you can use the left textarea to
-          <span class="font-medium text-gray-800 dark:text-white">add new service</span>.
+          <span class="font-medium text-black-white">add new service</span>.
           You can also use the trash icon to delete some service.
         </p>
       </div>
@@ -54,7 +54,11 @@
             <span v-if="errors.description">{{ errors.description[0] }}</span>
           </p>
         </div>
-          <button type="submit" class="btn-base btn-default">Create</button>
+          <button type="submit" class="inline-flex justify-center btn-base btn-default">
+            <svg class="h-4 w-4 mr-3" viewBox="0 0 16 16" fill="currentColor">
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+            </svg>Add new service
+          </button>
       </form>
     </div>
   </div>
