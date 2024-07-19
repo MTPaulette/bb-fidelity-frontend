@@ -1,14 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../Components/Home.vue'
-import Login from '../Pages/Authentification/Login.vue'
-import Register from '../Pages/Authentification/Register.vue'
-import Reset from '../Pages/Authentification/Reset.vue'
-import Profile from '../Pages/Dashboard/Profile.vue'
-import Users from '../Pages/Dashboard/User/Index.vue'
-import User from '../Pages/Dashboard/User/Show.vue'
-import Services from '../Pages/Dashboard/Service/Index.vue'
-import Service from '../Pages/Dashboard/Service/Show.vue'
-import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
@@ -18,7 +8,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: Home
+      component: () => import('../Components/Home.vue')
     },
     {
       path: '/login',
@@ -27,17 +17,17 @@ const router = createRouter({
         {
           path: "/register",
           name: "register",
-          component: Register,
+          component: () => import('../Pages/Authentification/Register.vue'),
         },
         {
           path: "/login",
           name: "login",
-          component: Login,
+          component: () => import('../Pages/Authentification/Login.vue'),
         },
         {
           path: "/reset",
           name: "reset",
-          component: Reset,
+          component: () => import('../Pages/Authentification/Reset.vue'),
         },
       ],
     },
@@ -50,34 +40,34 @@ const router = createRouter({
         {
           path: "/profile",
           name: "profile",
-          component: Profile,
+          component: () => import('../Pages/Dashboard/Profile.vue'),
         },
         {
           path: "/users",
           name: "users",
-          component: Users,
+          component: () => import('../Pages/Dashboard/User/Index.vue'),
         },
         {
           path: "/user/:id",
           name: "user",
-          component: User,
+          component: () => import('../Pages/Dashboard/User/Show.vue'),
           props: true
         },
         {
           path: "/services",
           name: "services",
-          component: Services,
+          component: () => import('../Pages/Dashboard/Service/Index.vue'),
         },
         {
           path: "/service/:id",
           name: "service",
-          component: Service,
+          component: () => import('../Pages/Dashboard/Service/Show.vue'),
           props: true
         },
         {
           path: "/service/create",
           name: "service.create",
-          component: ServiceCreate,
+          component: () => import('../Pages/Dashboard/Service/Create.vue'),
           props: true
         },
       ],

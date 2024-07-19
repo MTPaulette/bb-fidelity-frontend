@@ -1,5 +1,5 @@
 <template>
-  <button id="user-menu-button" type="button" :class="isDark?'bg-gray-500':''" class="flex p-1.5 mt-2.5 text-sm hover:text-accentuate hover:bg-transparent rounded-full md:mr-0" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+  <button id="user-menu-button" type="button" class="flex p-1.5 mt-2.5 text-sm hover:text-accentuate hover:bg-transparent rounded-full md:mr-0" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16">
       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
     </svg>

@@ -51,7 +51,6 @@ export default new Vuex.Store({
         })
     },
 
-
     register ({ commit }, credentials) {
       /*
       const axiosConfig = {
