@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-const Home = () => import('../Components/Home.vue')
-const Login = () => import('../Pages/Authentification/Login.vue')
-const Register = () => import('../Pages/Authentification/Register.vue')
-const Reset = () => import('../Pages/Authentification/Reset.vue')
-const Profile = () => import('../Pages/Dashboard/Profile.vue')
-const Users = () => import('../Pages/Dashboard/User/Index.vue')
-const User = () => import('../Pages/Dashboard/User/Show.vue')
-const Services = () => import('../Pages/Dashboard/Service/Index.vue')
-const Service = () => import('../Pages/Dashboard/Service/Show.vue')
-const ServiceCreate = () => import('../Pages/Dashboard/Service/Create.vue')
-const AuthentificationLayout = () => import('@/Layouts/AuthentificationLayout.vue')
-const DashboardLayout = () => import('@/Layouts/DashboardLayout.vue')
+import Home from '../Components/Home.vue'
+import Login from '../Pages/Authentification/Login.vue'
+import Register from '../Pages/Authentification/Register.vue'
+import Reset from '../Pages/Authentification/Reset.vue'
+import Profile from '../Pages/Dashboard/Profile.vue'
+import Users from '../Pages/Dashboard/User/Index.vue'
+import User from '../Pages/Dashboard/User/Show.vue'
+import Services from '../Pages/Dashboard/Service/Index.vue'
+import Service from '../Pages/Dashboard/Service/Show.vue'
+import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
+import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
+import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
