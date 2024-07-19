@@ -21,10 +21,11 @@
         <p class="mb-1 text-secondary w-full h-12 overflow-hidden">{{ service.description }}</p>
         <p class="mb-3 text-xs font-light">Cree il y'a {{ formatDate(service.created_at) }}</p>
         <div class="flex items-center">
-          <router-link :to="`service/${service.id}`" class="btn-base btn-blue">
-              Voir plus
+          <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-blue">
+            <!-- <router-link :to="`service/${service.id}`" class="btn-base btn-blue"> -->
+              See More
           </router-link>
-          <router-link :to="`service/buy/${service.id}`" class="btn-base btn-success rounded-lg ms-2">Acheter</router-link>
+          <router-link :to="{ name: 'service.buy', params: { id: service.id }}" class="btn-base btn-success rounded-lg ms-2">Buy</router-link>
         </div>
     </div>
 </template>

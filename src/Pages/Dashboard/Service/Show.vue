@@ -27,8 +27,9 @@
         <p class="mb-3 text-xs font-light">Updated at {{ formatDate(service.updated_at) }}</p>
         
         <div class="flex items-center mt-4 md:mt-6">
-          <router-link :to="`service/edit/${service.id}`" class="inline-flex items-center btn-base btn-blue rounded-lg">Editer</router-link>
-          <router-link :to="`service/buy/${service.id}`" class="btn-base btn-success rounded-lg ml-3">Acheter</router-link>
+          <router-link :to="{ name: 'service.edit', params: { id: service.id }}" class="inline-flex items-center btn-base btn-blue rounded-lg">Edit</router-link>
+          <router-link :to="{ name: 'service.buy', params: { id: service.id }}" class="btn-base btn-success rounded-lg ml-3">Buy</router-link>
+          <!-- <router-link :to="`service/${service.id}/buy`" class="btn-base btn-success rounded-lg ml-3">Buy</router-link> -->
         </div>
       </div>
     </div>
@@ -57,7 +58,8 @@ export default {
 
   // created() {
   beforeMount() {
-    this.showService(this.$route.params.id);
+    // this.showService(this.$route.params.id);
+    this.showService(this.id);
   },
 
   methods: {
@@ -68,7 +70,7 @@ export default {
         })
         .then((res) => {
           this.service = res.data.service
-          this.$router.push({ name: 'service', params })
+          //this.$router.push({ name: 'service', params })
         })
         .catch(err => {
           console.log(err)

@@ -9,6 +9,7 @@ import User from '../Pages/Dashboard/User/Show.vue'
 import Services from '../Pages/Dashboard/Service/Index.vue'
 import Service from '../Pages/Dashboard/Service/Show.vue'
 import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
+import ServiceEdit from '../Pages/Dashboard/Service/Edit.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
@@ -72,7 +73,7 @@ const router = createRouter({
         },
         {
           path: "/service/:id",
-          name: "service",
+          name: "service.show",
           component: Service,
           props: true
         },
@@ -80,6 +81,12 @@ const router = createRouter({
           path: "/service/create",
           name: "service.create",
           component: ServiceCreate,
+          props: true
+        },
+        {
+          path: "/service/:id/edit",
+          name: "service.edit",
+          component: ServiceEdit,
           props: true
         },
       ],

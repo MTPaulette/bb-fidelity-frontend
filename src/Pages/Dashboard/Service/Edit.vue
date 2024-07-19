@@ -5,20 +5,20 @@
     </div>
     <Breadcrumb link1="dashboard" link2="service" />
     <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> New Service  </h1>
+      <h1 class="my-6 sm:my-8 title"> Edit Service  </h1>
     </div>
 
     <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           Check to the right. If the service that you find not exist, you can use the left textarea to
-          <span class="font-medium text-black-white">add new service</span>.
+          <span class="font-medium text-black-white">add edit service</span>.
           You can also use the trash icon to delete some service.
         </p>
       </div>
 
       <!-- dark:bg-gray-700  -->
-      <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="newService">
+      <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="editService">
         <div>
           <label for="name" class="label">Name</label>
           <input id="name" v-model="name" type="text" class="input" required />
@@ -49,12 +49,12 @@
         </div>
         <div>
           <label for="service" class="label">Description</label>
-          <textarea v-model="description" rows="4" class="text-area mb-4" placeholder="new service..." />
+          <textarea v-model="description" rows="4" class="text-area mb-4" placeholder="edit service..." />
           <p v-if="errors" class="input-error">
             <span v-if="errors.description">{{ errors.description[0] }}</span>
           </p>
         </div>
-        <ButtonLoading label="Create new service" :loading="loading" />
+        <ButtonLoading label="Create edit service" :loading="loading" />
       </form>
     </div>
   </div>
@@ -92,7 +92,7 @@ export default {
   },
 
   methods: {
-    newService () {
+    editService () {
       this.loading = true
       this.errors = null
       this.$store
