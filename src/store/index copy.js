@@ -1,3 +1,4 @@
+
 import { createApp } from 'vue'
 import Vuex from 'vuex'
 import App from '../App.vue'
@@ -14,7 +15,6 @@ export default new Vuex.Store({
     user: null,
     users: null,
     services: null,
-    serviceId: null,
   },
 
   mutations: {
@@ -31,13 +31,8 @@ export default new Vuex.Store({
     
 
     setAllServicesData (state, AllServiceData) {
-      state.services = AllServiceData
+      state.users = AllServiceData
       localStorage.setItem('services', JSON.stringify(AllServiceData))
-    },
-
-    setServiceIdData (state, ServiceIdData) {
-      state.serviceId = ServiceIdData
-      localStorage.setItem('serviceId', JSON.stringify(ServiceIdData))
     },
 
     clearUserData () {
@@ -115,6 +110,8 @@ export default new Vuex.Store({
       return axios
         .get('/services')
         .then(({ data }) => {
+          console.log('==========================================================')
+          console.log(data)
           commit('setAllServicesData', data)
         })
     },
@@ -133,24 +130,10 @@ export default new Vuex.Store({
         // })
     },
 
-    getServiceByIdCorrect ({ commit }, credentials) {
-          console.log('==========================================================')
-          console.log(credentials)
-      return axios
-        .get('/service/'+credentials)
-        .then((res) => {
-          commit('setServiceIdData', res.data.service)
-        })
-    },
-
-    
-
     getServiceById ({ commit }, credentials) {
       return axios
         .get('/service/'+credentials.id)
     },
-
-
 
     createService ({ commit }, credentials) {
       return axios
@@ -173,4 +156,3 @@ export default new Vuex.Store({
     isLogged: state => !!state.user
   }
 })
-

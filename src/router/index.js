@@ -6,10 +6,14 @@ import Reset from '../Pages/Authentification/Reset.vue'
 import Profile from '../Pages/Dashboard/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
+
 import Services from '../Pages/Dashboard/Service/Index.vue'
 import Service from '../Pages/Dashboard/Service/Show.vue'
 import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import ServiceEdit from '../Pages/Dashboard/Service/Edit.vue'
+
+import PurchaseCreate from '../Pages/Dashboard/Purchase/Create.vue'
+
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
@@ -87,6 +91,12 @@ const router = createRouter({
           path: "/service/:id/edit",
           name: "service.edit",
           component: ServiceEdit,
+          props: true
+        },
+        {
+          path: "/purchase/create",
+          name: "purchase.create",
+          component: PurchaseCreate,
           props: true
         },
       ],

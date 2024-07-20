@@ -49,46 +49,38 @@
 </template>
 
 
-<script setup>
-import { formatDate } from '@/Composables/formatDate'
-</script>
-
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
+import { ref, onBeforeMount, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
-  components: {
-    Breadcrumb
-  },
   props: {
     id: String,
   },
-  data() {
-    return {
-      service: null
-    }
-  },
+  setup(props) {
+    const store = useStore()
+    store.dispatch('getServiceById', props.id)
 
-  created() {
-    // this.getServiceById(this.$route.params.id);
-    this.getServiceById(this.id);
-  },
+    const service = computed(() => store.state.serviceId)
 
-  methods: {
-    getServiceById (id) {
-      this.$store
-        .dispatch('getServiceById', {
+    const getServiceById = (id) => {
+      store.dispatch('getServiceById', {
           id: id
         })
         .then((res) => {
-          this.service = res.data.service
+          service.value = res.data.service
           //this.$router.push({ name: 'service', params })
         })
         .catch(err => {
           console.log(err)
         })
     }
-  },
-}
 
+    return {
+      service,
+    }
+
+  }
+}
 </script>

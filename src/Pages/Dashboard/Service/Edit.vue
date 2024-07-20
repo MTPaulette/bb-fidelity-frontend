@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="border border-red-500 p-4 m-7"> service: {{ service }}</div>
+    <!-- <div class="border border-red-500 p-4 m-7"> service: {{ service }}</div> -->
     <div v-if="this.message !=''">
       <FlashAlert :message="this.message" />
     </div>
