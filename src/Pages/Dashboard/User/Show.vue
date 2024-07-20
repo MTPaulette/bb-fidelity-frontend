@@ -59,13 +59,13 @@ export default {
 
   // created() {
   beforeMount() {
-    this.showUser(this.$route.params.id);
+    this.getUserById(this.$route.params.id);
   },
 
   methods: {
-    showUser (id) {
+    getUserById (id) {
       this.$store
-        .dispatch('showUser', {
+        .dispatch('getUserById', {
           id: id
         })
         .then((res) => {

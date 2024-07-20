@@ -59,14 +59,14 @@ export default {
   // created() {
   // beforeMount() {
   mounted() {
-    this.showService(this.id);
-    // this.showService(this.$route.params.id);
+    this.getServiceById(this.id);
+    // this.getServiceById(this.$route.params.id);
   },
 
   methods: {
-    showService (id) {
+    getServiceById (id) {
       this.$store
-        .dispatch('showService', {
+        .dispatch('getServiceById', {
           id: id
         })
         .then((resp) => {

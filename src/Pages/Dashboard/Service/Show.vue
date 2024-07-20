@@ -4,6 +4,7 @@
     <div class="ml-3">
       <h1 class="my-6 sm:my-8 title"> Service id {{ id }} Informations </h1>
     </div>
+    <div class="border border-red-600 p-4 m-5">service: {{ service }}</div>
     <div class="w-full bg-default border border-color rounded-lg shadow">
       <div class="flex flex-col items-centerr p-6 md:p-12">
         <!-- <img class="w-24 h-24 mb-3 shadow-lg rounded-full" src="./../../../assets/s.png"> -->
@@ -28,7 +29,7 @@
         
         <div class="flex items-center mt-4 md:mt-6">
           <router-link :to="{ name: 'service.edit', params: { id: service.id }}" class="inline-flex items-center btn-base btn-blue rounded-lg">Edit</router-link>
-          <router-link :to="{ name: 'service.buy', params: { id: service.id }}" class="btn-base btn-success rounded-lg ml-3">Buy</router-link>
+          <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-success rounded-lg ml-3">Buy</router-link>
           <!-- <router-link :to="`service/${service.id}/buy`" class="btn-base btn-success rounded-lg ml-3">Buy</router-link> -->
         </div>
       </div>
@@ -58,14 +59,14 @@ export default {
 
   // created() {
   beforeMount() {
-    // this.showService(this.$route.params.id);
-    this.showService(this.id);
+    // this.getServiceById(this.$route.params.id);
+    this.getServiceById(this.id);
   },
 
   methods: {
-    showService (id) {
+    getServiceById (id) {
       this.$store
-        .dispatch('showService', {
+        .dispatch('getServiceById', {
           id: id
         })
         .then((res) => {

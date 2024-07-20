@@ -110,6 +110,8 @@ export default new Vuex.Store({
       return axios
         .get('/services')
         .then(({ data }) => {
+          console.log('==========================================================')
+          console.log(data)
           commit('setAllServicesData', data)
         })
     },
@@ -120,7 +122,7 @@ export default new Vuex.Store({
         .put('/updateBalance', credentials)
     },
 
-    showUser ({ commit }, credentials) {
+    getUserById ({ commit }, credentials) {
       return axios
         .get('/user/'+credentials.id)
         // .then(({ data }) => {
@@ -128,7 +130,7 @@ export default new Vuex.Store({
         // })
     },
 
-    showService ({ commit }, credentials) {
+    getServiceById ({ commit }, credentials) {
       return axios
         .get('/service/'+credentials.id)
     },
@@ -136,6 +138,17 @@ export default new Vuex.Store({
     createService ({ commit }, credentials) {
       return axios
         .post('/service/store/', credentials)
+    },
+
+    updateService ({ commit, dispatch }, credentials) {
+      return axios
+        .put('/service/'+credentials.id+'/update', credentials.service)
+        .then((data) => {
+          
+          //after udpate services in local store
+          dispatch('getAllServices')
+          return data
+        })
     },
   },
 
