@@ -76,7 +76,7 @@ export default {
 
   computed: {
     user_id() {
-      return JSON.parse(localStorage.getItem('user')).user.id
+      return JSON.parse(localStorage.getItem('user')).id
     },
   },
 

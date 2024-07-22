@@ -1,4 +1,3 @@
-
 import { createApp } from 'vue'
 import Vuex from 'vuex'
 import App from '../App.vue'
@@ -11,10 +10,17 @@ app.use(Vuex)
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default new Vuex.Store({
+  modules: {
+    auth,
+    service,
+    users,
+    purchases
+  },
   state: {
     user: null,
     users: null,
     services: null,
+    serviceId: null,
   },
 
   mutations: {
@@ -31,8 +37,13 @@ export default new Vuex.Store({
     
 
     setAllServicesData (state, AllServiceData) {
-      state.users = AllServiceData
+      state.services = AllServiceData
       localStorage.setItem('services', JSON.stringify(AllServiceData))
+    },
+
+    setServiceIdData (state, ServiceIdData) {
+      state.serviceId = ServiceIdData
+      localStorage.setItem('serviceId', JSON.stringify(ServiceIdData))
     },
 
     clearUserData () {
@@ -110,8 +121,6 @@ export default new Vuex.Store({
       return axios
         .get('/services')
         .then(({ data }) => {
-          console.log('==========================================================')
-          console.log(data)
           commit('setAllServicesData', data)
         })
     },
@@ -130,10 +139,24 @@ export default new Vuex.Store({
         // })
     },
 
+    getServiceByIdCorrect ({ commit }, credentials) {
+          console.log('==========================================================')
+          console.log(credentials)
+      return axios
+        .get('/service/'+credentials)
+        .then((res) => {
+          commit('setServiceIdData', res.data.service)
+        })
+    },
+
+    
+
     getServiceById ({ commit }, credentials) {
       return axios
         .get('/service/'+credentials.id)
     },
+
+
 
     createService ({ commit }, credentials) {
       return axios
@@ -156,3 +179,4 @@ export default new Vuex.Store({
     isLogged: state => !!state.user
   }
 })
+

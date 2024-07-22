@@ -53,7 +53,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("getAllServices");
+    this.$store.dispatch("services/getAllServices");
   }
 }
 

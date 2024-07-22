@@ -66,7 +66,7 @@ const router = createRouter({
         },
         {
           path: "/user/:id",
-          name: "user",
+          name: "user.show",
           component: User,
           props: true
         },

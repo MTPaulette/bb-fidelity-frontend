@@ -152,7 +152,7 @@ export default {
 
   computed: {
     user() {
-      return JSON.parse(localStorage.getItem('user')).user
+      return JSON.parse(localStorage.getItem('user'))
     },
     services() {
       return JSON.parse(localStorage.getItem('services')).servives

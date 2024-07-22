@@ -115,7 +115,7 @@ export default {
   
   computed: {
     user() {
-      return JSON.parse(localStorage.getItem('user')).user
+      return JSON.parse(localStorage.getItem('user'))
     },
   },
   mounted() {
@@ -128,14 +128,15 @@ export default {
     updateUserInformation () {
       this.loading = true
       this.$store
-        .dispatch('profile', {
+        .dispatch('auth/profile', {
           name: this.name,
           id: this.user.id
         })
         .then((res) => {
-          this.message = res.data.message
+          this.message = res.message
           setTimeout(() => {
             this.message = ''
+            // location.reload()
           }, 5000)
         })
         .catch(err => {
@@ -148,17 +149,18 @@ export default {
       this.loading = true
       this.errors = null
       this.$store
-        .dispatch('password', {
+        .dispatch('auth/password', {
           current_password: this.current_password,
           password: this.password,
           id: this.user.id
         })
         .then((res) => {
-          this.message = res.data.message
+          this.message = res.message
 
           //flashAlert will disappear after 1s
           setTimeout(() => {
             this.message = ''
+            // location.reload()
           }, 5000)
         })
         .catch(err => {

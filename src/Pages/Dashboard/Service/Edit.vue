@@ -94,7 +94,7 @@ export default {
 
   computed: {
     user_id() {
-      return JSON.parse(localStorage.getItem('user')).user.id
+      return JSON.parse(localStorage.getItem('user')).id
     },
   },
 
@@ -105,7 +105,7 @@ export default {
   methods: {
     getServiceById (id) {
       this.$store
-        .dispatch('getServiceById', {
+        .dispatch('services/getServiceById', {
           id: id
         })
         .then((res) => {
@@ -124,7 +124,7 @@ export default {
       this.service.user_id = this.user_id
       
       this.$store
-      .dispatch('updateService', {
+      .dispatch('services/updateService', {
         id: this.id,
         service: this.service
       })

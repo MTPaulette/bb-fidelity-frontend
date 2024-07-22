@@ -99,13 +99,13 @@
           <td>
           <div class="px-6 py-2.5 flex w-full">
             <div>
-              <router-link :to="`user/${user.id}`" class="btn-blue btn-extrasmall" title="voir profil client">
+              <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="voir profil client">
                 Profile
               </router-link>
             </div>
             
             <div class="mx-2">
-              <router-link :to="`user/${user.id}/historique`" class="btn-extrasmall btn-light" title="voir historique">
+              <router-link  :to="{ name: 'user.show', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
                 Historique
               </router-link>
             </div>
@@ -185,7 +185,7 @@ export default {
   },
 
   created() {
-    this.$store.dispatch("getAllUsers");
+    this.$store.dispatch("auth/getAllUsers");
   },
 
   methods: {
@@ -200,7 +200,7 @@ export default {
       this.errors = null
       this.malus = this.malus,
       this.$store
-        .dispatch('updateBalance', {
+        .dispatch('auth/updateBalance', {
           malus: this.malus,
           balance: this.balance,
           id: user.id

@@ -69,7 +69,7 @@ export default {
       this.loading = true
       this.errors = null
       this.$store
-        .dispatch('login', {
+        .dispatch('auth/login', {
           email: this.email,
           password: this.password
         })

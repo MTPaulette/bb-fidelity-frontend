@@ -65,12 +65,11 @@ export default {
   methods: {
     getUserById (id) {
       this.$store
-        .dispatch('getUserById', {
+        .dispatch('auth/getUserById', {
           id: id
         })
         .then((res) => {
           this.user = res.data.user
-          this.$router.push({ name: 'user', params })
         })
         .catch(err => {
           console.log(err)

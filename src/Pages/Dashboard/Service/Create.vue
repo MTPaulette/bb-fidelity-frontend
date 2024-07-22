@@ -76,7 +76,7 @@ export default {
 
   computed: {
     user_id() {
-      return JSON.parse(localStorage.getItem('user')).user.id
+      return JSON.parse(localStorage.getItem('user')).id
     },
   },
 
@@ -97,7 +97,7 @@ export default {
       this.service.user_id = this.user_id
       
       this.$store
-      .dispatch('createService', this.service)
+      .dispatch('services/createService', this.service)
       .then((res) => {
         this.message = res.data.message
 
@@ -123,7 +123,7 @@ export default {
       this.service.user_id = this.user_id
       
       this.$store
-      .dispatch('createService', {
+      .dispatch('services/createService', {
         name: this.name,
         price: this.price,
         point: this.point,

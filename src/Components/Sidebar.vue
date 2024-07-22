@@ -4,6 +4,7 @@
     <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
       <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
 
+        <div class="border-red-500 p-3 m-5">userstate: {{ userstate }}</div>
         <!-- historic -->
         <li v-if="user.role_id === 1">
           <router-link
@@ -121,17 +122,17 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'isLogged'
+      'auth/isLogged'
     ]),
     user() {
-      return JSON.parse(localStorage.getItem('user')).user
+      return JSON.parse(localStorage.getItem('user'))
     },
   },
 
   methods: {
     logout () {
       this.$store
-        .dispatch('logout')
+        .dispatch('auth/logout')
         .then(() => {
           this.$router.push({ name: 'login' })
         })

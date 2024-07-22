@@ -41,7 +41,7 @@ onMounted(() => {
 export default {
   computed: {
     user() {
-      return JSON.parse(localStorage.getItem('user')).user
+      return JSON.parse(localStorage.getItem('user'))
     },
   },
 
