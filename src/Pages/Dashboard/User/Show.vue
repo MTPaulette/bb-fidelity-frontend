@@ -5,7 +5,13 @@
       <h1 class="my-6 sm:my-8 title"> User id {{ id }} Informations </h1>
     </div>
 
-    <div class="w-full bg-default border border-color rounded-lg shadow">
+    <div v-if="loading">
+      <Loading />
+    </div>
+
+    <div v-if="errors" class="error">{{ errors }}</div>
+
+    <div class="w-full bg-default border border-color rounded-lg shadow" v-if="user">
       <div class="flex flex-col items-center py-10">
         <div>
           <svg class="w-24 h-24 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
@@ -37,33 +43,35 @@ import { formatDate } from '@/Composables/formatDate'
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
+import Loading from '@/Components/Loading.vue'
 
 export default {
   components: {
-    Breadcrumb
-  },
-  props: {
-    id: String,
+    Breadcrumb,
+    Loading
   },
   data() {
     return {
-      user: null
+      user: null,
+      loading: false,
+      errors: null
     }
   },
 
-  computed: {
-    userrr() {
-      return null
-    },
-  },
+  created() {
+    // watch the params of the route to fetch the data again
+    this.$watch(
+      () => this.$route.params.id,
+      this.getUserById,
 
-  // created() {
-  beforeMount() {
-    this.getUserById(this.$route.params.id);
+      // fetch the data when the view is created and the data is already being observed
+      { immediate: true }
+    )
   },
 
   methods: {
     getUserById (id) {
+      this.loading = true
       this.$store
         .dispatch('auth/getUserById', {
           id: id
@@ -72,8 +80,10 @@ export default {
           this.user = res.data.user
         })
         .catch(err => {
+          this.errors = err.toString()
           console.log(err)
         })
+        .finally(() => this.loading = false)
     }
   }
 }

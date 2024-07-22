@@ -136,7 +136,7 @@ export default {
           this.message = res.message
           setTimeout(() => {
             this.message = ''
-            // location.reload()
+            location.reload()
           }, 5000)
         })
         .catch(err => {
@@ -160,7 +160,7 @@ export default {
           //flashAlert will disappear after 1s
           setTimeout(() => {
             this.message = ''
-            // location.reload()
+            location.reload()
           }, 5000)
         })
         .catch(err => {

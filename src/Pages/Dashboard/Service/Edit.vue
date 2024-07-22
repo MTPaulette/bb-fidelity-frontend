@@ -9,7 +9,13 @@
       <h1 class="my-6 sm:my-8 title"> Edit Service  </h1>
     </div>
 
-    <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
+    <div v-if="loading">
+      <Loading />
+    </div>
+
+    <div v-if="errors" class="error">{{ errors }}</div>
+
+    <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow" v-if="service">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           Check to the right. If the service that you find not exist, you can use the left textarea to
@@ -65,6 +71,7 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
+import Loading from '@/Components/Loading.vue'
 
 import Service from "@/Models/Service.js"
 
@@ -72,10 +79,8 @@ export default {
   components: {
     Breadcrumb,
     FlashAlert,
-    ButtonLoading
-  },
-  props: {
-    id: String,
+    ButtonLoading,
+    Loading
   },
 
   data() {
@@ -98,12 +103,20 @@ export default {
     },
   },
 
-  beforeMount() {
-    this.getServiceById(this.id);
+  created() {
+    // watch the params of the route to fetch the data again
+    this.$watch(
+      () => this.$route.params.id,
+      this.getServiceById,
+
+      // fetch the data when the view is created and the data is already being observed
+      { immediate: true }
+    )
   },
 
   methods: {
     getServiceById (id) {
+      this.loading = true
       this.$store
         .dispatch('services/getServiceById', {
           id: id
@@ -116,6 +129,7 @@ export default {
         .catch(err => {
           console.log(err)
         })
+        .finally(() => this.loading = false)
     },
 
     updateService () {
