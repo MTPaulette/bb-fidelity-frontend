@@ -80,10 +80,10 @@
               <p class="font-light font-[roboto]">{{ user.email }}</p>
             </div>  
           </th>
-          <td class="px-6 py-2.5">
+          <td class="px-6 py-2.5 whitespace-nowrap text-black-white">
             <div class="flex items-center">
               <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
-              {{ user.balance }} Point
+              {{ user.balance }} point(s)
             </div>
             <!-- <div v-if="user.balance>0" class="text-green-500 p-2">{{ user.balance }}</div>
             <div v-else class="text-danger p-2">{{ user.balance }}</div> -->
@@ -105,7 +105,7 @@
             </div>
             
             <div class="mx-2">
-              <router-link  :to="{ name: 'user.show', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
+              <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
                 Historique
               </router-link>
             </div>

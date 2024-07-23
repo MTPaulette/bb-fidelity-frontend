@@ -12,7 +12,7 @@ const getters = {
 const mutations = {
   setAllServicesData (state, AllServiceData) {
     state.services = AllServiceData
-    localStorage.setItem('services', JSON.stringify(AllServiceData))
+    localStorage.setItem('services', JSON.stringify(AllServiceData.services))
   }
 }
 

@@ -15,6 +15,8 @@ import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import ServiceEdit from '../Pages/Dashboard/Service/Edit.vue'
 
 import PurchaseCreate from '../Pages/Dashboard/Purchase/Create.vue'
+import Purchases from '../Pages/Dashboard/Purchase/Index.vue'
+
 import Historic from '../Pages/Dashboard/Purchase/Historic.vue'
 import User_Services from '../Pages/Dashboard/Purchase/User_services.vue'
 
@@ -59,6 +61,7 @@ const router = createRouter({
       component: DashboardLayout,
       meta: {
         auth: true,
+        admin: false,
       },
       children: [
         {
@@ -129,14 +132,19 @@ const router = createRouter({
           props: true
         },
         {
+          path: "/purchases",
+          name: "purchases",
+          component: Purchases,
+        },
+        {
           path: "/purchase/create",
           name: "purchase.create",
           component: PurchaseCreate,
           props: true
         },
         {
-          path: "/historic/:id",
-          name: "user.services",
+          path: "/user/:id/historic",
+          name: "user.historic",
           component: User_Services,
           props: true
         },
@@ -174,12 +182,11 @@ const router = createRouter({
   },
 
   //defsult active link style
-  linkExactActiveClass: 'text-accentuate bg-highlight'
+  linkExactActiveClass: 'text-accentuate bg-highlight rounded-lg'
 })
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
-  const user_role = loggedIn.role_id
   
   // if user is already authenticated, redirect login to services page
   if(to.name === 'login' && loggedIn) {
@@ -187,14 +194,11 @@ router.beforeEach((to, from, next) => {
   }
 
   // check if the user is authenticated
+  // check if the user is authenticated
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
     next({ name: 'login'})
   }else {
-    if (to.meta.admin && user_role != 1) {
-      next({ name: 'unauthorize'})
-    } else {
-      next()
-    }
+    next()
   }
   
 })

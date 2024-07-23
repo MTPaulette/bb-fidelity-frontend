@@ -3,7 +3,7 @@
   <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
     <h5 class="space-x-4">
       <span class="text-gray-500">Total purchases:</span>
-      <span class="dark:text-white">{{ services.length }}</span>
+      <span class="dark:text-white" v-if="services">{{ services.length }}</span>
     </h5>
     <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
       <router-link class="flex justify-end" :to="{ name: 'purchase.create'}">

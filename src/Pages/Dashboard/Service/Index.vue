@@ -48,7 +48,7 @@ export default {
 
   computed: {
     services() {
-      return JSON.parse(localStorage.getItem('services')).services
+      return JSON.parse(localStorage.getItem('services'))
     }
   },
 

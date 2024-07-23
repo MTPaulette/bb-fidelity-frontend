@@ -12,7 +12,7 @@ const getters = {
 const mutations = {
   setAllPurchasesData (state, AllPurchaseData) {
     state.purchases = AllPurchaseData
-    localStorage.setItem('purchases', JSON.stringify(AllPurchaseData))
+    localStorage.setItem('purchases', JSON.stringify(AllPurchaseData.purchases))
   }
 }
 

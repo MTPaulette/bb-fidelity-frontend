@@ -5,7 +5,7 @@
       <Loading />
     </div>
 
-    <div v-if="errors" class="error">{{ errors }}</div>
+    <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
 
     <div class="ml-3">
       <h1 class="my-6 sm:my-8 title" v-if="user"> {{ user.name }} Historic </h1>
@@ -68,7 +68,7 @@ export default {
           this.services = res.data.services
         })
         .catch(err => {
-          this.errors = err.toString()
+          this.errors = err.response.data.errors
           console.log(err)
         })
         .finally(() => this.loading = false)

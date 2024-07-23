@@ -59,6 +59,7 @@ const router = createRouter({
       component: DashboardLayout,
       meta: {
         auth: true,
+        admin: false,
       },
       children: [
         {
@@ -179,7 +180,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
-  const user_role = loggedIn.role_id
   
   // if user is already authenticated, redirect login to services page
   if(to.name === 'login' && loggedIn) {
@@ -190,16 +190,22 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
     next({ name: 'login'})
   }else {
-    next()
+    if(loggedIn) {
+      const user_role = loggedIn.role_id
+      if (to.meta.admin && user_role != 1) {
+        if(from.name === 'login') {
+          next()
+        } else {
+          next({ name: 'unauthorize'})
+        }
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
   }
   
-  if (to.meta.admin && user_role != 1) {
-    console.log("=============     ici       ===================")
-    next({ name: 'unauthorize'})
-  } else {
-    console.log("SDDDDDDDDDDDDDDDDd")
-    next()
-  }
 })
 
 router.beforeResolve((to, from, next) => {
