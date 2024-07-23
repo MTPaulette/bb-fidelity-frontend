@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import NProgress from 'nprogress'
+
 import Home from '../Components/Home.vue'
 import Login from '../Pages/Authentification/Login.vue'
 import Register from '../Pages/Authentification/Register.vue'
@@ -13,6 +15,7 @@ import ServiceCreate from '../Pages/Dashboard/Service/Create.vue'
 import ServiceEdit from '../Pages/Dashboard/Service/Edit.vue'
 
 import PurchaseCreate from '../Pages/Dashboard/Purchase/Create.vue'
+import Historic from '../Pages/Dashboard/Purchase/Historic.vue'
 
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
@@ -99,6 +102,12 @@ const router = createRouter({
           component: PurchaseCreate,
           props: true
         },
+        {
+          path: "/historic/:id",
+          name: "historic",
+          component: Historic,
+          props: true
+        },
       ],
     },
     // {
@@ -137,7 +146,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
-
   
   // if user is already authenticated, redirect login to services page
   if(to.name === 'login' && loggedIn) {
@@ -150,6 +158,20 @@ router.beforeEach((to, from, next) => {
   }else {
     next()
   }
+})
+
+router.beforeResolve((to, from, next) => {
+  // if this isn't an initial page load
+  if(to.name) {
+    // start the route progress bar
+    NProgress.done()
+  }
+  next()
+})
+
+// complete the animation of the route progress bar
+router.afterEach(() => {
+  NProgress.done()
 })
 
 

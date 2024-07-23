@@ -3,15 +3,47 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 //inittial state
 const state = {
+  purchases: null,
 }
 
 const getters = {
 }
 
 const mutations = {
+  setAllPurchasesData (state, AllPurchaseData) {
+    state.purchases = AllPurchaseData
+    localStorage.setItem('purchases', JSON.stringify(AllPurchaseData))
+  }
 }
 
 const actions = {
+  async getAllPurchases ({ commit }) {
+    return await axios
+      .get('/purchases')
+      .then(({ data }) => {
+        commit('setAllPurchasesData', data)
+      })
+  },
+
+  async getPurchaseById ({ commit }, credentials) {
+    return await axios
+      .get('/purchase/'+credentials.id)
+  },
+
+  async createPurchase ({ commit }, credentials) {
+    return await axios
+      .post('/purchase/store/', credentials)
+  },
+
+  async getAllServicesOfUser ({ commit }, credentials) {
+    return await axios
+      .get('/user/'+credentials.id+'/services')
+  },
+
+  async getAllUsersOfService ({ commit }, credentials) {
+    return await axios
+      .get('/service/'+credentials.id+'/users')
+  },
 
 }
 

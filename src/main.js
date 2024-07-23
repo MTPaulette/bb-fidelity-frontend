@@ -5,6 +5,9 @@ import store from "./store"
 
 import './assets/main.css'
 
+//progress during page change
+import '../node_modules/nprogress/nprogress.css'
+
 const app = createApp(App)
 app.use(store)
 app.use(router)
