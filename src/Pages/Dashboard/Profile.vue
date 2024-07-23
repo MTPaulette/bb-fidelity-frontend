@@ -118,11 +118,6 @@ export default {
       return JSON.parse(localStorage.getItem('user'))
     },
   },
-  mounted() {
-    if (!this.user) {
-      this.$router.push("/login");
-    }
-  },
 
   methods: {
     updateUserInformation () {

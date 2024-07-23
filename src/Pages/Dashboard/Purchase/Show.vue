@@ -21,10 +21,10 @@
         </div>
         <h5 class="text-xl font-medium text-black-white">{{ user.name }}</h5>
         <span class="text-sm text-blue-500 my-1">{{ user.email }}</span>
-        <p>
-          <span class="text-green-500" v-if="user.balance>0"> {{ user.balance }} point(s) </span>
-          <span class="text-danger" v-else>{{ user.balance }} point(s)</span>
-        </p>
+        <div class="flex items-center">
+          <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
+          {{ user.balance }} point(s)
+        </div>
         <p class="text-black-white"><span v-if="user.role_id === 1"> Admin </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
         <div class="flex mt-4 md:mt-6">
           <router-link :to="`user/${user.id}/historique`" class="btn-base btn-blue" title="voir historique">

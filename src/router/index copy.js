@@ -190,13 +190,16 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
     next({ name: 'login'})
   }else {
-    if (to.meta.admin && user_role != 1) {
-      next({ name: 'unauthorize'})
-    } else {
-      next()
-    }
+    next()
   }
   
+  if (to.meta.admin && user_role != 1) {
+    console.log("=============     ici       ===================")
+    next({ name: 'unauthorize'})
+  } else {
+    console.log("SDDDDDDDDDDDDDDDDd")
+    next()
+  }
 })
 
 router.beforeResolve((to, from, next) => {
