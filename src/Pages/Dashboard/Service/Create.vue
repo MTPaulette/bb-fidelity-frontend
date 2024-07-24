@@ -115,39 +115,6 @@ export default {
       })
       .finally(() => this.loading = false)
     },
-
-  
-    newServicee () {
-      this.loading = true
-      this.errors = null
-      this.service.user_id = this.user_id
-      
-      this.$store
-      .dispatch('services/createService', {
-        name: this.name,
-        price: this.price,
-        point: this.point,
-        validity: this.validity,
-        description: this.description,
-        user_id: this.user_id
-      })
-      .then((res) => {
-        this.message = res.data.message
-
-        //flashAlert will disappear after 1s
-        setTimeout(() => {
-          this.message = ''
-        }, 20000)
-
-        this.errors = res.response.data.errors
-        // this.$router.push({ name: 'profile' })
-      })
-      .catch(err => {
-        this.errors = err.response.data.errors
-        console.log(err)
-      })
-      .finally(() => this.loading = false)
-    }
   }
 }
 

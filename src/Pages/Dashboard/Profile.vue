@@ -14,7 +14,9 @@
           <div class="mb-4">
             <h2 class="title"> General Information </h2>
           </div>
-          <div class="p-4 mb-8 bg-secondary rounded-lg">You have: <span class="text-accentuate">{{ user.balance }} point(s)</span></div>
+          <div class="p-4 mb-8 bg-secondary rounded-lg">
+            You have: <span  :class="[user.balance> 0 ? 'text-green-400' : 'text-danger']">{{ user.balance }} point(s)</span>
+          </div>
           <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updateUserInformation">
             <div class="grid gap-2 sm:gap-6 grid-cols-2">
               <div>

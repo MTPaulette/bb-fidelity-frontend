@@ -12,7 +12,7 @@
     <div v-if="errors" class="error">{{ errors }}</div>
 
     <div class="w-full bg-default border border-color rounded-lg shadow" v-if="service">
-      <div class="flex flex-col items-centerr p-6 md:p-12">
+      <div class="flex flex-col p-6 md:p-12">
         <!-- <img class="w-24 h-24 mb-3 shadow-lg rounded-full" src="./../../../assets/s.png"> -->
         <div>
           <svg class="w-24 h-24 mb-5 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
