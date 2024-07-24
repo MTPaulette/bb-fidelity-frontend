@@ -8,7 +8,7 @@
     <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
 
     <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title" v-if="user"> {{ user.name }} Historic </h1>
+      <h1 class="my-6 sm:my-8 title" v-if="services"> {{ services[0].user_name }} Historic </h1>
     </div>
 
     <!-- <div class="p-4 m-7"> user: {{ user }}</div> -->
@@ -34,7 +34,6 @@ export default {
   },
   data() {
     return {
-      user: null,
       services: null,
       loading: false,
       errors: null
@@ -60,7 +59,6 @@ export default {
           id: id
         })
         .then((res) => {
-          this.user = res.data.user
           this.services = res.data.services
         })
         .catch(err => {

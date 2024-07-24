@@ -1,7 +1,5 @@
 <template>
   <div>
-    admin_id {{ admin_id }}
-    <br />
     <div v-if="message !=''">
       <FlashAlert :message="message" />
     </div>
@@ -24,7 +22,7 @@
           <label for="user" class="label">Choose User</label>
           <select id="user" v-model="selectedUser" name="user" class="input" required>
             <option selected>No user selected</option>
-            <option v-for="user in users" :key="user.id" :value="user">{{ user.name }} &nbsp; {{ user.id }}</option>
+            <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option>
           </select>
         </div>
 
@@ -33,7 +31,7 @@
           <label for="service" class="label">Choose Service</label>
           <select id="service" v-model="selectedService" name="service" class="input" required>
             <option selected>No service selected</option>
-            <option v-for="service in services" :key="service.id" :value="service">{{ service.name }} &nbsp; {{ service.id }}</option>
+            <option v-for="service in services" :key="service.id" :value="service">{{ service.name }}</option>
           </select>
           <p v-if="errors" class="input-error">{{ errors }}</p>
         </div>
@@ -112,10 +110,10 @@
       
         <div class="grid gap-4 mt-6 pb-6 mb-10 sm:grid-cols-2 rounded-t border-b ">
           <div class="border-r border-color mb-6 sm:mb-0">
-            <h4 class="title">User information</h4>
+            <h4 class="subtitle">User information</h4>
             <div v-if="selectedUser" class="w-full mt-4 sm:mt-8">
               <div>
-                <svg class="w-24 h-24 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
+                <svg class="w-16 h-16 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
                   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg>
@@ -130,10 +128,10 @@
           </div>
 
           <div>
-            <h4 class="title">Service information</h4>
+            <h4 class="subtitle">Service information</h4>
             <div v-if="selectedService" class="w-full mt-4 sm:mt-8">
               <div>
-                <svg class="w-24 h-24 mb-5 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
+                <svg class="w-16 h-16 mb-5 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M0 1a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm9 0a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V1zm0 9a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-5z" />
                 </svg>
               </div>

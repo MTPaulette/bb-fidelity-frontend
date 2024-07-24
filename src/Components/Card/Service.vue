@@ -25,7 +25,7 @@
             <!-- <router-link :to="`service/${service.id}`" class="btn-base btn-blue"> -->
               See More
           </router-link>
-          <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-success rounded-lg ms-2">Buy</router-link>
+          <!-- <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-success rounded-lg ms-2">Buy</router-link> -->
         </div>
     </div>
 </template>
