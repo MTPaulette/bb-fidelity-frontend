@@ -36,12 +36,18 @@ const actions = {
       .get('/service/'+credentials.id)
   },
 
-  async createService ({ commit }, credentials) {
+  async createService ({ dispatch }, credentials) {
     return await axios
       .post('/service/store/', credentials)
-  },
+      .then((data) => {
 
-  updateService ({ commit, dispatch }, credentials) {
+        //after udpate services in local store
+        dispatch('getAllServices')
+        return data
+      })
+    },
+
+  updateService ({ dispatch }, credentials) {
     return axios
       .put('/service/'+credentials.id+'/update', credentials.service)
       .then((data) => {

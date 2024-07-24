@@ -103,7 +103,7 @@
           </button>
         </div>
         
-        <div class="flex p-3 mb-4 rounded-lg font-medium border border-red-600 text-danger">
+        <div v-if="errors" class="flex p-3 mb-4 rounded-lg font-medium border border-red-600 text-danger">
           <svg class="w-7 h-7 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
           </svg>
@@ -178,7 +178,7 @@
 
         <!-- confirm and cancel btn-->
         <div class="flex items-center space-x-4">
-          <button @click="newPurchase" :disabled="!canSubmit" type="button" class="btn-base btn-blue">Confirm purchase</button>
+          <ButtonLoading @click="newPurchase" :disabled="!canSubmit" type="button" class="btn-base btn-blue" label="Confirm purchase" />
           <button @click="summary" type="button" class="btn-base btn-light-2">Cancel</button>
         </div>
       </div>
@@ -202,8 +202,8 @@ export default {
 
   data() {
     return {
-      // new Purchase(admin_id, service_id, admin_id, by_cash, bonus_point, user_balance)
-      purchase: new Purchase("1", "", "", true, "", ""),
+      // new Purchase(admin_id, service_id, admin_id, by_cash)
+      purchase: new Purchase("", "", "", true),
       message: '',
       selectedUser: null,
       selectedService: null,
@@ -233,6 +233,7 @@ export default {
   methods: {
     summary() {
       this.loading = !this.loading
+      this.errors = null
       document.getElementById('summaryButton').click()
       if(!this.purchase.by_cash) {
         let new_balance = this.selectedUser.balance - this.selectedService.price
@@ -245,12 +246,16 @@ export default {
     newPurchase() {
       this.loading = true
       this.errors = null
+
       this.purchase.admin_id = this.admin_id
+      this.purchase.service_id = this.selectedService.id
+      this.purchase.user_id = this.selectedUser.id
       
       this.$store
-        .dispatch('createPurchase', this.purchase)
+        .dispatch('purchases/createPurchase', this.purchase)
         .then((res) => {
           this.message = res.data.message
+          document.getElementById('summaryButton').click()
 
           //flashAlert will disappear after 1s
           setTimeout(() => {
@@ -265,25 +270,6 @@ export default {
           console.log(err)
         })
         .finally(() => this.loading = false)
-    },
-    getUserById(id) {
-      this.$store
-        .dispatch('auth/getUserById', {
-          id: id,
-        })
-        .then((res) => {
-          this.selectedUser = res.data.user
-        })
-    },
-    getServiceById(id) {
-      this.loading = true
-      this.$store
-        .dispatch('services/getServiceById', {
-          id: id,
-        })
-        .then((res) => {
-          this.selectedService = res.data.service
-        })
     },
   },
 }

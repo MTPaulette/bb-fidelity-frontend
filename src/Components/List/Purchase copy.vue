@@ -31,7 +31,6 @@
           <th scope="col" class="p-4">
             Transaction Nbr
           </th>
-          <th scope="col" class="px-4 py-3">User</th>
           <th scope="col" class="px-4 py-3">Service</th>
           <th scope="col" class="px-4 py-3">Price</th>
           <th scope="col" class="px-4 py-3">Validity</th>
@@ -48,11 +47,6 @@
             {{ service.pivot.id }}
           </router-link>
         </th>
-        <td class="px-4 py-2 whitespace-nowrap text-black-white hover:text-accentuate hover:underline">
-          <router-link :to="{ name: 'user.show', params: { id: service.pivot.user_id }}">
-            {{ service.users.name }}
-          </router-link>
-        </td>
         <td class="px-4 py-2 whitespace-nowrap text-black-white hover:text-accentuate hover:underline">
           <router-link :to="{ name: 'service.show', params: { id: service.id }}">
             {{ service.name }}

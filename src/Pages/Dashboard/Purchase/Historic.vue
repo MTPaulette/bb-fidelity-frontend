@@ -68,13 +68,11 @@ import { formatDate } from '@/Composables/formatDate'
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
-import ListPurchase from '@/Components/List/Purchase.vue'
 
 export default {
   components: {
     Breadcrumb,
     Loading,
-    ListPurchase
   },
   data() {
     return {

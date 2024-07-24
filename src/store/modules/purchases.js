@@ -30,9 +30,14 @@ const actions = {
       .get('/purchase/'+credentials.id)
   },
 
-  async createPurchase ({ commit }, credentials) {
+  async createPurchase ({ dispatch }, credentials) {
     return await axios
       .post('/purchase/store/', credentials)
+      .then((data) => {
+        //after udpate services in local store
+        dispatch('getAllPurchases')
+        return data
+      })
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {

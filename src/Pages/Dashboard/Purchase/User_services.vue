@@ -21,10 +21,6 @@
   </div>
 </template>
 
-<script setup>
-import { formatDate } from '@/Composables/formatDate'
-</script>
-
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'

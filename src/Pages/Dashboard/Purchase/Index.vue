@@ -16,14 +16,11 @@
 
     <!-- <div class="w-full bg-default border border-color rounded-lg shadow" v-if="user"> -->
     <div v-if="purchases">
-      <ListPurchase :services="purchases" />
+      purchases: {{ purchases[4].users }}
+      <!-- <ListPurchase :services="purchases" /> -->
     </div>
   </div>
 </template>
-
-<script setup>
-import { formatDate } from '@/Composables/formatDate'
-</script>
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
