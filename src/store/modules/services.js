@@ -62,6 +62,11 @@ const actions = {
         dispatch('getAllServices')
         return data
       })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
     },
 
   updateService ({ dispatch }, credentials) {

@@ -13,8 +13,6 @@
       <Loading />
     </div>
 
-    <div v-if="errors" class="error">{{ errors }}</div>
-
     <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow" v-if="service">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -103,7 +101,7 @@ export default {
     },
   },
 
-  created() {
+  mountedd() {
     // watch the params of the route to fetch the data again
     this.$watch(
       () => this.$route.params.id,
@@ -112,6 +110,9 @@ export default {
       // fetch the data when the view is created and the data is already being observed
       { immediate: true }
     )
+  },
+  mounted() {
+    this.getServiceById(this.$route.params.id)
   },
 
   methods: {
@@ -123,7 +124,7 @@ export default {
         })
         .then((res) => {
           // this.service = res.data.service
-          const serviceData = res.data.service
+          const serviceData = res.service
           this.service = new Service(serviceData.name, serviceData.price, serviceData.point, serviceData.validity, serviceData.description, serviceData.user_id)
         })
         .catch(err => {
@@ -133,13 +134,15 @@ export default {
     },
 
     updateService () {
+      console.log('============')
+      console.log(this.id)
       this.loading = true
       this.errors = null
       this.service.user_id = this.user_id
       
       this.$store
       .dispatch('services/updateService', {
-        id: this.id,
+        id: this.$route.params.id,
         service: this.service
       })
       .then((res) => {
