@@ -116,9 +116,14 @@ const actions = {
   async getUserById ({ commit }, credentials) {
     return await axios
       .get('/user/'+credentials.id)
-      // .then(({ data }) => {
-      //   commit('setAllUsersData', data)
-      // })
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
   },
 }
 

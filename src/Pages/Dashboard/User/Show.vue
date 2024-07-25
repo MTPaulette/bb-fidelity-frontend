@@ -9,8 +9,6 @@
       <Loading />
     </div>
 
-    <div v-if="errors" class="error">{{ errors }}</div>
-
     <div class="w-full bg-default border border-color rounded-lg shadow" v-if="user">
       <div class="flex flex-col items-center py-10">
         <div>
@@ -54,11 +52,10 @@ export default {
     return {
       user: null,
       loading: false,
-      errors: null
     }
   },
 
-  created() {
+  mounted() {
     // watch the params of the route to fetch the data again
     this.$watch(
       () => this.$route.params.id,
@@ -77,10 +74,9 @@ export default {
           id: id
         })
         .then((res) => {
-          this.user = res.data.user
+          this.user = res.user
         })
         .catch(err => {
-          this.errors = err.toString()
           console.log(err)
         })
         .finally(() => this.loading = false)

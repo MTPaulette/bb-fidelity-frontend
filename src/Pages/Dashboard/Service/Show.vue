@@ -9,8 +9,6 @@
       <Loading />
     </div>
 
-    <div v-if="errors" class="error">{{ errors }}</div>
-
     <div class="w-full bg-default border border-color rounded-lg shadow" v-if="service">
       <div class="flex flex-col p-6 md:p-12">
         <!-- <img class="w-24 h-24 mb-3 shadow-lg rounded-full" src="./../../../assets/s.png"> -->
@@ -60,7 +58,6 @@ export default {
     return {
       service: null,
       loading: false,
-      errors: null
     }
   },
 
@@ -83,10 +80,9 @@ export default {
           id: id
         })
         .then((res) => {
-          this.service = res.data.service
+          this.service = res.service
         })
         .catch(err => {
-          this.errors = err.toString()
           console.log(err)
         })
         .finally(() => this.loading = false)

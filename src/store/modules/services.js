@@ -44,13 +44,20 @@ const actions = {
   async getServiceById ({ commit }, credentials) {
     return await axios
       .get('/service/'+credentials.id)
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
   },
 
   async createService ({ dispatch }, credentials) {
     return await axios
       .post('/service/store/', credentials)
       .then((data) => {
-
         //after udpate services in local store
         dispatch('getAllServices')
         return data
