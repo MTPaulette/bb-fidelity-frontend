@@ -77,7 +77,7 @@ export default {
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
-          this.errors = err.response.data.errors
+          this.errors = err //response.data.errors
           console.log(err)
         })
         .finally(() => this.loading = false)

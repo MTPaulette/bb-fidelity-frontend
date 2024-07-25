@@ -23,7 +23,7 @@ import User_Services from '../Pages/Dashboard/Purchase/User_services.vue'
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 
-import Unauthorize from '../Pages/Dashboard/Unauthorize.vue'
+import Forbidden from '../Pages/Dashboard/Forbidden.vue'
 import NotFound from '../Pages/NotFound.vue'
 
 const router = createRouter({
@@ -65,9 +65,9 @@ const router = createRouter({
       },
       children: [
         {
-          path: "/unauthorize",
-          name: "unauthorize",
-          component: Unauthorize,
+          path: "/forbidden",
+          name: "forbidden",
+          component: Forbidden,
           props: true
         },
         {

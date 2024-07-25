@@ -1,15 +1,15 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="historic" />
+    <div class="ml-3">
+      <h1 class="my-6 sm:my-8 title"> My Historic </h1>
+    </div>
+
     <div v-if="loading">
       <Loading />
     </div>
 
     <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
-
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> My Historic </h1>
-    </div>
 
     <div v-if="services">
       <ListPurchase :services="services" />

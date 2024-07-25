@@ -1,4 +1,5 @@
 <template>
+  <div v-if="users">
   <div v-if="this.message !=''">
     <FlashAlert :message="this.message" />
   </div>
@@ -73,7 +74,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" class="border-b border-color hover:bg-highlight">
+        <tr v-for="user in users.users" :key="user.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
               <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
@@ -139,7 +140,7 @@
       </tbody>
     </table>
   </div>
-
+</div>
   <!-- <div v-if="users">
     <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
       <Pagination :links="users.links" />
@@ -180,11 +181,11 @@ export default {
 
   computed: {
     users() {
-      return JSON.parse(localStorage.getItem('users')).users
+      return JSON.parse(localStorage.getItem('users'))
     },
   },
 
-  created() {
+  mounted() {
     this.$store.dispatch("auth/getAllUsers");
   },
 

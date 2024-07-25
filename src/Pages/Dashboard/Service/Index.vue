@@ -52,7 +52,7 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
     this.$store.dispatch("services/getAllServices");
   }
 }

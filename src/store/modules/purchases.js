@@ -1,5 +1,6 @@
+
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+import router from '../../router'
 
 //inittial state
 const state = {
@@ -13,15 +14,27 @@ const mutations = {
   setAllPurchasesData (state, AllPurchaseData) {
     state.purchases = AllPurchaseData
     localStorage.setItem('purchases', JSON.stringify(AllPurchaseData.purchases))
+  },
+
+  clearPurchasesData () {
+    localStorage.removeItem('purchases')
   }
 }
 
 const actions = {
   async getAllPurchases ({ commit }) {
+    commit('clearPurchasesData')
     return await axios
       .get('/purchases')
       .then(({ data }) => {
         commit('setAllPurchasesData', data)
+      })
+      .catch(err => {
+        console.log('=============err')
+        console.log(err)
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
   },
 
@@ -41,6 +54,7 @@ const actions = {
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {
+    let token = localStorage.getItem('token')
     return await axios
       .get('/user/'+credentials.id+'/services')
   },

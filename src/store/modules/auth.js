@@ -1,5 +1,5 @@
 import axios from 'axios'
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+import router from '../../router'
 
 //initial state
 const state = {
@@ -19,7 +19,7 @@ const mutations = {
     
     localStorage.setItem('user', JSON.stringify(userData.user))
     localStorage.setItem('token', userData.token)
-    axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`
+    // axios.defaults.headers.Authorization = `Bearer ${userData.token}`
   },
 
   setAllUsersData (state, AlluserData) {
@@ -30,6 +30,10 @@ const mutations = {
   clearUserData () {
     localStorage.removeItem('user')
     location.reload()
+  },
+
+  clearUsersData () {
+    localStorage.removeItem('users')
   }
 }
 
@@ -88,18 +92,24 @@ const actions = {
   },
 
   async logout ({ commit }) {
-    return await axios
-      .delete('/logout')
-      .then(({ data }) => {
         commit('clearUserData')
-      })
+    // return await axios
+    //   .delete('/logout')
+    //   .then(({ data }) => {
+    //   })
   },
 
   async getAllUsers ({ commit }) {
+    commit('clearUsersData')
     return await axios
       .get('/users')
       .then(({ data }) => {
         commit('setAllUsersData', data)
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
   },
 
