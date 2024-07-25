@@ -88,7 +88,11 @@ const actions = {
   },
 
   async logout ({ commit }) {
-    commit('clearUserData')
+    return await axios
+      .delete('/logout')
+      .then(({ data }) => {
+        commit('clearUserData')
+      })
   },
 
   async getAllUsers ({ commit }) {
