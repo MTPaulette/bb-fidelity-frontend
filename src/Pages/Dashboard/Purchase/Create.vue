@@ -8,7 +8,7 @@
       <h1 class="my-6 sm:my-8 title"> New Purchase  </h1>
     </div>
 
-    <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
+    <div v-if="users && services" class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
           Check to the right. If the purchase that you find not exist, you can use the left textarea to
@@ -22,7 +22,7 @@
           <label for="user" class="label">Choose User</label>
           <select id="user" v-model="selectedUser" name="user" class="input" required>
             <option selected>No user selected</option>
-            <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option>
+            <option v-for="user in users.users" :key="user.id" :value="user">{{ user.name }}</option>
           </select>
         </div>
 
@@ -219,11 +219,11 @@ export default {
       return JSON.parse(localStorage.getItem('services'))
     },
     users() {
-      return JSON.parse(localStorage.getItem('users')).users
+      return JSON.parse(localStorage.getItem('users'))
     },
   },
 
-  created() {
+  mounted() {
     this.$store.dispatch("services/getAllServices")
     this.$store.dispatch("auth/getAllUsers")
   },
@@ -258,6 +258,7 @@ export default {
           //flashAlert will disappear after 1s
           setTimeout(() => {
             this.message = ''
+            location.reload()
           }, 20000)
 
           this.errors = res.response.data.errors

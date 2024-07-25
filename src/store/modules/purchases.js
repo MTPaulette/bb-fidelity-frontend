@@ -30,8 +30,6 @@ const actions = {
         commit('setAllPurchasesData', data)
       })
       .catch(err => {
-        console.log('=============err')
-        console.log(err)
         if(err.response.status === 403) {
           router.push({ name: 'forbidden' })
         }
@@ -49,7 +47,13 @@ const actions = {
       .then((data) => {
         //after udpate services in local store
         dispatch('getAllPurchases')
+        //dispatch('getAllUsers')
         return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
   },
 

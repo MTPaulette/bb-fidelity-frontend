@@ -62,15 +62,10 @@ const actions = {
         dispatch('getAllServices')
         return data
       })
-      .catch(err => {
-        if(err.response.status === 403) {
-          router.push({ name: 'forbidden' })
-        }
-      })
     },
 
-  updateService ({ dispatch }, credentials) {
-    return axios
+  async updateService ({ dispatch }, credentials) {
+    return await axios
       .put('/service/'+credentials.id+'/update', credentials.service)
       .then((data) => {
 
