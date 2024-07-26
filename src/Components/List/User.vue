@@ -77,7 +77,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-2 border-b-2 border-green-400 dark:border-green-400': '']"  class="border-b border-color hover:bg-highlight">
+        <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-800/30': '']"  class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
               <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
