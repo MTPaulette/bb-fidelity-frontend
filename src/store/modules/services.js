@@ -49,11 +49,29 @@ const actions = {
       })
   },
 
+  async getRecentServiceId() {
+    return await axios
+      .get('/recent/service')
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
+  },
+
   async createService ({ dispatch }, credentials) {
     return await axios
       .post('/service/store/', credentials)
       .then((data) => {
         return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
     },
 
@@ -62,6 +80,11 @@ const actions = {
       .put('/service/'+credentials.id+'/update', credentials.service)
       .then((data) => {
         return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
   },
 }

@@ -93,6 +93,6 @@ export default {
     user() {
       return JSON.parse(localStorage.getItem('user'))
     },
-  }
+  },
 }
 </script>

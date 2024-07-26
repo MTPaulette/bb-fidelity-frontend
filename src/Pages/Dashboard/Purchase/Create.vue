@@ -270,7 +270,6 @@ export default {
           setTimeout(() => {
             this.message = ''
             this.getAllUsers()
-            //location.reload()
           }, 5000)
 
           this.errors = res.response.data.errors

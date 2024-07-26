@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-sm bg-default hover:bg-highlight border border-color rounded-lg shadow p-5">
+    <div :class="[service.id == recentServiceId ? 'border-2 border-green-400 shadow-green-500': '']" class="max-w-sm bg-default hover:bg-highlight border border-color rounded-lg shadow p-5">
         <div class="flex justify-between">
             <h5 class="mb-2 text-2xl font-bold tracking-tight text-black-white w-full truncate">{{ service.name }}</h5>
             <div>
@@ -35,5 +35,6 @@ import { formatDate } from '@/Composables/formatDate'
 
 defineProps({
   service: Object,
+  recentServiceId: String
 })
 </script>

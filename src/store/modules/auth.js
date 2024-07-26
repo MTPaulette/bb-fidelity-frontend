@@ -120,6 +120,19 @@ const actions = {
         }
       })
   },
+
+  async getRecentUserId() {
+    return await axios
+      .get('/recent/user')
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
+  },
 }
 
 export default {

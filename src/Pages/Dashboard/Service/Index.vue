@@ -16,10 +16,9 @@
     </div>
 
     <div v-if="services" class="w-full h-auto">
-      <!-- <div class="w-full px-3 py-5 h-auto border-color rounded-lg shadow"> -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="service in services" :key="service.id" class="col-span-1">
-          <ServiceCard :service="service"/>
+          <ServiceCard :service="service" :recentServiceId="recentServiceId" />
         </div>
       </div>
     </div>
@@ -54,6 +53,7 @@ export default {
     return {
       loading: false,
       services: null,
+      recentServiceId: null
     }
   },
 
@@ -64,8 +64,13 @@ export default {
           this.services = res.services
           this.loading = false
         })
-},
+
+    this.$store.dispatch("services/getRecentServiceId")
+        .then((res) => {
+          console.log(res)
+          this.recentServiceId = res.id
+          this.loading = false
+        })
+  },
 }
-
 </script>
-

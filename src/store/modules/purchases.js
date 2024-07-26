@@ -36,6 +36,19 @@ const actions = {
       .get('/purchase/'+credentials.id)
   },
 
+  async getRecentPurchaseId() {
+    return await axios
+      .get('/recent/purchase')
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
+  },
+
   async createPurchase ({ dispatch }, credentials) {
     return await axios
       .post('/purchase/store/', credentials)
