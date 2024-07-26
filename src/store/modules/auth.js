@@ -29,6 +29,7 @@ const mutations = {
 
   clearUserData () {
     localStorage.removeItem('user')
+    localStorage.removeItem('token')
     location.reload()
   },
 }
@@ -86,12 +87,14 @@ const actions = {
       })
   },
 
-  async logout ({ commit }) {
-        commit('clearUserData')
-    // return await axios
-    //   .delete('/logout')
-    //   .then(({ data }) => {
-    //   })
+  async logout ({ commit }, credentials) {
+    return await axios
+       .post('/logout', credentials)
+       .then(({ data }) => {
+          commit('clearUserData')
+        }).catch((err) =>{
+          console.log(err)
+        })
   },
 
   async getAllUsers ({ commit }) {

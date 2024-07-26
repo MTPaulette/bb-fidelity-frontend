@@ -126,12 +126,8 @@ export default {
   methods: {
     logout () {
       this.$store
-        .dispatch('auth/logout')
-        .then(() => {
-          this.$router.push({ name: 'login' })
-        })
-        .catch(err => {
-          console.log(err)
+        .dispatch('auth/logout', {
+          id: this.user.id
         })
     }
   }

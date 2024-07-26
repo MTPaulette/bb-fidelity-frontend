@@ -22,6 +22,7 @@ const axiosConfig = {
   'Authorization': 'Bearer '+localStorage.getItem('token')
 };
 
+//axios.defaults.credentials = 'include'
 axios.defaults.headers = axiosConfig
 
 export default new Vuex.Store({
