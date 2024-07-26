@@ -1,35 +1,9 @@
 <template>
-  <div class="flex flex-col items-center justify-center w-full h-full my-32">
-    <h1 class="my-10 text-4xl md:text-6xl font-bold font-[roboto] leading-tight tracking-tight text-black-white">403 - Forbidden</h1>
-    <button @click="goBack" class="inline-flex justify-center btn-base btn-light-2">
-      <svg class="h-4 w-4 mr-1" viewBox="0 0 16 16" fill="currentColor">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-      </svg>
-      Back
-    </button>
-
-    <!-- <div class="w-full px-3 py-5 h-auto border-color rounded-lg shadow">
-      <div class="flex flex-col items-center justify-center w-full mt-4 space-y-4 lg:mt-5 md:space-y-5">
-      </div>
-    </div> -->
+  <div class="flex flex-col items-center justify-center text-primary w-full h-full my-28">
+    <svg class="mx-auto w-28 h-28" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+      <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+    </svg>
+    <h1 class="my-6 text-4xl md:text-6xl font-bold font-[roboto] leading-tight tracking-tight">403 - Forbidden</h1>
   </div>
 </template>
-
-<script>
-import Breadcrumb from '@/Components/Breadcrumb.vue'
-import Loading from '@/Components/Loading.vue'
-import ListPurchase from '@/Components/List/Purchase.vue'
-
-export default {
-  components: {
-    Breadcrumb,
-    Loading,
-    ListPurchase
-  },
-  methods: {
-    goBack () {
-      this.$router.go(-2)
-    }
-  }
-}
-</script>

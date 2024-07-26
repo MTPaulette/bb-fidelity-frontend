@@ -1,9 +1,7 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="services" />
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> Tous les services </h1>
-    </div>
+    <h1 class="ml-3 my-6 sm:my-8 title"> Tous les services </h1>
     <div class="my-6 md:mt-12 md:mb-16 p-5 md:px-8 rounded-lg bg-secondary" role="alert">
       <span class="font-medium">Ensure that these requirements are met:</span>
         <ul class="mt-1.5 ml-4 list-disc list-inside text-secondary">
@@ -13,7 +11,11 @@
         </ul>
     </div>
 
-    <div class="w-full h-auto">
+    <div v-if="loading">
+      <Loading />
+    </div>
+
+    <div v-if="services" class="w-full h-auto">
       <!-- <div class="w-full px-3 py-5 h-auto border-color rounded-lg shadow"> -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div v-for="service in services" :key="service.id" class="col-span-1">
@@ -38,23 +40,31 @@
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import ServiceCard from '@/Components/Card/Service.vue'
+import Loading from '@/Components/Loading.vue'
 
 
 export default {
   components: {
     Breadcrumb,
-    ServiceCard
+    ServiceCard,
+    Loading
   },
 
-  computed: {
-    services() {
-      return JSON.parse(localStorage.getItem('services'))
+  data() {
+    return {
+      loading: false,
+      services: null,
     }
   },
 
   mounted() {
-    this.$store.dispatch("services/getAllServices");
-  }
+    this.loading = true
+    this.$store.dispatch("services/getAllServices")
+        .then((res) => {
+          this.services = res.services
+          this.loading = false
+        })
+},
 }
 
 </script>

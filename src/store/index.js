@@ -10,6 +10,8 @@ import purchases from './modules/purchases.js'
 
 const app = createApp(App)
 
+//app.use(Vuex)
+
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
@@ -21,8 +23,6 @@ const axiosConfig = {
 };
 
 axios.defaults.headers = axiosConfig
-
-app.use(Vuex)
 
 export default new Vuex.Store({
   modules: {

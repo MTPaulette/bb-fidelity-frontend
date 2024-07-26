@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <Loading />
+  </div>
   <div v-if="users">
   <div v-if="this.message !=''">
     <FlashAlert :message="this.message" />
@@ -74,7 +77,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users.users" :key="user.id" class="border-b border-color hover:bg-highlight">
+        <tr v-for="user in users" :key="user.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
             <div class="pl-3">
               <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
@@ -154,20 +157,24 @@ import { ref } from 'vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Button from '@/Components/Button.vue'
 import SearchBar from '@/Components/SearchBar.vue'
+import Loading from '@/Components/Loading.vue'
 
 
 export default {
   components: {
     Pagination,
     FlashAlert,
-    SearchBar
+    SearchBar,
+    Loading
   },
   data() {
     return {
       balance: 0,
       malus: false,
+      loading: false,
       message: '',
       errors: null,
+      users: null,
     }
   },
   setup() {
@@ -179,14 +186,13 @@ export default {
     }
   },
 
-  computed: {
-    users() {
-      return JSON.parse(localStorage.getItem('users'))
-    },
-  },
-
   mounted() {
-    this.$store.dispatch("auth/getAllUsers");
+    this.loading = true
+    this.$store.dispatch("auth/getAllUsers")
+        .then((res) => {
+          this.users = res.users
+          this.loading = false
+        })
   },
 
   methods: {

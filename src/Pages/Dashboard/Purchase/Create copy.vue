@@ -4,12 +4,10 @@
       <FlashAlert :message="message" />
     </div>
     <Breadcrumb link1="dashboard" link2="purchase" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> New Purchase  </h1>
-
-    <div v-if="!(users && services)">
-      <Loading />
+    <div class="ml-3">
+      <h1 class="my-6 sm:my-8 title"> New Purchase  </h1>
     </div>
-  
+
     <div v-if="users && services" class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -24,7 +22,7 @@
           <label for="user" class="label">Choose User</label>
           <select id="user" v-model="selectedUser" name="user" class="input" required>
             <option selected>No user selected</option>
-            <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option>
+            <option v-for="user in users.users" :key="user.id" :value="user">{{ user.name }}</option>
           </select>
         </div>
 
@@ -190,7 +188,6 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
-import Loading from '@/Components/Loading.vue'
 
 import Purchase from "@/Models/Purchase.js"
 
@@ -199,47 +196,45 @@ export default {
     Breadcrumb,
     FlashAlert,
     ButtonLoading,
-    Loading
   },
 
   data() {
     return {
       // new Purchase(admin_id, service_id, admin_id, by_cash)
-      users: null,
-      services: null,
       purchase: new Purchase("", "", "", true),
       message: '',
       selectedUser: null,
       selectedService: null,
+      loading: false,
       errors: null,
       canSubmit: true,
     }
   },
 
+  watch: {
+    users: function() {
+      return JSON.parse(localStorage.getItem('users'))
+    },
+  },
+
   computed: {
     admin_id() {
       return JSON.parse(localStorage.getItem('user')).id
-    }
+    },
+    services() {
+      return JSON.parse(localStorage.getItem('services'))
+    },
+    users() {
+      return JSON.parse(localStorage.getItem('users'))
+    },
   },
 
   mounted() {
-    this.getAllUsers()
-    this.getAllServices()
+    this.$store.dispatch("services/getAllServices")
+    this.$store.dispatch("auth/getAllUsers")
   },
 
   methods: {
-    getAllUsers() {
-      this.$store.dispatch("auth/getAllUsers")
-          .then((res) => {
-            this.users = res.users
-          })
-    },
-    getAllServices() {
-      this.$store.dispatch("services/getAllServices")
-        .then((res) => {
-          this.services = res.services
-        })
-    },
     summary() {
       this.loading = !this.loading
       this.errors = null
@@ -269,7 +264,7 @@ export default {
           //flashAlert will disappear after 1s
           setTimeout(() => {
             this.message = ''
-            this.getAllUsers()
+            this.$store.dispatch("auth/getAllUsers")
             //location.reload()
           }, 5000)
 

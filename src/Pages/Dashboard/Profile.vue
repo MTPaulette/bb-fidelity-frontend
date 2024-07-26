@@ -4,9 +4,7 @@
       <FlashAlert :message="this.message" />
     </div>
     <Breadcrumb link1="dashboard" link2="profile" />
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> Profile </h1>
-    </div>
+    <h1 class="ml-3 my-6 sm:my-8 title"> Profile </h1>
 
     <div class="w-full h-auto">
         <!-- general informations -->
@@ -37,10 +35,7 @@
 
       <!-- password information -->
       <div class="my-4 md:my-5 lg:my-12 md:col-span-2 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
-        <!-- change profile pic -->
-        <div class="mb-4">
-          <h2 class="title"> Password Information </h2>
-        </div>
+        <h2 class="title mb-4"> Password Information </h2>
         <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updatePassword">
           <div class="grid gap-2 sm:gap-6 grid-cols-2">
             <div class="col-span-2">

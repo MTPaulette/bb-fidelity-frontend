@@ -25,12 +25,17 @@ const mutations = {
 
   setAllUsersData (state, AlluserData) {
     state.users = AlluserData
+    localStorage.setItem('users', JSON.stringify(AlluserData))
   },
 
   clearUserData () {
     localStorage.removeItem('user')
     location.reload()
   },
+
+  clearUsersData () {
+    localStorage.removeItem('users')
+  }
 }
 
 const actions = {
@@ -95,11 +100,11 @@ const actions = {
   },
 
   async getAllUsers ({ commit }) {
+    commit('clearUsersData')
     return await axios
       .get('/users')
       .then(({ data }) => {
         commit('setAllUsersData', data)
-        return data
       })
       .catch(err => {
         if(err.response.status === 403) {

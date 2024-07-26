@@ -13,6 +13,11 @@ const getters = {
 const mutations = {
   setAllPurchasesData (state, AllPurchaseData) {
     state.purchases = AllPurchaseData
+    localStorage.setItem('purchases', JSON.stringify(AllPurchaseData.purchases))
+  },
+
+  clearPurchasesData () {
+    localStorage.removeItem('purchases')
   }
 }
 
@@ -21,7 +26,6 @@ const actions = {
     return await axios
       .get('/purchases')
       .then(({ data }) => {
-        commit('setAllPurchasesData', data)
         return data
       })
       .catch(err => {
@@ -40,6 +44,8 @@ const actions = {
     return await axios
       .post('/purchase/store/', credentials)
       .then((data) => {
+        //after udpate services in local store
+        dispatch('getAllPurchases')
         return data
       })
       .catch(err => {

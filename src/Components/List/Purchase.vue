@@ -5,7 +5,7 @@
         <span class="text-gray-500">Total purchases:</span>
         <span class="dark:text-white" v-if="services">{{ services.length }}</span>
       </h5>
-      <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+      <div v-if="user.role_id === 1" class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
         <router-link class="flex justify-end" :to="{ name: 'purchase.create'}">
         <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base">
           <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -87,3 +87,12 @@
   })
   </script>
   
+<script>
+export default {
+  computed: {
+    user() {
+      return JSON.parse(localStorage.getItem('user'))
+    },
+  }
+}
+</script>

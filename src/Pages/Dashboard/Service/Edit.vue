@@ -5,9 +5,7 @@
       <FlashAlert :message="this.message" />
     </div>
     <Breadcrumb link1="dashboard" link2="service" />
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> Edit Service  </h1>
-    </div>
+    <h1 class="ml-3 my-6 sm:my-8 title"> Edit Service  </h1>
 
     <div v-if="loading">
       <Loading />

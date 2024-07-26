@@ -1,9 +1,7 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="historic" />
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title"> My Historic </h1>
-    </div>
+    <h1 class="ml-3 my-6 sm:my-8 title"> My Historic </h1>
 
     <div v-if="loading">
       <Loading />

@@ -7,14 +7,7 @@
 
     <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
 
-    <div class="ml-3">
-      <h1 class="my-6 sm:my-8 title" v-if="services"> {{ services[0].user_name }} Historic </h1>
-    </div>
-
-    <!-- <div class="p-4 m-7"> user: {{ user }}</div> -->
-    <!-- <div class="p-4 m-14"> services: {{ services }}</div> -->
-
-    <!-- <div class="w-full bg-default border border-color rounded-lg shadow" v-if="user"> -->
+    <h1 class="ml-3 my-6 sm:my-8 title" v-if="services"> {{ services[0].user_name }} Historic </h1>
     <div v-if="services">
       <ListPurchase :services="services" />
     </div>
