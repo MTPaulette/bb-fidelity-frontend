@@ -61,7 +61,6 @@ const router = createRouter({
       component: DashboardLayout,
       meta: {
         auth: true,
-        admin: false,
       },
       children: [
         {
@@ -89,7 +88,6 @@ const router = createRouter({
       component: DashboardLayout,
       meta: {
         auth: true,
-        admin: true,
       },
       children: [
         {
@@ -123,7 +121,10 @@ const router = createRouter({
           path: "/service/create",
           name: "service.create",
           component: ServiceCreate,
-          props: true
+          props: true,
+          meta: {
+            admin: true,
+          },
         },
         {
           path: "/service/:id/edit",
@@ -140,7 +141,10 @@ const router = createRouter({
           path: "/purchase/create",
           name: "purchase.create",
           component: PurchaseCreate,
-          props: true
+          props: true,
+          meta: {
+            admin: true,
+          },
         },
         {
           path: "/user/:id/historic",
@@ -186,21 +190,40 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const loggedIn = localStorage.getItem('user')
+  const loggedIn = JSON.parse(localStorage.getItem('user'))
   
   // if user is already authenticated, redirect login to services page
   if(to.name === 'login' && loggedIn) {
     next({ name: 'home'})
   }
 
-  // check if the user is authenticated
-  // check if the user is authenticated
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
     next({ name: 'login'})
   }else {
-    next()
+    // check if the user is authenticated
+    if (to.meta.admin) {
+      console.log('------------------------')
+      console.log(loggedIn)
+      if( loggedIn.role_id === 1) {
+        next()
+      } else {
+        next({ name: 'forbidden'})
+      }
+
+    }else {
+      next()
+    }
   }
-  
+
+
+  /*
+    // check if the user is authenticated
+    if (to.meta.admin && loggedIn.role_id === 1) {
+      next({ name: 'forbidden'})
+    }else {
+      next()
+    }
+      */
 })
 
 router.beforeResolve((to, from, next) => {
