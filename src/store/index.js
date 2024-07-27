@@ -13,7 +13,7 @@ const app = createApp(App)
 //app.use(Vuex)
 
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+axios.defaults.baseURL = 'https://fidelityapi.brain-booster.net'
 
 const axiosConfig = {
   // 'Content-Type': 'application/json',
