@@ -68,11 +68,6 @@ const actions = {
       .then((data) => {
         return data
       })
-      .catch(err => {
-        if(err.response.status === 403) {
-          router.push({ name: 'forbidden' })
-        }
-      })
     },
 
   async updateService ({ dispatch }, credentials) {
@@ -80,11 +75,6 @@ const actions = {
       .put('/service/'+credentials.id+'/update', credentials.service)
       .then((data) => {
         return data
-      })
-      .catch(err => {
-        if(err.response.status === 403) {
-          router.push({ name: 'forbidden' })
-        }
       })
   },
 }

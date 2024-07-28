@@ -72,12 +72,6 @@ export default {
     ButtonLoading
   },
 
-  computed: {
-    user_id() {
-      return JSON.parse(localStorage.getItem('user')).id
-    },
-  },
-
   data() {
     return {
       // new Service(name, price, point, validity, description, user_id)
@@ -92,8 +86,7 @@ export default {
     newService () {
       this.loading = true
       this.errors = null
-      this.service.user_id = this.user_id
-      
+
       this.$store
       .dispatch('services/createService', this.service)
       .then((res) => {
@@ -103,13 +96,14 @@ export default {
         setTimeout(() => {
           this.message = ''
         }, 20000)
-
-        this.errors = res.response.data.errors
-        // this.$router.push({ name: 'profile' })
       })
       .catch(err => {
-        this.errors = err.response.data.errors
-        console.log(err)
+        if(err.response) {
+          this.errors = err.response.data.errors
+          if(err.response.status === 403) {
+            router.push({ name: 'forbidden' })
+          }
+        }
       })
       .finally(() => this.loading = false)
     },

@@ -212,6 +212,7 @@ export default {
       selectedUser: null,
       selectedService: null,
       errors: null,
+      loading: false,
       canSubmit: true,
     }
   },
@@ -231,13 +232,17 @@ export default {
     getAllUsers() {
       this.$store.dispatch("auth/getAllUsers")
           .then((res) => {
-            this.users = res.users
+            if(res) {
+              this.users = res.users
+            }
           })
     },
     getAllServices() {
       this.$store.dispatch("services/getAllServices")
         .then((res) => {
-          this.services = res.services
+          if(res) {
+            this.services = res.services
+          }
         })
     },
     summary() {
@@ -272,12 +277,15 @@ export default {
             this.getAllUsers()
           }, 5000)
 
-          this.errors = res.response.data.errors
-        // this.$router.push({ name: 'profile' })
+          // this.errors = res.response.data.errors
         })
         .catch(err => {
-          this.errors = err.response.data.errors
-          console.log(err)
+          if(err.response) {
+            this.errors = err.response.data.errors
+            if(err.response.status === 403) {
+              router.push({ name: 'forbidden' })
+            }
+          }
         })
         .finally(() => this.loading = false)
     },

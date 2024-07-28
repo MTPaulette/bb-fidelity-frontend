@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import NProgress from 'nprogress'
 
-import Home from '../Components/Home.vue'
+// import Home from '../Components/Home.vue'
 import Login from '../Pages/Authentification/Login.vue'
 import Register from '../Pages/Authentification/Register.vue'
 import Reset from '../Pages/Authentification/Reset.vue'
@@ -29,11 +29,6 @@ import NotFound from '../Pages/NotFound.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    {
-      path: '/home',
-      name: 'home',
-      component: Home
-    },
     {
       path: '/login',
       component: AuthentificationLayout,

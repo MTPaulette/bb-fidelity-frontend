@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user">
     <div v-if="this.message !=''">
       <FlashAlert :message="this.message" />
     </div>
@@ -113,6 +113,7 @@ export default {
   computed: {
     user() {
       return JSON.parse(localStorage.getItem('user'))
+      //return localStorage.getItem('user')
     },
   },
 
@@ -121,8 +122,7 @@ export default {
       this.loading = true
       this.$store
         .dispatch('auth/profile', {
-          name: this.name,
-          id: this.user.id
+          name: this.name
         })
         .then((res) => {
           this.message = res.message
@@ -143,8 +143,7 @@ export default {
       this.$store
         .dispatch('auth/password', {
           current_password: this.current_password,
-          password: this.password,
-          id: this.user.id
+          password: this.password
         })
         .then((res) => {
           this.message = res.message

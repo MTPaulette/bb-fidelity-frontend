@@ -46,6 +46,7 @@ export default {
 
   methods: {
     getAllServicesOfUser (id) {
+      if(id) {
       this.loading = true
       this.$store
         .dispatch('purchases/getAllServicesOfUser', {
@@ -55,10 +56,13 @@ export default {
           this.services = res.data.services
         })
         .catch(err => {
-          this.errors = err.response.data.errors
+          if(err.response) {
+            this.errors = err.response.data.errors
+          }
           console.log(err)
         })
         .finally(() => this.loading = false)
+      }
     }
   }
 }

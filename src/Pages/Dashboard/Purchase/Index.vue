@@ -34,7 +34,9 @@ export default {
     this.loading = true
     this.$store.dispatch("purchases/getAllPurchases")
         .then((res) => {
-          this.purchases = res.purchases
+          if(res) {
+            this.purchases = res.purchases
+          }
           this.loading = false
         })
   },

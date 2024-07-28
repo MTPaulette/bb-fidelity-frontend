@@ -61,14 +61,17 @@ export default {
     this.loading = true
     this.$store.dispatch("services/getAllServices")
         .then((res) => {
-          this.services = res.services
+          if(res) {
+            this.services = res.services
+          }
           this.loading = false
         })
 
     this.$store.dispatch("services/getRecentServiceId")
         .then((res) => {
-          console.log(res)
-          this.recentServiceId = res.id
+          if(res) {
+            this.recentServiceId = res.id
+          }
           this.loading = false
         })
   },

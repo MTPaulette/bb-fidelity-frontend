@@ -35,6 +35,6 @@ import { formatDate } from '@/Composables/formatDate'
 
 defineProps({
   service: Object,
-  recentServiceId: String
+  recentServiceId: Number
 })
 </script>

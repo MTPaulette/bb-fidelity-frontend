@@ -38,23 +38,24 @@
           </div>
         </div>
       </div>
-      <div class="flex mt-5 sm:mt-0">
-        <div>
-          <Button label="add user" hasicon rounded btn small>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+      <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+        <!-- <div class="flex mt-5 sm:mt-0"> -->
+        <router-link class="flex justify-end" to="#">
+          <!-- <router-link class="flex justify-end" :to="{ name: 'user.create'}"> -->
+          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base">
+            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-          </Button>
-        </div>
-
-        <a href="/export/users" class="ml-2">
-          <Button label="export" hasicon rounded light small>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
-              <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
-            </svg>
-          </Button>
-        </a>
+            New user
+          </button>
+        </router-link>
+  
+        <button type="button" class="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+          <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+          </svg>
+          Export
+        </button>
       </div>
     </div>
 
@@ -155,7 +156,6 @@
 import FlashAlert from '@/Components/FlashAlert.vue'
 import { ref } from 'vue'
 import Pagination from '@/Components/PaginationTable.vue'
-import Button from '@/Components/Button.vue'
 import SearchBar from '@/Components/SearchBar.vue'
 import Loading from '@/Components/Loading.vue'
 
@@ -191,13 +191,16 @@ export default {
     this.loading = true
     this.$store.dispatch("auth/getAllUsers")
         .then((res) => {
-          this.users = res.users
+          if(res) {
+            this.users = res.users
+          }
           this.loading = false
         })
     this.$store.dispatch("auth/getRecentUserId")
         .then((res) => {
-          console.log(res)
-          this.recentUserId = res.id
+          if(res) {
+            this.recentUserId = res.id
+          }
           this.loading = false
         })
   },

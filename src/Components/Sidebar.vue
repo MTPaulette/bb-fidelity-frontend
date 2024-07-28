@@ -120,6 +120,7 @@ export default {
     ]),
     user() {
       return JSON.parse(localStorage.getItem('user'))
+      // return localStorage.getItem('user')
     },
   },
 

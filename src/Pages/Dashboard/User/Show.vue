@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="user" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> User id {{ id }} Informations </h1>
+    <h1 class="ml-3 my-6 sm:my-8 title"> User {{ $route.params.id }} Informations </h1>
 
     <div v-if="loading">
       <Loading />
@@ -72,7 +72,9 @@ export default {
           id: id
         })
         .then((res) => {
-          this.user = res.user
+          if(res) {
+            this.user = res.user
+          }
         })
         .catch(err => {
           console.log(err)

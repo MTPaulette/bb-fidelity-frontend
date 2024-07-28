@@ -75,11 +75,11 @@ export default {
           email: this.email,
           password: this.password
         })
-        .then(() => {
+        .then((res) => {
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
-          this.errors = err //response.data.errors
+          this.errors = err.response.data.errors
           console.log(err)
         })
         .finally(() => this.loading = false)

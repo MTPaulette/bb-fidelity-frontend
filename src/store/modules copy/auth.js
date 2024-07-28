@@ -39,11 +39,10 @@ const actions = {
     return await axios
       .post('/login', credentials)
       .then(({ data }) => {
-        console.log("+++++++++++++++++++++++requets++++++++++++++++")
-        console.log(data)
-        //commit('setUserData', data)
+        commit('setUserData', data)
       })
   },
+
 
   async register ({ commit }, credentials) {
     /*

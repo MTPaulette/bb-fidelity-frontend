@@ -5,7 +5,7 @@
       <FlashAlert :message="this.message" />
     </div>
     <Breadcrumb link1="dashboard" link2="service" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> Edit Service  </h1>
+    <h1 class="ml-3 my-6 sm:my-8 title"> Edit Service {{ $route.params.id }}  </h1>
 
     <div v-if="loading">
       <Loading />
@@ -93,22 +93,6 @@ export default {
     }
   },
 
-  computed: {
-    user_id() {
-      return JSON.parse(localStorage.getItem('user')).id
-    },
-  },
-
-  mountedd() {
-    // watch the params of the route to fetch the data again
-    this.$watch(
-      () => this.$route.params.id,
-      this.getServiceById,
-
-      // fetch the data when the view is created and the data is already being observed
-      { immediate: true }
-    )
-  },
   mounted() {
     this.getServiceById(this.$route.params.id)
   },
@@ -121,9 +105,10 @@ export default {
           id: id
         })
         .then((res) => {
-          // this.service = res.data.service
-          const serviceData = res.service
-          this.service = new Service(serviceData.name, serviceData.price, serviceData.point, serviceData.validity, serviceData.description, serviceData.user_id)
+          if(res) {
+            const serviceData = res.service
+            this.service = new Service(serviceData.name, serviceData.price, serviceData.point, serviceData.validity, serviceData.description, serviceData.user_id)
+          }
         })
         .catch(err => {
           console.log(err)
@@ -132,11 +117,8 @@ export default {
     },
 
     updateService () {
-      console.log('============')
-      console.log(this.id)
       this.loading = true
       this.errors = null
-      this.service.user_id = this.user_id
       
       this.$store
       .dispatch('services/updateService', {
@@ -145,19 +127,20 @@ export default {
       })
       .then((res) => {
         this.message = res.data.message
-        // location.reload()
 
         //flashAlert will disappear after 1s
         setTimeout(() => {
           this.message = ''
-        }, 20000)
-
-        this.errors = res.response.data.errors
-        // this.$router.push({ name: 'profile' })
+          location.reload()
+        }, 5000)
       })
       .catch(err => {
-        this.errors = err.response.data.errors
-        console.log(err)
+        if(err.response) {
+          this.errors = err.response.data.errors
+          if(err.response.status === 403) {
+            router.push({ name: 'forbidden' })
+          }
+        }
       })
       .finally(() => this.loading = false)
     },

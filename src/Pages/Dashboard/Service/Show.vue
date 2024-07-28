@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="service" />
-    <h1 class=" ml-3 my-6 sm:my-8 title"> Service id {{ id }} Informations </h1>
+    <h1 class=" ml-3 my-6 sm:my-8 title"> Service {{ $route.params.id }} Informations </h1>
 
     <div v-if="loading">
       <Loading />
@@ -38,11 +38,6 @@
   </div>
 </template>
 
-
-<script setup>
-import { formatDate } from '@/Composables/formatDate'
-</script>
-
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
@@ -78,12 +73,23 @@ export default {
           id: id
         })
         .then((res) => {
-          this.service = res.service
+          if(res) {
+            this.service = res.service
+          }
         })
         .catch(err => {
           console.log(err)
         })
         .finally(() => this.loading = false)
+      
+        .catch(err => {
+        if(err.response) {
+          this.errors = err.response.data.errors
+          if(err.response.status === 403) {
+            router.push({ name: 'forbidden' })
+          }
+        }
+      })
     }
   },
 }
