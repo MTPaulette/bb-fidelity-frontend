@@ -12,21 +12,16 @@ const getters = {
 const mutations = {
   setAllServicesData (state, AllServiceData) {
     state.services = AllServiceData
-    localStorage.setItem('services', JSON.stringify(AllServiceData.services))
   },
-
-  clearServicesData () {
-    localStorage.removeItem('services')
-  }
 }
 
 const actions = {
   async getAllServices ({ commit }) {
-    commit('clearServicesData')
     return await axios
       .get('/services')
       .then(({ data }) => {
         commit('setAllServicesData', data)
+        return data
       })
       .catch(err => {
         if(err.response.status === 403) {
@@ -54,13 +49,29 @@ const actions = {
       })
   },
 
+  async getRecentServiceId() {
+    return await axios
+      .get('/recent/service')
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
+  },
+
   async createService ({ dispatch }, credentials) {
     return await axios
       .post('/service/store/', credentials)
       .then((data) => {
-        //after udpate services in local store
-        dispatch('getAllServices')
         return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
     },
 
@@ -68,10 +79,12 @@ const actions = {
     return await axios
       .put('/service/'+credentials.id+'/update', credentials.service)
       .then((data) => {
-
-        //after udpate services in local store
-        dispatch('getAllServices')
         return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
       })
   },
 }

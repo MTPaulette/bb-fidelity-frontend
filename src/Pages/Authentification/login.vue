@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 
 export default {
@@ -68,7 +69,8 @@ export default {
     login () {
       this.loading = true
       this.errors = null
-      this.$store
+      // axios.get('/sanctum/csrf-cookie').then(response => {});
+        this.$store
         .dispatch('auth/login', {
           email: this.email,
           password: this.password

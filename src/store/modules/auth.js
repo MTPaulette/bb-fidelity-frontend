@@ -14,7 +14,6 @@ const getters = {
 const mutations = {
   setUserData (state, userData) {
     state.user = userData.user
-    console.log("-------------------store----------------------------")
     
     localStorage.setItem('user', JSON.stringify(userData.user))
     if(userData.token) {
@@ -42,6 +41,20 @@ const actions = {
         commit('setUserData', data)
       })
   },
+
+
+  /*
+  login ({ commit }, credentials) {
+    axios.get('/sanctum/csrf-cookie').then(response => {
+      return axios
+        .post('/login', credentials)
+        .then(({ data }) => {
+          commit('setUserData', data)
+        })
+    })
+  },
+  */
+
 
   async register ({ commit }, credentials) {
     /*

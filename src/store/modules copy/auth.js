@@ -14,7 +14,6 @@ const getters = {
 const mutations = {
   setUserData (state, userData) {
     state.user = userData.user
-    console.log("-------------------store----------------------------")
     
     localStorage.setItem('user', JSON.stringify(userData.user))
     if(userData.token) {
@@ -25,25 +24,24 @@ const mutations = {
 
   setAllUsersData (state, AlluserData) {
     state.users = AlluserData
-    localStorage.setItem('users', JSON.stringify(AlluserData))
   },
 
   clearUserData () {
     localStorage.removeItem('user')
+    localStorage.removeItem('token')
     location.reload()
   },
-
-  clearUsersData () {
-    localStorage.removeItem('users')
-  }
 }
 
 const actions = {
+  
   async login ({ commit }, credentials) {
     return await axios
       .post('/login', credentials)
       .then(({ data }) => {
-        commit('setUserData', data)
+        console.log("+++++++++++++++++++++++requets++++++++++++++++")
+        console.log(data)
+        //commit('setUserData', data)
       })
   },
 
@@ -91,20 +89,22 @@ const actions = {
       })
   },
 
-  async logout ({ commit }) {
-        commit('clearUserData')
-    // return await axios
-    //   .delete('/logout')
-    //   .then(({ data }) => {
-    //   })
+  async logout ({ commit }, credentials) {
+    return await axios
+       .post('/logout', credentials)
+       .then(({ data }) => {
+          commit('clearUserData')
+        }).catch((err) =>{
+          console.log(err)
+        })
   },
 
   async getAllUsers ({ commit }) {
-    commit('clearUsersData')
     return await axios
       .get('/users')
       .then(({ data }) => {
         commit('setAllUsersData', data)
+        return data
       })
       .catch(err => {
         if(err.response.status === 403) {
@@ -116,6 +116,19 @@ const actions = {
   async getUserById ({ commit }, credentials) {
     return await axios
       .get('/user/'+credentials.id)
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        if(err.response.status === 403) {
+          router.push({ name: 'forbidden' })
+        }
+      })
+  },
+
+  async getRecentUserId() {
+    return await axios
+      .get('/recent/user')
       .then(({ data }) => {
         return data
       })
