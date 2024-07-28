@@ -50,12 +50,6 @@ export default {
     logout () {
       this.$store
         .dispatch('auth/logout')
-        .then(() => {
-          this.$router.push({ name: 'login' })
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 }

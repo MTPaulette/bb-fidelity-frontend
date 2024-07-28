@@ -16,7 +16,6 @@ const mutations = {
     state.user = userData.user
     
     localStorage.setItem('user', JSON.stringify(userData.user))
-    // localStorage.setItem('user', JSON.parse(JSON.stringify(userData.user)))
     if(userData.token) {
       localStorage.setItem('token', userData.token)
     }
@@ -39,8 +38,7 @@ const actions = {
     return await axios
       .post('/login', credentials)
       .then(({ data }) => {
-        console.log("+++++++++++++++++++++++requets++++++++++++++++")
-        console.log(data)
+        console.log("+++++++++++++++++++++++login++++++++++++++++")
         commit('setUserData', data)
       })
   },
@@ -104,9 +102,15 @@ const actions = {
 
   async logout ({ commit }) {
     return await axios
-       .delete('/logout')
+       .delete('/logout'
+        /*, {
+        headers: {
+          'Authorization': 'Bearer '+localStorage.getItem('token')
+        }
+      */
+       )
        .then(({ data }) => {
-          console.log(data)
+        console.log(data)
           commit('clearUserData')
         }).catch((err) =>{
           console.log(err)

@@ -217,12 +217,6 @@ export default {
     }
   },
 
-  computed: {
-    admin_id() {
-      return JSON.parse(localStorage.getItem('user')).id
-    }
-  },
-
   mounted() {
     this.getAllUsers()
     this.getAllServices()
@@ -261,7 +255,7 @@ export default {
       this.loading = true
       this.errors = null
 
-      this.purchase.admin_id = this.admin_id
+      // this.purchase.admin_id = this.admin_id
       this.purchase.service_id = this.selectedService.id
       this.purchase.user_id = this.selectedUser.id
       

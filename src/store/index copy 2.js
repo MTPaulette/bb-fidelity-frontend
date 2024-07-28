@@ -6,7 +6,10 @@ import auth from './modules/auth.js'
 import services from './modules/services.js'
 import purchases from './modules/purchases.js'
 
+
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('token')
+axios.defaults.withCredentials = true
 
 const axiosConfig = {
   'Content-Type': 'application/json',
@@ -16,8 +19,8 @@ const axiosConfig = {
   // 'Authorization': 'Bearer '+localStorage.getItem('token')
 };
 
-axios.defaults.withCredentials = true
-axios.defaults.headers.common.Authorization = 'Bearer '+localStorage.getItem('token')
+//axios.defaults.credentials = 'include'
+//axios.defaults.headers = axiosConfig
 
 export default new Vuex.Store({
   modules: {
