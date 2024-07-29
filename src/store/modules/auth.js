@@ -1,5 +1,5 @@
-import axios from 'axios'
 import router from '../../router'
+import axios from './../axios'
 
 //initial state
 const state = {
@@ -18,8 +18,9 @@ const mutations = {
     localStorage.setItem('user', JSON.stringify(userData.user))
     if(userData.token) {
       localStorage.setItem('token', userData.token)
+      // Mettre à jour le header Authorization immédiatement après l'authentification
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`
     }
-    // axios.defaults.headers.Authorization = `Bearer ${userData.token}`
   },
 
   setAllUsersData (state, AlluserData) {
@@ -38,42 +39,11 @@ const actions = {
     return await axios
       .post('/login', credentials)
       .then(({ data }) => {
-        console.log("+++++++++++++++++++++++login++++++++++++++++")
         commit('setUserData', data)
       })
   },
-
-  /*
-  login ({ commit }, credentials) {
-    axios.get('/sanctum/csrf-cookie').then(response => {
-      return axios
-        .post('/login', credentials)
-        .then(({ data }) => {
-          commit('setUserData', data)
-        })
-    })
-  },
-  */
-
 
   async register ({ commit }, credentials) {
-    /*
-    const axiosConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-origin": "*",
-        'Accept': 'application/json'
-      }
-    };
-    return await axios
-      .post('/register', credentials, {
-        headers: axiosConfig
-      })
-      .then(({ data }) => {
-        commit('setUserData', data)
-      })
-    */
-
     return await axios
       .post('/register', credentials)
       .then(({ data }) => {
@@ -102,18 +72,12 @@ const actions = {
 
   async logout ({ commit }) {
     return await axios
-       .delete('/logout'
-        /*, {
-        headers: {
-          'Authorization': 'Bearer '+localStorage.getItem('token')
-        }
-      */
-       )
+       .delete('/logout')
        .then(({ data }) => {
         console.log(data)
           commit('clearUserData')
         }).catch((err) =>{
-          console.log(err)
+          console.log("logout error: "+err)
         })
   },
 
