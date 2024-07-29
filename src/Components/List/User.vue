@@ -86,7 +86,7 @@
             </div>  
           </th>
           <td class="px-6 py-2.5 whitespace-nowrap text-black-white">
-            <div class="flex items-center">
+            <div v-if="user.role_id != 1" class="flex items-center">
               <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
               {{ user.balance }} point(s)
             </div>
@@ -109,35 +109,11 @@
               </router-link>
             </div>
             
-            <div class="mx-2">
+            <div v-if="user.role_id != 1" class="mx-2">
               <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
                 Historique
               </router-link>
             </div>
-            <!-- <div class="px-6 py-2.5 flex justify-between w-full " v-if="edit != user.id"> -->
-            <div @click="editForm(user)" class="mx-2">
-              <button class="btn-extrasmall btn-success">
-                crediter
-              </button>
-            </div>
-
-            <div @click="editFormMalus(user)">
-              <button class="btn-extrasmall btn-danger">
-                debiter
-              </button>
-            </div>
-          </div>
-          <div v-if="edit == user.id">
-            <form class="relative w-full my-2" @submit.prevent="update(user)">
-              <div class="">
-                <label for="delta" class="sr-only">bonus</label>
-                <input id="delta" type="number" name="delta" v-model="balance" class="input" />
-              </div>
-              <p v-if="errors" class="input-error">
-                <span v-if="errors">{{ errors }}</span>
-              </p>
-              <button type="submit" class="rounded-lg btn-base btn-blue mt-1 disabled" :disabled="balance<=0">Save</button>
-            </form>
           </div>
           </td>
         </tr>
@@ -145,45 +121,27 @@
     </table>
   </div>
 </div>
-  <!-- <div v-if="users">
-    <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
-      <Pagination :links="users.links" />
-    </div>
-  </div> -->
 </template>
 
 <script>
 import FlashAlert from '@/Components/FlashAlert.vue'
-import { ref } from 'vue'
-import Pagination from '@/Components/PaginationTable.vue'
 import SearchBar from '@/Components/SearchBar.vue'
 import Loading from '@/Components/Loading.vue'
 
 
 export default {
   components: {
-    Pagination,
     FlashAlert,
     SearchBar,
     Loading
   },
   data() {
     return {
-      balance: 0,
-      malus: false,
       loading: false,
       message: '',
       errors: null,
       users: null,
       recentUserId: null
-    }
-  },
-  setup() {
-    const edit = ref(null)
-    const malus = ref(false)
-    return {
-      edit,
-      malus
     }
   },
 
@@ -203,37 +161,6 @@ export default {
           }
           this.loading = false
         })
-  },
-
-  methods: {
-    editForm (user) {
-      this.edit = user.id
-    },
-    editFormMalus (user) {
-      this.edit = user.id
-      this.malus = true
-    },
-    update (user) {
-      this.errors = null
-      this.malus = this.malus,
-      this.$store
-        .dispatch('auth/updateBalance', {
-          malus: this.malus,
-          balance: this.balance,
-          id: user.id
-        })
-        .then((res) => {
-          this.message = res.data.message
-          this.$router.push({ name: 'users' })
-          // location.reload()
-        })
-        .catch(err => {
-          console.log(err)
-          this.errors = err.response.data.errors
-        })
-      this.malus = false
-      // this.edit = null
-    }
   }
 }
 

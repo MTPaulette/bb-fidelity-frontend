@@ -24,7 +24,11 @@
           <label for="user" class="label">Choose User</label>
           <select id="user" v-model="selectedUser" name="user" class="input" required>
             <option selected>No user selected</option>
-            <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option>
+            <!-- <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option> -->
+            <option v-for="user in users" :key="user.id" :value="user">
+              <span v-if="user.role_id == 1"> {{ user.name }} (Admin)</span>
+              <span v-else>{{ user.name }}</span>
+            </option>
           </select>
         </div>
 
@@ -43,44 +47,6 @@
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
           <label for="payment" class="sr-onlyy">Payment by cash</label>
         </div>
-                    
-        
-        
-        <!-- <div>
-          <label for="name" class="label">Name</label>
-          <input id="name" v-model="purchase.name" type="text" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.name">{{ errors.name[0] }}</span>
-          </p>
-        </div>
-        <div>
-          <label for="price" class="label">Price (FCFA)</label>
-          <input id="price" v-model="purchase.price" type="price" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.price">{{ errors.price[0] }}</span>
-          </p>
-        </div>
-        <div>
-          <label for="point" class="label">Bonus Point</label>
-          <input id="point" v-model="purchase.point" type="number" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.point">{{ errors.point[0] }}</span>
-          </p>
-        </div>
-        <div>
-          <label for="validity" class="label">Validity</label>
-          <input id="validity" v-model="purchase.validity" type="text" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.validity">{{ errors.validity[0] }}</span>
-          </p>
-        </div>
-        <div>
-          <label for="purchase" class="label">Description</label>
-          <textarea v-model="purchase.description" rows="4" class="text-area mb-4" placeholder="new purchase..." />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.description">{{ errors.description[0] }}</span>
-          </p>
-        </div> -->
         <ButtonLoading label="Save purchase" :loading="loading" />
       </form>
     </div>
@@ -122,7 +88,7 @@
               </div>
               <h5 class="subtitle">{{ selectedUser.name }}</h5>
               <span class="text-sm text-blue-500 my-1">{{ selectedUser.email }}</span>
-              <div class="flex items-center">
+              <div v-if="selectedUser.role_id != 1" class="flex items-center">
                 <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[selectedUser.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
                 {{ selectedUser.balance }} point(s)
               </div>
@@ -262,7 +228,8 @@ export default {
       this.$store
         .dispatch('purchases/createPurchase', this.purchase)
         .then((res) => {
-          this.message = res.data.message
+          this.loading = false
+          //this.message = res.data.message
           document.getElementById('summaryButton').click()
 
           //flashAlert will disappear after 1s
@@ -271,9 +238,11 @@ export default {
             this.getAllUsers()
           }, 5000)
 
-          // this.errors = res.response.data.errors
+          //this.errors = res.response.data.errors
         })
         .catch(err => {
+          console.log("===============err====--------")
+          console.log(err)
           if(err.response) {
             this.errors = err.response.data.errors
             if(err.response.status == 403) {

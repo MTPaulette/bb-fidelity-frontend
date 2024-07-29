@@ -30,12 +30,6 @@ const actions = {
       })
   },
 
-
-  updateBalance ({ commit }, credentials) {
-    return axios
-      .put('/updateBalance', credentials)
-  },
-
   async getServiceById ({ commit }, credentials) {
     return await axios
       .get('/service/'+credentials.id)
