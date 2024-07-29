@@ -85,7 +85,7 @@ export default {
         .catch(err => {
         if(err.response) {
           this.errors = err.response.data.errors
-          if(err.response.status === 403) {
+          if(err.response.status == 403) {
             router.push({ name: 'forbidden' })
           }
         }

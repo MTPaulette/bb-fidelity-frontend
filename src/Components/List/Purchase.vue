@@ -5,7 +5,7 @@
         <span class="text-gray-500">Total purchases:</span>
         <span class="dark:text-white" v-if="services">{{ services.length }}</span>
       </h5>
-      <div v-if="user.role_id === 1" class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+      <div v-if="user.role_id == 1" class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
         <router-link class="flex justify-end" :to="{ name: 'purchase.create'}">
           <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base">
             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -44,7 +44,7 @@
         <tbody>
         <tr v-for="service in services" :key="service.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="w-4 px-4 py-3">
-            <div v-if="user.role_id === 1">
+            <div v-if="user.role_id == 1">
               <router-link :to="{ name: 'service.show', params: { id: service.pivot.id }}">
                 {{ service.pivot.id }}
               </router-link>
@@ -52,7 +52,7 @@
             <div v-else>{{ service.pivot.id }}</div>
           </th>
           <td class="px-4 py-2 whitespace-nowrap text-black-white">
-            <div v-if="user.role_id === 1" class="hover:text-accentuate hover:underline">
+            <div v-if="user.role_id == 1" class="hover:text-accentuate hover:underline">
               <router-link :to="{ name: 'user.show', params: { id: service.pivot.user_id }}">
                 {{ service.user_name }}
               </router-link>
@@ -60,7 +60,7 @@
             <div v-else>{{ service.user_name }}</div>
           </td>
           <td class="px-4 py-2 whitespace-nowrap text-black-white">
-            <div v-if="user.role_id === 1" class="hover:text-accentuate hover:underline">
+            <div v-if="user.role_id == 1" class="hover:text-accentuate hover:underline">
               <router-link :to="{ name: 'service.show', params: { id: service.id }}">
                 {{ service.name }}
               </router-link>

@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 
 export default {
@@ -79,7 +78,9 @@ export default {
           this.$router.push({ name: 'profile' })
         })
         .catch(err => {
-          this.errors = err.response.data.errors
+          if(err.response) {
+            this.errors = err.response.data.errors
+          }
           console.log(err)
         })
         .finally(() => this.loading = false)

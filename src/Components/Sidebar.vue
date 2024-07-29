@@ -4,7 +4,7 @@
     <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
       <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
         <!-- historic -->
-        <li v-if="user.role_id === 1">
+        <li v-if="user.role_id == 1">
           <router-link :to="{ name: 'purchases'}" class="flex items-center w-full p-2 hover:text-accentuate">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223Z"/>
@@ -32,7 +32,7 @@
         </li>
 
         <!-- new purchase -->
-         <li v-if="user.role_id === 1">
+         <li v-if="user.role_id == 1">
           <router-link
             to="/purchase/create" class="-px-4 py-2 item-dropdown"
           >
@@ -54,7 +54,7 @@
         </li>
 
         <!-- service -->
-        <li v-if="user.role_id === 1">
+        <li v-if="user.role_id == 1">
           <button type="button" class="-px-4 py-2 item-dropdown" aria-controls="dropdown-article" data-collapse-toggle="dropdown-article">
             <svg aria-hidden="false" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" /></svg>
             <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Services</span>
@@ -79,7 +79,7 @@
         </li>
 
         <!-- users list -->
-         <li v-if="user.role_id === 1">
+         <li v-if="user.role_id == 1">
           <router-link
             to="/users" class="-px-4 py-2 item-dropdown"
           >

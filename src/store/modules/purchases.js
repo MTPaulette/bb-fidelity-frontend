@@ -25,7 +25,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status === 403) {
+        if(err.response.status == 403) {
           router.push({ name: 'forbidden' })
         }
       })
@@ -43,7 +43,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status === 403) {
+        if(err.response.status == 403) {
           router.push({ name: 'forbidden' })
         }
       })

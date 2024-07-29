@@ -188,7 +188,7 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
   
   // if user is already authenticated, redirect login to services page
-  if(to.name === 'login' && loggedIn) {
+  if(to.name == 'login' && loggedIn) {
     next({ name: 'profile'})
   }
 
@@ -198,7 +198,7 @@ router.beforeEach((to, from, next) => {
     // check if the user is authenticated
     if (to.meta.admin) {
       const role_id = JSON.parse(localStorage.getItem('user')).role_id
-      if( role_id === 1) {
+      if( role_id == 1) {
         next()
       } else {
         next({ name: 'forbidden'})
@@ -212,7 +212,7 @@ router.beforeEach((to, from, next) => {
 
   /*
     // check if the user is authenticated
-    if (to.meta.admin && loggedIn.role_id === 1) {
+    if (to.meta.admin && loggedIn.role_id == 1) {
       next({ name: 'forbidden'})
     }else {
       next()

@@ -21,7 +21,7 @@
           <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
           {{ user.balance }} point(s)
         </div>
-        <p class="text-black-white"><span v-if="user.role_id === 1"> Admin </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
+        <p class="text-black-white"><span v-if="user.role_id == 1"> Admin </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
         <div class="flex mt-4 md:mt-6">
           <router-link :to="{ name: 'user.historic', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
             Historique

@@ -7,8 +7,8 @@ import services from './modules/services.js'
 import purchases from './modules/purchases.js'
 
 
-axios.defaults.baseURL = 'https://fidelityapi.brain-booster.net'
-//axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+//axios.defaults.baseURL = 'https://fidelityapi.brain-booster.net'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 const axiosConfig = {
   'Content-Type': 'application/json',
