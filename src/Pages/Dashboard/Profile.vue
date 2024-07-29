@@ -129,7 +129,7 @@ export default {
           setTimeout(() => {
             this.message = ''
             location.reload()
-          }, 5000)
+          }, 2000)
         })
         .catch(err => {
           console.log(err)

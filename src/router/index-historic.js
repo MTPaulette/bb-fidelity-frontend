@@ -145,10 +145,7 @@ const router = createRouter({
           path: "/user/:id/historic",
           name: "user.historic",
           component: User_Services,
-          props: true,
-          meta: {
-            admin: true,
-          },
+          props: true
         },
       ],
     },
@@ -195,19 +192,31 @@ router.beforeEach((to, from, next) => {
     next({ name: 'profile'})
   }
 
-  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
-    next({ name: 'login'})
-  }else {
+  if(!loggedIn){
+    if (to.matched.some(record => record.meta.auth)) {
+      next({ name: 'login'})
+    } else {
+      next()
+    }
+  } else {
+    const role_id = JSON.parse(loggedIn).role_id
     // check if the user is authenticated
     if (to.meta.admin) {
-      const role_id = JSON.parse(localStorage.getItem('user')).role_id
       if( role_id == 1) {
         next()
       } else {
         next({ name: 'forbidden'})
       }
     }else {
-      next()
+      if(to.name == 'user.historic') {
+        if(role_id == 1) {
+          next()
+        } else {
+          next({ name: 'forbidden'})
+        }
+      } else {
+        next()
+      }
     }
   }
 
