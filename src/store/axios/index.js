@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  // baseURL: 'https://fidelityapi.brain-booster.net/api',
-  baseURL: 'http://127.0.0.1:8000/api', // Votre URL de base pour les requêtes API
+  baseURL: 'https://fidelityapi.brain-booster.net/api',
+  //baseURL: 'http://127.0.0.1:8000/api', // Votre URL de base pour les requêtes API
   withCredentials: true, // inclure les cookies si nécessaire
 });
 

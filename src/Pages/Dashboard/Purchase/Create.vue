@@ -209,6 +209,11 @@ export default {
       this.loading = !this.loading
       this.errors = null
       document.getElementById('summaryButton').click()
+      if(this.selectedUser.role_id == 1) {
+        this.errors = "Only client can make purchase. not Admin."
+        this.canSubmit = false
+      }
+
       if(!this.purchase.by_cash) {
         let new_balance = this.selectedUser.balance - this.selectedService.price
         if(new_balance < 0) {
@@ -241,8 +246,6 @@ export default {
           //this.errors = res.response.data.errors
         })
         .catch(err => {
-          console.log("===============err====--------")
-          console.log(err)
           if(err.response) {
             this.errors = err.response.data.errors
             if(err.response.status == 403) {
