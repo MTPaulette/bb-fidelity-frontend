@@ -1,5 +1,6 @@
 import router from '../../router/index-historic'
 import axios from './../axios'
+import axiosLogin from 'axios'
 
 //initial state
 const state = {
@@ -36,11 +37,14 @@ const mutations = {
 
 const actions = {
   async login ({ commit }, credentials) {
-    return await axios
-      .post('/login', credentials)
-      .then(({ data }) => {
-        commit('setUserData', data)
-      })
+    await axiosLogin.get('https://fidelityapi.brain-booster.net/sanctum/csrf-cookie')
+        .then(() => {
+              return axios
+                .post('/login', credentials)
+                .then(({ data }) => {
+                  commit('setUserData', data)
+                })
+    })
   },
 
   async register ({ commit }, credentials) {

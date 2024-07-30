@@ -3,7 +3,6 @@
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 sm:w-52 xl:w-64 h-screen pt-16 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
       <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
-        role: {{ user.role_id == 1 }}
         <!-- historic -->
         <li v-if="user.role_id == 1">
           <router-link :to="{ name: 'purchases'}" class="flex items-center w-full p-2 hover:text-accentuate">

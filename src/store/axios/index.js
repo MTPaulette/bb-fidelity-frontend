@@ -8,8 +8,10 @@ const instance = axios.create({
     "Access-Control-Allow-origin": "*",
     'Accept': 'application/json',
     'Access-Control-Allow-Credentials': true,
+    //'Authorization': 'Bearer '+localStorage.getItem('token')
   },
   withCredentials: true, // inclure les cookies si nécessaire
+  withXSRFToken: true,
 });
 
 // Ajoute un interceptor de requête pour ajouter le token à chaque requête
