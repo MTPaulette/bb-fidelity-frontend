@@ -1,4 +1,4 @@
-import router from '../../router/index-historic'
+import router from '../../router'
 import axios from './../axios'
 
 //inittial state
@@ -24,9 +24,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 
@@ -37,9 +35,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 
@@ -50,9 +46,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 

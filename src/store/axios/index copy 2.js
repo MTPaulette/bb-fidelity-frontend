@@ -10,21 +10,19 @@ const instance = axios.create({
     'Accept': 'application/json',
     'Access-Control-Allow-Credentials': true,
   },
-  withCredentials: true,
+  withCredentials: true, // inclure les cookies si nécessaire
   withXSRFToken: true,
-  timeout: 30000,
+  timeout: 10000,
 });
 
 // Ajoute un interceptor de requête pour ajouter le token à chaque requête
 instance.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
-    // config.headers.Authorization = 'Bearer 54|d6DgHQcvVlvxf5pcubE6eCHLQuUOLx9YSxc5uqWkd0e472fc';
-    config.headers.Authorization = 'Bearer '+token;
+    config.headers.Authorization = 'Bearer 83|8mScWmyeTeHBAJ8cLtLnrjcFRiZftjrdIZjMzTUt01802e24';
   }
   return config;
 }, error => {
-  // return error
   return Promise.reject(error);
 });
 
@@ -33,16 +31,23 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
-  switch(error.response.status) {
-    case 403: return router.push({ name: 'forbidden' });
-    case 401: 
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      return router.push({ name: 'login' });
-    case 404: return router.push({ name: 'notFound' });
-    default: return Promise.reject(error);
-   }
-  
+  const status = error.response.staus
+  if(status == 401) {
+    router.push({ name: 'login' })
+  }
+  if(status == 403) {
+    router.push({ name: 'forbidden' })
+  }
+  if(status == 404) {
+    router.push({ name: 'notFound' })
+  }
+  console.log("==============================================================: "+error.response.status)
+  // switch(error.response.status) {
+  //   case 403: router.push({ name: 'forbidden' });
+  //   case 401: router.push({ name: 'login' });
+  //   case 404: router.push({ name: 'notFound' });
+  // }
+  return Promise.reject(error);
 });
 
 export default instance;

@@ -83,6 +83,7 @@ const actions = {
        .then(({ data }) => {
         console.log(data)
           commit('clearUserData')
+          // router.push({ name: 'login' })
         }).catch((err) =>{
           console.log("logout error: "+err)
         })
@@ -96,9 +97,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 
@@ -109,9 +108,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 
@@ -122,9 +119,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        if(err.response.status == 403) {
-          router.push({ name: 'forbidden' })
-        }
+        console.log(err)
       })
   },
 }

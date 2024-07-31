@@ -179,6 +179,41 @@ const router = createRouter({
   linkExactActiveClass: 'text-accentuate bg-highlight rounded-lg'
 })
 
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem('user')
+  
+  // if user is already authenticated, redirect login to services page
+  if(to.name == 'login' && loggedIn) {
+    next({ name: 'profile'})
+  }
+
+  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+    next({ name: 'login'})
+  }else {
+    // check if the user is authenticated
+    if (to.meta.admin) {
+      const role_id = JSON.parse(localStorage.getItem('user')).role_id
+      if( role_id == 1) {
+        next()
+      } else {
+        next({ name: 'forbidden'})
+      }
+    }else {
+      next()
+    }
+  }
+
+
+  /*
+    // check if the user is authenticated
+    if (to.meta.admin && loggedIn.role_id == 1) {
+      next({ name: 'forbidden'})
+    }else {
+      next()
+    }
+      */
+})
+
 router.beforeResolve((to, from, next) => {
   // if this isn't an initial page load
   if(to.name) {
@@ -186,28 +221,6 @@ router.beforeResolve((to, from, next) => {
     NProgress.done()
   }
   next()
-})
-
-router.beforeEach((to, from) => {
-  const loggedIn = localStorage.getItem('user')
-  
-  // if user is already authenticated, redirect login to services page
-  if(to.name == 'login' && loggedIn) {
-    return { name: 'profile'}
-  }
-
-  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
-    return { name: 'login' }
-  }
-  else {
-    // check if the user is authenticated
-    if (to.meta.admin) {
-      const role_id = JSON.parse(loggedIn).role_id
-      if( role_id != 1) {
-        return { name: 'forbidden'}
-      }
-    }
-  }
 })
 
 // complete the animation of the route progress bar
