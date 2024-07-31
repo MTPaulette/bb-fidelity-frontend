@@ -43,9 +43,13 @@
             <span v-if="errors.point">{{ errors.point[0] }}</span>
           </p>
         </div>
+        <!-- validity -->
         <div>
           <label for="validity" class="label">Validity</label>
-          <input id="validity" v-model="service.validity" type="text" class="input" required />
+          <select id="validity" v-model="service.validity" name="validity" class="input" required>
+            <option selected>No validity selected</option>
+            <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
+          </select>
           <p v-if="errors" class="input-error">
             <span v-if="errors.validity">{{ errors.validity[0] }}</span>
           </p>
@@ -70,6 +74,7 @@ import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
 
 import Service from "@/Models/Service.js"
+import Validities from "@/Models/Validities.js"
 
 export default {
   components: {
@@ -81,6 +86,7 @@ export default {
 
   data() {
     return {
+      validities: Validities,
       service: null,
       name: null,
       price: '1000',
