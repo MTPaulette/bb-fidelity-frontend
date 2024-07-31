@@ -26,6 +26,7 @@ import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import Forbidden from '../Pages/Dashboard/Forbidden.vue'
 import NotFound from '../Pages/NotFound.vue'
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -152,16 +153,6 @@ const router = createRouter({
         },
       ],
     },
-
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
-    
     {
       component: AuthentificationLayout,
       children: [
@@ -193,33 +184,9 @@ router.beforeEach((to, from, next) => {
   // if user is already authenticated, redirect login to services page
   if(to.name == 'login' && loggedIn) {
     next({ name: 'profile'})
+  } else {
+    next()
   }
-
-  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
-    next({ name: 'login'})
-  }else {
-    // check if the user is authenticated
-    if (to.meta.admin) {
-      const role_id = JSON.parse(localStorage.getItem('user')).role_id
-      if( role_id == 1) {
-        next()
-      } else {
-        next({ name: 'forbidden'})
-      }
-    }else {
-      next()
-    }
-  }
-
-
-  /*
-    // check if the user is authenticated
-    if (to.meta.admin && loggedIn.role_id == 1) {
-      next({ name: 'forbidden'})
-    }else {
-      next()
-    }
-      */
 })
 
 router.beforeResolve((to, from, next) => {
@@ -238,3 +205,30 @@ router.afterEach(() => {
 
 
 export default router
+
+/*
+router.beforeEach((to, from, next) => {
+  const loggedIn = localStorage.getItem('user')
+  
+  // if user is already authenticated, redirect login to services page
+  if(to.name == 'login' && loggedIn) {
+    next({ name: 'profile'})
+  }
+
+  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+    next({ name: 'login'})
+  }else {
+    // check if the user is authenticated
+    if (to.meta.admin) {
+      const role_id = JSON.parse(localStorage.getItem('user')).role_id
+      if( role_id == 1) {
+        next()
+      } else {
+        next({ name: 'forbidden'})
+      }
+    }else {
+      next()
+    }
+  }
+})
+  */
