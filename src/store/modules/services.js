@@ -1,4 +1,3 @@
-import router from '../../router'
 import axios from './../axios'
 
 //inittial state
@@ -61,6 +60,14 @@ const actions = {
   async updateService ({ dispatch }, credentials) {
     return await axios
       .put('/service/'+credentials.id+'/update', credentials.service)
+      .then((data) => {
+        return data
+      })
+  },
+
+  async deleteService ({ dispatch }, credentials) {
+    return await axios
+      .put('/service/'+credentials.id+'/delete', credentials)
       .then((data) => {
         return data
       })

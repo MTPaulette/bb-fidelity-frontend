@@ -17,24 +17,7 @@ export default {
   components: {
     Sidebar,
     Footer,
-  },
-  data() {
-    return {
-      data:{
-        backendData:''
-      }
-    }
-  },
-  computed: {
-    user() {
-      return localStorage.getItem('user')
-    },
-  },
-  mounted() {
-    if (!this.user) {
-      this.$router.push("/login");
-    }
-  },
+  }
 }
 
 </script>

@@ -132,11 +132,6 @@ export default {
           }, 2000)
         })
         .catch(err => {
-          switch(err.response.status) {
-            case 404: this.$router.push({ name: 'notFound' });
-            case 403: this.$router.push({ name: 'forbidden' });
-            case 401: this.$router.push({ name: 'login' });
-          }
           console.log(err)
         })
         .finally(() => this.loading = false)

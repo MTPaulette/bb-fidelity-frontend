@@ -56,10 +56,10 @@
   <button id="summaryButton" data-modal-target="summaryModal" data-modal-toggle="summaryModal" class="sr-only" type="button">Save purchase</button>
 
   <!-- Summary modal -->
-  <div id="summaryModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal">
+  <div id="summaryModal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-fulll">
     <div class="relative p-4 w-full max-w-2xl h-full">
       <!-- Modal content -->
-      <div class="relative bg-primary rounded-lg shadow p-5 md:p-8">
+      <div class="relative bg-default rounded-lg shadow p-5 md:p-8">
         <!-- Modal header -->
         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 border-color">
           <h3 class="title"> Purchase summary </h3>
@@ -69,8 +69,11 @@
           </button>
         </div>
         
-        <div v-if="errors">
-          <Error :message="errors" />
+        <div v-if="errors" class="flex p-3 mb-4 rounded-lg font-medium border border-red-600 text-danger">
+          <svg class="w-7 h-7 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+          </svg>
+          {{ errors }}
         </div>
       
         <div class="grid gap-4 mt-6 pb-6 mb-10 sm:grid-cols-2 rounded-t border-b ">
@@ -134,7 +137,11 @@
           </p>
           <p class="text-black-white font-[Roboto] font-bold text-2xl mt-4 mb-12">
             The user new balance is 
-            <span :class="[newBalance < 0 ? 'text-danger': 'text-accentuate']"> {{ newBalance }} points.</span><br />
+            <!-- <span v-if="purchase.by_cash" class="text-green-400"> {{ parseInt(selectedUser.balance)+parseInt(selectedService.point) }} points.</span>
+            <span v-else class="text-danger"> {{ parseInt(selectedUser.balance)-parseInt(selectedService.point) }} points.</span><br /> -->
+
+            <span v-if="purchase.by_cash" class="text-green-400"> {{ this.new_balance }} points.</span>
+            <span v-else class="text-danger"> ici {{ selectedUser.balance-selectedService.point }} points.</span><br />
           </p>
         </div>
 
@@ -153,7 +160,6 @@ import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
-import Error from '@/Components/Error.vue'
 
 import Purchase from "@/Models/Purchase.js"
 
@@ -162,8 +168,7 @@ export default {
     Breadcrumb,
     FlashAlert,
     ButtonLoading,
-    Loading,
-    Error
+    Loading
   },
 
   data() {
@@ -179,7 +184,6 @@ export default {
       loading: false,
       canSubmit: true,
       sending: false,
-      newBalance: 0
     }
   },
 
@@ -187,12 +191,6 @@ export default {
     this.getAllUsers()
     this.getAllServices()
   },
-
-  // watch: {
-  //   selectedUser() {
-  //     this.setNewBalance()
-  //   }
-  // },
 
   methods: {
     getAllUsers() {
@@ -220,12 +218,11 @@ export default {
         this.canSubmit = false
       }
 
-      if(this.purchase.by_cash) {
-        this.newBalance = parseInt(this.selectedUser.balance) + parseInt(this.selectedService.price)
-      } else {
-        this.newBalance = parseInt(this.selectedUser.balance) - parseInt(this.selectedService.price)
-        // this.newBalance = this.selectedUser.balance - this.selectedService.price
-        if(this.newBalance < 0) {
+      if(!this.purchase.by_cash) {
+        // let new_balance = parseInt(this.selectedUser.balance) - parseInt(this.selectedService.price)
+        let new_balance = this.selectedUser.balance - this.selectedService.price
+          console.log("================ "+new_balance)
+        if(new_balance < 0) {
           this.errors = "The user's balance is insuffisant to buy this service."
           this.canSubmit = false
         }

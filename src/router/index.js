@@ -158,7 +158,7 @@ const router = createRouter({
       component: AuthentificationLayout,
       children: [
         {
-          path: '/:pathMatch(.*)', //'/:pathMatch(.*)*',
+          path: '/:pathMatch(.*)*',
           name: 'notFound',
           component: NotFound
         }

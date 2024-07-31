@@ -67,7 +67,7 @@
             </div>
             <div v-else>{{ service.name }}</div>
           </td>
-          <td class="px-4 py-2 whitespace-nowrap text-black-white">{{ service.price }} FCFA</td>
+          <td class="px-4 py-2 whitespace-nowrap text-black-white">{{ service.price }} XAF</td>
           <td class="px-4 py-2">{{ service.validity }}</td>
           <td class="px-4 py-2 whitespace-nowrap">
             <span v-if="service.pivot.by_cash">By cash</span>

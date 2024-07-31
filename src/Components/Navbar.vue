@@ -15,8 +15,9 @@
               <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z" />
             </svg>
           </button>
-          <a href="/home" class="shrink-0 ml-2 md:mr-24">
-            <img src="./../assets/logo_bb.png" alt="Factoriuux" class="h-12 w-40" /></a>
+          <a href="#" class="shrink-0 ml-2 md:mr-24">
+            <img src="./../assets/logo_bb.png" alt="brain booster logo" class="h-12 w-24" />
+          </a>
         </div>
         <div class="flex items-center">
           <!-- <div class="flex items-center ml-3"> -->

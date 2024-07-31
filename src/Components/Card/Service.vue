@@ -13,10 +13,10 @@
         </div>
         <div class="my-3">
           <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
-          <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} FCFA </span></p>
+          <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} XAF </span></p>
           <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.point }} Point(s) </span></p>
         </div>
-        <!-- <p class="text-accentuate"> {{ service.price }} FCFA</p>
+        <!-- <p class="text-accentuate"> {{ service.price }} XAF</p>
         <p class="text-green-500">{{ service.price }} point(s)</p> -->
         <p class="mb-1 text-secondary w-full h-12 overflow-hidden">{{ service.description }}</p>
         <p class="mb-3 text-xs font-light">Cree il y'a {{ formatDate(service.created_at) }}</p>
@@ -25,7 +25,7 @@
             <!-- <router-link :to="`service/${service.id}`" class="btn-base btn-blue"> -->
               See More
           </router-link>
-          <!-- <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-success rounded-lg ms-2">Buy</router-link> -->
+          <!-- <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-danger-2 ms-2">Delete</router-link> -->
         </div>
     </div>
 </template>

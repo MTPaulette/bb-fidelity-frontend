@@ -25,7 +25,7 @@
           </p>
         </div>
         <div>
-          <label for="price" class="label">Price (FCFA)</label>
+          <label for="price" class="label">Price (XAF)</label>
           <input id="price" v-model="service.price" type="price" class="input" required />
           <p v-if="errors" class="input-error">
             <span v-if="errors.price">{{ errors.price[0] }}</span>
@@ -101,7 +101,7 @@ export default {
         //flashAlert will disappear after 1s
         setTimeout(() => {
           this.message = ''
-        }, 20000)
+        }, 5000)
       })
       .catch(err => {
         if(err.response) {
