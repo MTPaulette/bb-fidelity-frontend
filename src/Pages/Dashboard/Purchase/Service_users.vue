@@ -1,7 +1,6 @@
 <template>
   <div>
-    users: {{ users }}
-    <Breadcrumb link1="dashboard" link2="historic" />
+    <Breadcrumb link1="dashboard" link2="users_service" />
     <div v-if="loading">
       <Loading />
     </div>

@@ -11,6 +11,7 @@ const instance = axios.create({
     'Access-Control-Allow-Credentials': true,
   },
   withCredentials: true,
+  credentials: 'include',
   withXSRFToken: true,
   timeout: 30000,
 });
