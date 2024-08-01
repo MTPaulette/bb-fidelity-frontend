@@ -44,12 +44,12 @@
         <tbody>
         <tr v-for="service in services" :key="service.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="w-4 px-4 py-3">
-            <div v-if="user.role_id == 1">
+            <!-- <div v-if="user.role_id == 1">
               <router-link :to="{ name: 'service.show', params: { id: service.pivot.id }}">
                 {{ service.pivot.id }}
               </router-link>
-            </div>
-            <div v-else>{{ service.pivot.id }}</div>
+            </div> -->
+            <div>{{ service.pivot.id }}</div>
           </th>
           <td class="px-4 py-2 whitespace-nowrap text-black-white">
             <div v-if="user.role_id == 1" class="hover:text-accentuate hover:underline">
@@ -86,15 +86,15 @@
     </table>
   </div>
   </section>
-  </template>
+</template>
   
-  <script setup>
+<script setup>
   import { formatDate } from '@/Composables/formatDate'
   
   defineProps({
     services: Object,
   })
-  </script>
+</script>
   
 <script>
 export default {

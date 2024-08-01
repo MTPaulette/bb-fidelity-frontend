@@ -42,7 +42,7 @@
         <div>
           <label for="validity" class="label">Validity</label>
           <select id="validity" v-model="service.validity" name="validity" class="input" required>
-            <option selected>No validity selected</option>
+            <!-- <option selected>No validity selected</option> -->
             <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
           </select>
           <p v-if="errors" class="input-error">

@@ -19,6 +19,7 @@ import Purchases from '../Pages/Dashboard/Purchase/Index.vue'
 
 import Historic from '../Pages/Dashboard/Purchase/Historic.vue'
 import User_Services from '../Pages/Dashboard/Purchase/User_services.vue'
+import Service_Users from '../Pages/Dashboard/Purchase/Service_users.vue'
 
 import AuthentificationLayout from '@/Layouts/AuthentificationLayout.vue'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
@@ -147,6 +148,15 @@ const router = createRouter({
           path: "/user/:id/historic",
           name: "user.historic",
           component: User_Services,
+          props: true,
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: "/service/:id/users",
+          name: "service.users",
+          component: Service_Users,
           props: true,
           meta: {
             admin: true,

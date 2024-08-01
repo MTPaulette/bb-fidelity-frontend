@@ -2,12 +2,42 @@
   <div v-if="loading">
     <Loading />
   </div>
+  <div v-if="users">
+  <div v-if="this.message !=''">
+    <FlashAlert :message="this.message" />
+  </div>
   <div class="overflow-x-auto relative">
     <div class="block sm:flex sm:justify-between sm:items-center py-3">
-      <h5 class="space-x-4">
-        <span class="text-gray-500">Total users:</span>
-        <span class="dark:text-white" v-if="users">{{ users.length }}</span>
-      </h5>
+      <div class="flex items-center">
+        <div class="relative">
+          <SearchBar placeholder="Search for users" />
+        </div>
+        <div>
+          <button id="dropdownActionButton" data-dropdown-toggle="dropdownDotsHorizontal" class="inline-flex mt-2 ml-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button"> 
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+            </svg>
+          </button>
+        
+          <!-- Dropdown menu -->
+          <div id="dropdownDotsHorizontal" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+            <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>
+              </li>
+            </ul>
+            <div class="py-1">
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
         <!-- <div class="flex mt-5 sm:mt-0"> -->
         <router-link class="flex justify-end" to="#">
@@ -28,6 +58,7 @@
         </button>
       </div>
     </div>
+
 
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
@@ -89,27 +120,40 @@
       </tbody>
     </table>
   </div>
+</div>
 </template>
 
 <script>
+import FlashAlert from '@/Components/FlashAlert.vue'
+import SearchBar from '@/Components/SearchBar.vue'
 import Loading from '@/Components/Loading.vue'
+
 
 export default {
   components: {
+    FlashAlert,
+    SearchBar,
     Loading
-  },
-  props: {
-    users: Object
   },
   data() {
     return {
       loading: false,
+      message: '',
+      errors: null,
+      users: null,
       recentUserId: null
     }
   },
 
   mounted() {
     this.loading = true
+    this.$store.dispatch("auth/getAllUsers")
+        .then((res) => {
+          if(res) {
+            this.users = res.users
+          }
+          this.loading = false
+        })
     this.$store.dispatch("auth/getRecentUserId")
         .then((res) => {
           if(res) {

@@ -33,7 +33,10 @@ export default {
     }
   },
 
-  created() {
+  mounted() {
+    this.getAllServicesOfUser(this.$route.params.id)
+  },
+  createdd() {
     // watch the params of the route to fetch the data again
     this.$watch(
       () => this.$route.params.id,

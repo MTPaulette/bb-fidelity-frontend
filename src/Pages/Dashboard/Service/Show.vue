@@ -37,6 +37,7 @@
         
         <div class="flex items-center mt-4 md:mt-6">
           <router-link :to="{ name: 'service.edit', params: { id: service.id }}" class="btn-base btn-blue">Edit</router-link>
+          <router-link :to="{ name: 'service.users', params: { id: service.id }}" class="btn-base btn-light ms-2"> All Users </router-link>
           <div @click="toggleModal">
             <ButtonLoading class="btn-base btn-danger-2 ms-2" label="Delete" type="button" :loading="loading" />
           </div>
@@ -82,7 +83,7 @@
               Yes, I'm sure
             </button> -->
             <div class="flex w-full justify-center">
-              <div @click="deleteService">
+              <div @click.stop="deleteService">
                 <ButtonLoading :loading="sending" type="button" class="btn-base btn-danger" label="Yes, I'm sure" />
               </div>
               <button data-modal-hide="confirm-modal" type="button" class="btn-base btn-light-2 ms-2">No, cancel</button>
@@ -124,15 +125,8 @@ export default {
     }
   },
 
-  created() {
-    // watch the params of the route to fetch the data again
-    this.$watch(
-      () => this.$route.params.id,
-      this.getServiceById,
-
-      // fetch the data when the view is created and the data is already being observed
-      { immediate: true }
-    )
+  mounted() {
+    this.getServiceById(this.$route.params.id)
   },
 
   methods: {
@@ -168,8 +162,8 @@ export default {
           this.message = res.data.message
           this.toggleModal()
           setTimeout(() => {
-            this.$router.push({ name: 'services' })
             this.message = ''
+            this.$router.push({ name: 'services' })
           }, 5000)
         })
         .catch(err => {
@@ -189,4 +183,15 @@ export default {
   },
 }
 
+</script>
+
+<script setup>
+import { onMounted } from 'vue'
+import {
+  initModals
+} from 'flowbite'
+
+onMounted(() => {
+  initModals();
+})
 </script>

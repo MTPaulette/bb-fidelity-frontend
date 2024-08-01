@@ -106,6 +106,17 @@
   </aside>
 </template>
 
+<script setup>
+import { onMounted } from 'vue'
+import {
+  initDropdowns
+} from 'flowbite'
+
+onMounted(() => {
+  initDropdowns();
+})
+</script>
+
 <script>
 import { mapGetters } from 'vuex'
 import Navbar from '@/Components/Navbar.vue'
@@ -132,8 +143,6 @@ export default {
   }
 }
 </script>
-
-
 
 
 <style scoped>

@@ -188,12 +188,6 @@ export default {
     this.getAllServices()
   },
 
-  // watch: {
-  //   selectedUser() {
-  //     this.setNewBalance()
-  //   }
-  // },
-
   methods: {
     getAllUsers() {
       this.$store.dispatch("auth/getAllUsers")
@@ -266,4 +260,15 @@ export default {
   },
 }
 
+</script>
+
+<script setup>
+import { onMounted } from 'vue'
+import {
+  initModals
+} from 'flowbite'
+
+onMounted(() => {
+  initModals();
+})
 </script>
