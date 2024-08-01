@@ -36,7 +36,8 @@
             <th scope="col" class="px-4 py-3">Price</th>
             <th scope="col" class="px-4 py-3">Validity</th>
             <th scope="col" class="px-4 py-3">Pay Mode</th>
-            <th scope="col" class="px-4 py-3">Bonus Point</th>
+            <th scope="col" class="px-4 py-3">Credit Point</th>
+            <th scope="col" class="px-4 py-3">Debit Point</th>
             <th scope="col" class="px-4 py-3">Current Balance</th>
             <th scope="col" class="px-4 py-3">Date</th>
           </tr>
@@ -75,8 +76,14 @@
           </td>
           <td class="px-4 py-2 whitespace-nowrap text-black-white">
             <div class="flex items-center">
-              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[service.pivot.bonus_point > 0 ? 'bg-green-400' : 'bg-red-700']" />
-              {{ service.pivot.bonus_point }} point(s)
+              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[service.pivot.credit > 0 ? 'bg-green-400' : 'bg-gray-400']" />
+              {{ service.pivot.credit }} point(s)
+            </div>
+          </td>
+          <td class="px-4 py-2 whitespace-nowrap text-black-white">
+            <div class="flex items-center">
+              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[service.pivot.debit > 0 ? 'bg-red-700' : 'bg-gray-400']" />
+              {{ service.pivot.debit }} point(s)
             </div>
           </td>
           <td class="px-4 py-2">{{ service.pivot.user_balance }}</td>

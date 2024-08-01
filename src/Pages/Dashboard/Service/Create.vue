@@ -32,10 +32,17 @@
           </p>
         </div>
         <div>
-          <label for="point" class="label">Bonus Point</label>
-          <input id="point" v-model="service.point" type="number" class="input" required />
+          <label for="credit" class="label">Credit Point</label>
+          <input id="credit" v-model="service.credit" type="number" class="input" required />
           <p v-if="errors" class="input-error">
-            <span v-if="errors.point">{{ errors.point[0] }}</span>
+            <span v-if="errors.credit">{{ errors.credit[0] }}</span>
+          </p>
+        </div>
+        <div>
+          <label for="debit" class="label">Debit Point</label>
+          <input id="debit" v-model="service.debit" type="number" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.debit">{{ errors.debit[0] }}</span>
           </p>
         </div>
         <!-- validity -->
@@ -80,8 +87,8 @@ export default {
   data() {
     return {
       validities: Validities,
-      // new Service(name, price, point, validity, description, user_id)
-      service: new Service('', '', '', '', '', ''),
+      // new Service(name, price, credit, debit, validity, description, user_id)
+      service: new Service('', '', '', '', '', '', ''),
       message: '',
       loading: false,
       errors: null,

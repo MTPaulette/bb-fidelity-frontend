@@ -37,10 +37,17 @@
           </p>
         </div>
         <div>
-          <label for="point" class="label">Bonus Point</label>
-          <input id="point" v-model="service.point" type="number" class="input" required />
+          <label for="credit" class="label">Credit Point</label>
+          <input id="credit" v-model="service.credit" type="number" class="input" required />
           <p v-if="errors" class="input-error">
-            <span v-if="errors.point">{{ errors.point[0] }}</span>
+            <span v-if="errors.credit">{{ errors.credit[0] }}</span>
+          </p>
+        </div>
+        <div>
+          <label for="debit" class="label">Debit Point</label>
+          <input id="debit" v-model="service.debit" type="number" class="input" required />
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.debit">{{ errors.debit[0] }}</span>
           </p>
         </div>
         <!-- validity -->
@@ -90,7 +97,8 @@ export default {
       service: null,
       name: null,
       price: '1000',
-      point: '10',
+      credit: '10',
+      debit: '10',
       validity: '1 hour',
       description: "Ce forfait donne droit a une heure de temps dans l'espace open space.",
       message: '',
@@ -113,7 +121,7 @@ export default {
         .then((res) => {
           if(res) {
             const serviceData = res.service
-            this.service = new Service(serviceData.name, serviceData.price, serviceData.point, serviceData.validity, serviceData.description, serviceData.user_id)
+            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.description, serviceData.user_id)
           }
         })
         .catch(err => {
@@ -137,7 +145,8 @@ export default {
         //flashAlert will disappear after 1s
         setTimeout(() => {
           this.message = ''
-          location.reload()
+          this.$router.push({ name: 'service.show', params: { id: this.$route.params.id }})
+          // location.reload()
         }, 5000)
       })
       .catch(err => {

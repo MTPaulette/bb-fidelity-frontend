@@ -14,10 +14,9 @@
         <div class="my-3">
           <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
           <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} XAF </span></p>
-          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.point }} Point(s) </span></p>
+          <p>Credit Point: &nbsp;<span class="text-green-500"> {{ service.credit }} Point(s) </span></p>
+          <p>Debit Point: &nbsp;<span class="text-danger"> {{ service.debit }} Point(s) </span></p>
         </div>
-        <!-- <p class="text-accentuate"> {{ service.price }} XAF</p>
-        <p class="text-green-500">{{ service.price }} point(s)</p> -->
         <p class="mb-1 text-secondary w-full h-12 overflow-hidden">{{ service.description }}</p>
         <p class="mb-3 text-xs font-light">Cree il y'a {{ formatDate(service.created_at) }}</p>
         <div class="flex items-center">

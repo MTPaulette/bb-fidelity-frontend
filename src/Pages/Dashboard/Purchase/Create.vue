@@ -105,7 +105,8 @@
               <div class="my-2">
                 <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ selectedService.validity }} </span></p>
                 <p>Price: &nbsp;<span class="text-accentuate"> {{ selectedService.price }} XAF </span></p>
-                <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ selectedService.point }} Point(s) </span></p>
+                <p>Credit Point: &nbsp;<span class="text-green-500"> {{ selectedService.credit }} Point(s) </span></p>
+                <p>Debit Point: &nbsp;<span class="text-danger"> {{ selectedService.debit }} Point(s) </span></p>
               </div>
               <!-- <div>
                   Description: <br />
@@ -129,8 +130,8 @@
 
           <p>
             The user balance will be 
-            <span v-if="purchase.by_cash" class="text-green-400">credit on {{ selectedService.point }} points.</span>
-            <span v-else class="text-danger">debit on {{ selectedService.price }} points.</span><br />
+            <span v-if="purchase.by_cash" class="text-green-400">credit on {{ selectedService.credit }} points.</span>
+            <span v-else class="text-danger">debit on {{ selectedService.debit }} points.</span><br />
           </p>
           <p class="text-black-white font-[Roboto] font-bold text-2xl mt-4 mb-12">
             The user new balance is 
@@ -215,9 +216,9 @@ export default {
       }
 
       if(this.purchase.by_cash) {
-        this.newBalance = parseInt(this.selectedUser.balance) + parseInt(this.selectedService.price)
+        this.newBalance = parseInt(this.selectedUser.balance) + parseInt(this.selectedService.credit)
       } else {
-        this.newBalance = parseInt(this.selectedUser.balance) - parseInt(this.selectedService.price)
+        this.newBalance = parseInt(this.selectedUser.balance) - parseInt(this.selectedService.debit)
         // this.newBalance = this.selectedUser.balance - this.selectedService.price
         if(this.newBalance < 0) {
           this.errors = "The user's balance is insuffisant to buy this service."

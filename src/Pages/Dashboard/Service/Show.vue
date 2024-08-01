@@ -26,7 +26,8 @@
         <div class="mt-3 mb-5">
           <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
           <p>Price: &nbsp;<span class="text-accentuate"> {{ service.price }} XAF </span></p>
-          <p>Bonus Point: &nbsp;<span class="text-green-500"> {{ service.point }} Point(s) </span></p>
+          <p>Credit Point: &nbsp;<span class="text-green-500"> {{ service.credit }} Point(s) </span></p>
+          <p>Debit Point: &nbsp;<span class="text-accentuate"> {{ service.debit }} Point(s) </span></p>
         </div>
         <div>
           Description: <br />
