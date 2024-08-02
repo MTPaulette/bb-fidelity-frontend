@@ -38,8 +38,8 @@ const actions = {
   async login ({ commit }, credentials) {
 
     // share csrf-token generate by laravel (avoid 419 csrf-token expired)
-    // await axiosLogin.get('https://fidelityapi.brain-booster.net/sanctum/csrf-cookie')
     await axiosLogin.get('http://127.0.0.1:8000/sanctum/csrf-cookie')
+    //await axiosLogin.get('https://fidelityapi.brain-booster.net/sanctum/csrf-cookie')
         .then(() => {
               return axios
                 .post('/login', credentials)

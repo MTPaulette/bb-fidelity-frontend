@@ -2,20 +2,19 @@ import axios from 'axios';
 import router from '../../router';
 
 const instance = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api',
-  //baseURL: 'https://fidelityapi.brain-booster.net/api',
+  //baseURL: 'http://127.0.0.1:8000/api',
+  baseURL: 'https://fidelityapi.brain-booster.net/api',
   headers: {
     'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-origin": "*",
     'Accept': 'application/json',
     'Access-Control-Allow-Credentials': true,
-    // 'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 
   },
   withCredentials: true,
   credentials: 'include',
   withXSRFToken: true,
-  timeout: 30000,
+  // timeout: 30000,
 });
 
 // Ajoute un interceptor de requête pour ajouter le token à chaque requête
