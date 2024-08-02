@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Breadcrumb link1="dashboard" link2="users_service" />
+    <Breadcrumb link1="dashboard" link2="service_users" />
     <div v-if="loading">
       <Loading />
     </div>
 
     <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
 
-    <!-- <h1 class="ml-3 my-6 sm:my-8 title" v-if="users"> {{ users[0].user_name }} Historic </h1> -->
     <div v-if="users">
+      <h1 class="ml-3 my-6 sm:my-8 title"> {{ users[0].service_name }} Historic </h1>
       <ListUser :users="users" />
     </div>
   </div>

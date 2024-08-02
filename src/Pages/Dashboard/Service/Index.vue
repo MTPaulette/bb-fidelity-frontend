@@ -1,13 +1,13 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="services" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> Tous les services </h1>
+    <h1 class="ml-3 my-6 sm:my-8 title"> All Services </h1>
     <div class="my-6 md:mt-12 md:mb-16 p-5 md:px-8 rounded-lg bg-secondary" role="alert">
-      <span class="font-medium">Ensure that these requirements are met:</span>
+      <span class="font-medium">Below is a complete list of services offered by the company:</span>
         <ul class="mt-1.5 ml-4 list-disc list-inside text-secondary">
-          <li>At least 10 characters (and up to 100 characters)</li>
-          <li>At least one lowercase character</li>
-          <li>Inclusion of at least one special character, e.g., ! @ # ?</li>
+          <li>This list is in alphabetical order</li>
+          <li>The most recent service is highlighted.</li>
+          <li>You also have the possibility for a service to consult it, edit it, or ever delet it.</li>
         </ul>
     </div>
 

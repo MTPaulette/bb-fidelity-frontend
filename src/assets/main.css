@@ -46,7 +46,7 @@
   }
 
   .text-danger {
-    @apply text-[#d50100] dark:text-red-500
+    @apply text-[#d50100] dark:text-red-400
   }
 
   .text-accentuate {

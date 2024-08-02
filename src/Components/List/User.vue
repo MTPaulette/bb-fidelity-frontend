@@ -1,8 +1,8 @@
 <template>
-  <div v-if="loading">
+  <div v-if="!(users && recentUserId)">
     <Loading />
   </div>
-  <div class="overflow-x-auto relative">
+  <div v-else class="overflow-x-auto relative">
     <div class="block sm:flex sm:justify-between sm:items-center py-3">
       <h5 class="space-x-4">
         <span class="text-gray-500">Total users:</span>
@@ -32,29 +32,30 @@
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
         <tr>
-          <th scope="col" class="px-6 py-2.5">
+          <th scope="col" class="px-4 py-3">
             Name
           </th>
-          <th scope="col" class="px-6 py-2.5">
+          <th scope="col" class="px-4 py-3">
             balance
           </th>
-          <th scope="col" class="px-6 py-2.5">
+          <th scope="col" class="px-4 py-3">
             role
           </th>
-          <th scope="col" class="px-6 py-2.5">
+          <th scope="col" class="px-4 py-3">Date</th>
+          <th scope="col" class="px-4 py-3">
             Action
           </th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-600/30': '']"  class="border-b border-color hover:bg-highlight">
-          <th scope="row" class="flex items-center px-6 py-2.5 whitespace-nowrap">
+          <th scope="row" class="flex items-center px-4 py-3 whitespace-nowrap">
             <div class="pl-3">
               <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
               <p class="font-light font-[roboto]">{{ user.email }}</p>
             </div>  
           </th>
-          <td class="px-6 py-2.5 whitespace-nowrap text-black-white">
+          <td class="px-4 py-3 whitespace-nowrap text-black-white">
             <div v-if="user.role_id != 1" class="flex items-center">
               <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
               {{ user.balance }} point(s)
@@ -62,7 +63,8 @@
             <!-- <div v-if="user.balance>0" class="text-green-500 p-2">{{ user.balance }}</div>
             <div v-else class="text-danger p-2">{{ user.balance }}</div> -->
           </td>
-          <td class="px-6 py-2.5">
+          <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
+          <td class="px-4 py-3">
             <div v-if="user.role_id==1">
               Admin (Entreprise)
             </div>
@@ -71,25 +73,29 @@
             </div>
           </td>
           <td>
-          <div class="px-6 py-2.5 flex w-full">
-            <div>
-              <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="voir profil client">
-                Profile
-              </router-link>
+            <div class="px-4 py-3 flex w-full">
+              <div>
+                <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="voir profil client">
+                  Profile
+                </router-link>
+              </div>
+              
+              <div v-if="user.role_id != 1" class="mx-2">
+                <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
+                  Historique
+                </router-link>
+              </div>
             </div>
-            
-            <div v-if="user.role_id != 1" class="mx-2">
-              <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
-                Historique
-              </router-link>
-            </div>
-          </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
+<script setup>
+  import { formatDate } from '@/Composables/formatDate'
+</script>
 
 <script>
 import Loading from '@/Components/Loading.vue'
@@ -103,19 +109,16 @@ export default {
   },
   data() {
     return {
-      loading: false,
       recentUserId: null
     }
   },
 
   mounted() {
-    this.loading = true
     this.$store.dispatch("auth/getRecentUserId")
         .then((res) => {
           if(res) {
             this.recentUserId = res.id
           }
-          this.loading = false
         })
   }
 }

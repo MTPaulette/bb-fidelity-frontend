@@ -87,7 +87,7 @@
             </div>
           </td>
           <td class="px-4 py-2">{{ service.pivot.user_balance }}</td>
-        <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(service.pivot.created_at) }}</td>
+          <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(service.pivot.created_at) }}</td>
         </tr>
       </tbody>
     </table>

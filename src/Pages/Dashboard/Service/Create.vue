@@ -9,9 +9,9 @@
     <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          Check to the right. If the service that you find not exist, you can use the left textarea to
-          <span class="font-medium text-black-white">add new service</span>.
-          You can also use the trash icon to delete some service.
+          You have a possibility to create a new service.
+          <span class="font-medium text-black-white">Make sure its name is unique or not yet used</span>.
+          The description will provide more information about a service. Make sure to make it as detailled as possible.
         </p>
       </div>
 

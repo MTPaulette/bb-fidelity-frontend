@@ -74,7 +74,7 @@
           <div class="my-6 text-base" role="alert">
             <span class="font-medium">Ensure that these requirements are met:</span>
             <ul class="mt-1.5 ml-4 list-disc list-inside text-gray-500 dark:text-gray-400">
-              <li>At least 10 characters (and up to 100 characters)</li>
+              <li>At least 6 characters (and up to 100 characters)</li>
               <li>At least one lowercase character</li>
               <li>Inclusion of at least one special character, e.g., ! @ # ?</li>
             </ul>

@@ -13,9 +13,8 @@
     <div v-if="users && services" class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">
         <p class="text-sm text-gray-500 dark:text-gray-400">
-          Check to the right. If the purchase that you find not exist, you can use the left textarea to
-          <span class="font-medium text-black-white">add new purchase</span>.
-          You can also use the trash icon to delete some purchase.
+          For a new purchase, you must enter the customer, the service to be purchased and the payment method.
+          <span class="font-medium text-black-white">Administrators cannot make purchases.</span>.
         </p>
       </div>
       <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="summary">
@@ -216,9 +215,9 @@ export default {
       }
 
       if(this.purchase.by_cash) {
-        this.newBalance = parseInt(this.selectedUser.balance) + parseInt(this.selectedService.credit)
+        this.newBalance = parseFloat(this.selectedUser.balance) + parseFloat(this.selectedService.credit)
       } else {
-        this.newBalance = parseInt(this.selectedUser.balance) - parseInt(this.selectedService.debit)
+        this.newBalance = parseFloat(this.selectedUser.balance) - parseFloat(this.selectedService.debit)
         // this.newBalance = this.selectedUser.balance - this.selectedService.price
         if(this.newBalance < 0) {
           this.errors = "The user's balance is insuffisant to buy this service."

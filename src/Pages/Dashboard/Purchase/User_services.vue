@@ -7,8 +7,8 @@
 
     <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
 
-    <h1 class="ml-3 my-6 sm:my-8 title" v-if="services"> {{ services[0].user_name }} Historic </h1>
     <div v-if="services">
+      <h1 class="ml-3 my-6 sm:my-8 title"> {{ services[0].user_name }} Historic </h1>
       <ListPurchase :services="services" />
     </div>
   </div>
