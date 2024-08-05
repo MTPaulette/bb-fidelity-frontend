@@ -31,6 +31,7 @@
             <span v-if="errors.price">{{ errors.price[0] }}</span>
           </p>
         </div>
+      <div class="grid gap-2 sm:gap-6 grid-cols-2">
         <div>
           <label for="credit" class="label">Credit Point</label>
           <input id="credit" v-model="service.credit" type="number" class="input" required />
@@ -49,11 +50,34 @@
         <div>
           <label for="validity" class="label">Validity</label>
           <select id="validity" v-model="service.validity" name="validity" class="input" required>
-            <!-- <option selected>No validity selected</option> -->
             <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
           </select>
           <p v-if="errors" class="input-error">
             <span v-if="errors.validity">{{ errors.validity[0] }}</span>
+          </p>
+        </div>
+
+        <!-- agency -->
+        <div>
+          <label for="agency" class="label">Agency</label>
+          <select id="agency" v-model="service.agency" name="agency" class="input" required>
+            <option v-for="(agency, i) in agencies" :key="i" :value="agency">{{ agency }}</option>
+          </select>
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.agency">{{ errors.agency[0] }}</span>
+          </p>
+        </div>
+      </div>
+
+        <!-- service_type -->
+        <div>
+          <label for="service_type" class="label">Type</label>
+          <select id="service_type" v-model="service.service_type" name="service_type" class="input" required>
+            <!-- <option selected>No service_type selected</option> -->
+            <option v-for="(service_type, i) in validities" :key="i" :value="service_type">{{ service_type }}</option>
+          </select>
+          <p v-if="errors" class="input-error">
+            <span v-if="errors.service_type">{{ errors.service_type[0] }}</span>
           </p>
         </div>
         <div>
@@ -74,8 +98,10 @@ import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 
-import Service from "@/Models/Service.js"
-import Validities from "@/Models/Validities.js"
+import Service from '@/Models/Service.js'
+import Agencies from '@/Database/Agencies.js'
+import Validities from "@/Database/Validities.js"
+import Service_types from "@/Database/Service_types.js"
 
 export default {
   components: {
@@ -86,9 +112,12 @@ export default {
 
   data() {
     return {
+      agencies: Agencies,
       validities: Validities,
-      // new Service(name, price, credit, debit, validity, description, user_id)
-      service: new Service('', '', '', '', '', '', ''),
+      service_types: Service_types,
+      // new Service(name, price, credit, debit, validity, agency, service_type, description, user_id)
+      // service: new Service('', '', '', '', '', '', '', '', ''),
+      service: new Service('service', '2000', '1', '3', '01 hour', '', 'Etoa-Meki', 'space', 'service 1', ''),
       message: '',
       loading: false,
       errors: null,
@@ -100,6 +129,7 @@ export default {
       this.loading = true
       this.errors = null
 
+      console.log(this.service)
       this.$store
       .dispatch('services/createService', this.service)
       .then((res) => {

@@ -34,7 +34,7 @@ const actions = {
 
   async createPurchase ({ dispatch }, credentials) {
     return axios
-      .post('/purchase/store/', credentials)
+      .post('/purchase/store', credentials)
       .then((data) => {
         return data
       })

@@ -50,7 +50,7 @@
   }
 
   .text-accentuate {
-    @apply text-purple-600 dark:text-purple-500
+    @apply text-purple-600 dark:text-purple-400
     /* @apply text-[#202124] dark:text-[#dadce0] 
     @apply text-black dark:text-white*/
   }
@@ -208,5 +208,14 @@
   .item-dropdown {
     @apply flex items-center w-full p-2 transition duration-75 rounded-lg hover:text-accentuate hover:bg-highlight
     /* @apply flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 */
+  }
+  
+  /* dropdown */
+  .dropdown-item-filter {
+    @apply block px-4 py-2 hover:text-accentuate hover:bg-highlight border-b border-color
+  }
+  
+  .dropdown {
+    @apply bg-primary rounded-md shadow-dropdown-light dark:shadow-dropdown-dark
   }
 }

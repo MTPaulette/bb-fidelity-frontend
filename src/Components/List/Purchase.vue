@@ -46,6 +46,8 @@
             <th scope="col" class="px-4 py-3">Credit Point</th>
             <th scope="col" class="px-4 py-3">Debit Point</th>
             <th scope="col" class="px-4 py-3">Current Balance</th>
+            <th scope="col" class="px-4 py-3">Agency</th>
+            <th scope="col" class="px-4 py-3">Type</th>
             <th scope="col" class="px-4 py-3">Date</th>
           </tr>
         </thead>
@@ -89,6 +91,8 @@
             </div>
           </td>
           <td class="px-4 py-2">{{ service.pivot.user_balance }}</td>
+          <td class="px-4 py-2">{{ service.agency }}</td>
+          <td class="px-4 py-2">{{ service.service_type }}</td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(service.pivot.created_at) }}</td>
         </tr>
       </tbody>

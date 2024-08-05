@@ -3,12 +3,12 @@ import router from '../../router';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
-  //baseURL: 'https://fidelityapi.brain-booster.net/api',
+  //baseURL: 'https://fidelity.brain-booster.net/backend/api',
   headers: {
     'Accept': 'application/json',
   },
   withCredentials: true,
-  timeout: 30000,
+  //timeout: 1000,
 });
 
 // Ajoute un interceptor de requête pour ajouter le token à chaque requête
