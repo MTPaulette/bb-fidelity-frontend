@@ -1,37 +1,42 @@
-import axios from 'axios';
+import axiosLib from 'axios'
+import Cookies from 'js-cookie'
 import router from '../../router';
 
-const instance = axios.create({
+const axios = axiosLib.create({
   //baseURL: 'http://127.0.0.1:8000/api',
   baseURL: 'https://fidelityapi.brain-booster.net/api',
-  // headers: {
-  //   'Content-Type': 'application/x-www-form-urlencoded',
-  //   'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  // },
-  mode: "cors",
   headers: {
-    "Content-Type": "text/xml",
-    "X-PINGOTHER": "pingpong",
-    'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  }
-});
+    'X-Requested-With': 'XMLHttpRequest',
+    'Accept': 'application/json',
+  },
+  credentials: 'include',
+  withXSRFToken: true,
+})
 
-// Ajoute un interceptor de requête pour ajouter le token à chaque requête
-instance.interceptors.request.use(config => {
+axios.defaults.withCredentials  = true // allow sending cookies
+
+axios.interceptors.request.use(async (config) => {
+  console.log('===================================')
+  console.log(config.method)
+  const request_method = config.method
+  if (request_method.toLowerCase() !== 'get') {
+    await axios.get('/csrf-cookie').then(() => {
+      config.headers['X-XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN')
+    })
+  }
   const token = localStorage.getItem('token');
   if (token) {
-    // config.headers.Authorization = 'Bearer 54|d6DgHQcvVlvxf5pcubE6eCHLQuUOLx9YSxc5uqWkd0e472fc';
     config.headers.Authorization = 'Bearer '+token;
   }
-  return config;
+
+  return config
 }, error => {
   // return error
   return Promise.reject(error);
-});
-
+})
 
 // Add a response interceptor
-instance.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   switch(error.response.status) {
@@ -46,4 +51,4 @@ instance.interceptors.response.use(function (response) {
   
 });
 
-export default instance;
+export default axios

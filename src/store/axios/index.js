@@ -5,16 +5,9 @@ const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
   //baseURL: 'https://fidelityapi.brain-booster.net/api',
   headers: {
-    'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": "*",
     'Accept': 'application/json',
-    'Access-Control-Allow-Credentials': true,
-    // 'Access-Control-Allow-Headers': "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-
   },
   withCredentials: true,
-  credentials: 'include',
-  withXSRFToken: true,
   timeout: 30000,
 });
 
@@ -22,12 +15,10 @@ const instance = axios.create({
 instance.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
-    // config.headers.Authorization = 'Bearer 54|d6DgHQcvVlvxf5pcubE6eCHLQuUOLx9YSxc5uqWkd0e472fc';
     config.headers.Authorization = 'Bearer '+token;
   }
   return config;
 }, error => {
-  // return error
   return Promise.reject(error);
 });
 

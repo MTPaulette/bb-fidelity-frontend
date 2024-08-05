@@ -239,8 +239,8 @@ export default {
         .then((res) => {
           this.sending = false
           this.loading = false
-          this.message = res.data.message
           document.getElementById('summaryButton').click()
+          this.message = res.data.message
 
           //flashAlert will disappear after 1s
           setTimeout(() => {

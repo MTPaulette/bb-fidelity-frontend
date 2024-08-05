@@ -16,8 +16,8 @@ export default defineConfig({
   base: '/',
   // run front on port 3000 in local
   server: {
-     port: 3000,
-   },
+    port: 3000,
+  },
   build: {
     outDir: 'dist',
   },

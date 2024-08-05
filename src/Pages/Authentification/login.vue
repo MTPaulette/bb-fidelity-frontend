@@ -75,7 +75,14 @@ export default {
           password: this.password
         })
         .then((res) => {
-          this.$router.push({ name: 'profile' })
+          const loggedIn = JSON.parse(localStorage.getItem('user'))
+          console.log(loggedIn.role_id )
+          if(loggedIn.role_id != 1) {
+            return this.$router.push({ name: 'historic' })
+          } else {
+            return this.$router.push({ name: 'services' })
+          }
+          // this.$router.push({ name: 'profile' })
         })
         .catch(err => {
           if(err.response) {

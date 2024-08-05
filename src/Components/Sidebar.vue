@@ -52,15 +52,14 @@
             <span class="ml-3">Profile</span>
           </router-link>
         </li>
-
         <!-- service -->
         <li v-if="user.role_id == 1">
-          <button type="button" class="-px-4 py-2 item-dropdown" aria-controls="dropdown-article" data-collapse-toggle="dropdown-article">
+          <button type="button" @click="toggleDropdown = !toggleDropdown" class="-px-4 py-2 item-dropdown">
             <svg aria-hidden="false" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" /></svg>
-            <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Services</span>
-            <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            <span class="flex-1 ml-3 text-left whitespace-nowrap" >Services</span>
+            <svg  class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
-          <ul id="dropdown-article" class="hidden py-2 space-y-2">
+          <ul v-show="toggleDropdown" id="dropdown-articlee" class="py-2 space-y-2">
             <li>
               <router-link
                 to="/services" class="pl-11 item-dropdown"
@@ -106,17 +105,6 @@
   </aside>
 </template>
 
-<script setup>
-import { onMounted } from 'vue'
-import {
-  initDropdowns
-} from 'flowbite'
-
-onMounted(() => {
-  initDropdowns();
-})
-</script>
-
 <script>
 import { mapGetters } from 'vuex'
 import Navbar from '@/Components/Navbar.vue'
@@ -124,6 +112,11 @@ import Navbar from '@/Components/Navbar.vue'
 export default {
   components: {
     Navbar,
+  },
+  data(){
+    return {
+      toggleDropdown: false
+    }
   },
   computed: {
     ...mapGetters([
@@ -144,6 +137,17 @@ export default {
 }
 </script>
 
+
+<script setup>
+import { onMounted } from 'vue'
+import {
+  initDropdowns
+} from 'flowbite'
+
+onMounted(() => {
+  initDropdowns();
+})
+</script>
 
 <style scoped>
 #main-sidebar::-webkit-scrollbar{

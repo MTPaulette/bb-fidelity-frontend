@@ -1,4 +1,5 @@
 import axios from './../axios'
+import Cookies from 'js-cookie'
 
 //initial state
 const state = {
@@ -43,6 +44,15 @@ const actions = {
               return axios
                 .post('/login', credentials)
                 .then(({ data }) => {
+
+          const now = new Date().getTime()
+          const now_3h = new Date(now+10800000) //3h in millisecond
+          document.cookie = `XSRF-TOKEN=${Cookies.get('XSRF-TOKEN')};expires=${now_3h};domain=fidelityapi.brain-booster.net;path=/; SameSite=lax; Secure`
+
+          
+          console.log('==================cookie document')
+          console.log(Cookies.get('XSRF-TOKEN'))
+          
                   commit('setUserData', data)
                 })
     })

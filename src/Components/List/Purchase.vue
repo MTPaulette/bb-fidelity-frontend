@@ -5,6 +5,13 @@
         <span class="text-gray-500">Total purchases:</span>
         <span class="dark:text-white" v-if="services">{{ services.length }}</span>
       </h5>
+        <h5 v-if="user.role_id != 1" class="space-x-4 flex">
+          <span class="text-gray-500">Your balance is:</span>
+            <div class="flex items-center text-lg">
+              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
+              {{ user.balance }} point(s)
+            </div>
+        </h5>
       <div v-if="user.role_id == 1" class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
         <router-link class="flex justify-end" :to="{ name: 'purchase.create'}">
           <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base">
@@ -45,11 +52,6 @@
         <tbody>
         <tr v-for="service in services" :key="service.id" class="border-b border-color hover:bg-highlight">
           <th scope="row" class="w-4 px-4 py-3">
-            <!-- <div v-if="user.role_id == 1">
-              <router-link :to="{ name: 'service.show', params: { id: service.pivot.id }}">
-                {{ service.pivot.id }}
-              </router-link>
-            </div> -->
             <div>{{ service.pivot.id }}</div>
           </th>
           <td class="px-4 py-2 whitespace-nowrap text-black-white">

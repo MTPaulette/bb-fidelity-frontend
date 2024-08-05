@@ -1,4 +1,4 @@
-import axios from './../axios'
+import axios from './../axios/index-cors'
 
 //initial state
 const state = {
@@ -35,19 +35,12 @@ const mutations = {
 
 const actions = {
   async login ({ commit }, credentials) {
-
-    // share csrf-token generate by laravel (avoid 419 csrf-token expired)
-    await axios.get('/csrf-cookie')
-        .then(() => {
-
-              return axios
-                .post('/login', credentials)
-                .then(({ data }) => {
+    return axios
+            .post('/login', credentials)
+            .then(({ data }) => {
                   commit('setUserData', data)
                 })
-    })
   },
-
 
   async register ({ commit }, credentials) {
     return await axios

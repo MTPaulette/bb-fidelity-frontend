@@ -74,7 +74,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          this.$router.push({ name: 'profile' })
+          this.$router.push({ name: 'historic' })
         })
         .catch(err => {
           this.errors = err.response.data.errors

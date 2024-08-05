@@ -189,21 +189,16 @@ const router = createRouter({
   linkExactActiveClass: 'text-accentuate bg-highlight rounded-lg'
 })
 
-router.beforeResolve((to, from, next) => {
-  // if this isn't an initial page load
-  if(to.name) {
-    // start the route progress bar
-    NProgress.done()
-  }
-  next()
-})
-
 router.beforeEach((to, from) => {
   const loggedIn = localStorage.getItem('user')
   
   // if user is already authenticated, redirect login to services page
   if(to.name == 'login' && loggedIn) {
-    return { name: 'profile'}
+    if(loggedIn.role_id != 1) {
+      return { name: 'historic'}
+    } else {
+      return { name: 'services'}
+    }
   }
 
   if (to.matched.some(record => record.meta.auth) && !loggedIn) {
@@ -221,7 +216,17 @@ router.beforeEach((to, from) => {
 })
 
 // complete the animation of the route progress bar
+router.beforeResolve((to, from, next) => {
+  // If this isn't an initial page load.
+  if (to.name) {
+      // Start the route progress bar.
+      NProgress.start()
+  }
+  next()
+})
+
 router.afterEach(() => {
+  // Complete the animation of the route progress bar.
   NProgress.done()
 })
 

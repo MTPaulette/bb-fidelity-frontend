@@ -1,4 +1,5 @@
 import axios from './../axios'
+import Cookies from 'js-cookie'
 
 //inittial state
 const state = {
@@ -50,8 +51,55 @@ const actions = {
   },
 
   async createService ({ dispatch }, credentials) {
-    return axios.post('/service/store/', credentials)
+    
+    await axios.get('/csrf-cookie')
+        .then(() => {
+          console.log('==================apres')
+          console.log(Cookies.get('XSRF-TOKEN'))
+          return axios
+            .post('/service/store/', credentials)
             .then((data) => {
+              return data
+            })
+    })
+    
+    await axios.get('/csrf-cookie')
+        .then(() => {
+          return axios
+            .post('/service/store/', credentials, {
+              headers: {
+                'X-XSRF-TOKEN' : Cookies.get('XSRF-TOKEN')
+              }
+            })
+            .then((data) => {
+              return data
+            })
+    })
+  },
+
+  async createService ({ dispatch }, credentials) {
+
+    
+    console.log('==================service avant token')
+    console.log(Cookies.get('XSRF-TOKEN'))
+
+    return axios.post('/service/store/', credentials, {
+      headers: {
+        // 'Origin': 'https://fidelity.brain-booster.net',
+        'Origin': 'http://127.0.0.1:3000',
+        'Access-Control-Request-Method': 'POST',
+        'Access-Control-Request-Headers': 'content-type,x-pingother',
+        
+        // 'Cookie': `X-XSRF-TOKEN=${Cookies.get('XSRF-TOKEN')}`,
+        // 'X-Requested-With': 'XMLHttpRequest',
+        //'X-XSRF-TOKEN' : Cookies.get('XSRF-TOKEN')
+      },
+      // withCredentials: true,
+    })
+            .then((data) => {
+    
+              console.log('==================service apres token')
+              console.log(Cookies.get('XSRF-TOKEN'))
               return data
             })
   },

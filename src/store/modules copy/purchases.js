@@ -1,4 +1,6 @@
 import axios from './../axios'
+import Cookies from 'js-cookie'
+
 
 //inittial state
 const state = {
@@ -33,8 +35,14 @@ const actions = {
   },
 
   async createPurchase ({ dispatch }, credentials) {
-    return axios
-      .post('/purchase/store/', credentials)
+    console.log('==================cookie token')
+    console.log(Cookies.get('XSRF-TOKEN'))
+    return await axios
+      .post('/purchase/store/', credentials, {
+        headers: {
+          'X-XSRF-TOKEN' : Cookies.get('XSRF-TOKEN')
+        }
+      })
       .then((data) => {
         return data
       })

@@ -1,4 +1,4 @@
-import axios from './../axios'
+import axios from './../axios/index-cors'
 
 //initial state
 const state = {
@@ -39,7 +39,6 @@ const actions = {
     // share csrf-token generate by laravel (avoid 419 csrf-token expired)
     await axios.get('/csrf-cookie')
         .then(() => {
-
               return axios
                 .post('/login', credentials)
                 .then(({ data }) => {
@@ -47,7 +46,6 @@ const actions = {
                 })
     })
   },
-
 
   async register ({ commit }, credentials) {
     return await axios
