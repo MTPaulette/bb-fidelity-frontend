@@ -36,29 +36,54 @@
             <span v-if="errors.price">{{ errors.price[0] }}</span>
           </p>
         </div>
-        <div>
-          <label for="credit" class="label">Credit Point</label>
-          <input id="credit" v-model="service.credit" type="number" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.credit">{{ errors.credit[0] }}</span>
-          </p>
+  
+        <div class="grid gap-2 sm:gap-6 grid-cols-2">
+          <div>
+            <label for="credit" class="label">Credit Point</label>
+            <input id="credit" v-model="service.credit" type="number" class="input" required />
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.credit">{{ errors.credit[0] }}</span>
+            </p>
+          </div>
+          <div>
+            <label for="debit" class="label">Debit Point</label>
+            <input id="debit" v-model="service.debit" type="number" class="input" required />
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.debit">{{ errors.debit[0] }}</span>
+            </p>
+          </div>
+          <!-- validity -->
+          <div>
+            <label for="validity" class="label">Validity</label>
+            <select id="validity" v-model="service.validity" name="validity" class="input" required>
+              <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.validity">{{ errors.validity[0] }}</span>
+            </p>
+          </div>
+
+          <!-- agency -->
+          <div>
+            <label for="agency" class="label">Agency</label>
+            <select id="agency" v-model="service.agency" name="agency" class="input" required>
+              <option v-for="(agency, i) in agencies" :key="i" :value="agency">{{ agency }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.agency">{{ errors.agency[0] }}</span>
+            </p>
+          </div>
         </div>
+
+        <!-- service_type -->
         <div>
-          <label for="debit" class="label">Debit Point</label>
-          <input id="debit" v-model="service.debit" type="number" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.debit">{{ errors.debit[0] }}</span>
-          </p>
-        </div>
-        <!-- validity -->
-        <div>
-          <label for="validity" class="label">Validity</label>
-          <select id="validity" v-model="service.validity" name="validity" class="input" required>
-            <option selected>No validity selected</option>
-            <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
+          <label for="service_type" class="label">Type</label>
+          <select id="service_type" v-model="service.service_type" name="service_type" class="input" required>
+            <!-- <option selected>No service_type selected</option> -->
+            <option v-for="(service_type, i) in service_types" :key="i" :value="service_type">{{ service_type }}</option>
           </select>
           <p v-if="errors" class="input-error">
-            <span v-if="errors.validity">{{ errors.validity[0] }}</span>
+            <span v-if="errors.service_type">{{ errors.service_type[0] }}</span>
           </p>
         </div>
         <div>
@@ -80,8 +105,10 @@ import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
 
-import Service from "@/Models/Service.js"
+import Service from '@/Models/Service.js'
+import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
+import Service_types from "@/Database/Service_types.js"
 
 export default {
   components: {
@@ -93,14 +120,10 @@ export default {
 
   data() {
     return {
+      agencies: Agencies,
       validities: Validities,
+      service_types: Service_types,
       service: null,
-      name: null,
-      price: '1000',
-      credit: '10',
-      debit: '10',
-      validity: '1 hour',
-      description: "Ce forfait donne droit a une heure de temps dans l'espace open space.",
       message: '',
       loading: false,
       errors: null,
@@ -121,7 +144,7 @@ export default {
         .then((res) => {
           if(res) {
             const serviceData = res.service
-            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.description, serviceData.user_id)
+            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.service_type, serviceData.agency, serviceData.description, serviceData.user_id)
           }
         })
         .catch(err => {

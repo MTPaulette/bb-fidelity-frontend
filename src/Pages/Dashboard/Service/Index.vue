@@ -11,14 +11,8 @@
         </ul>
     </div>
 
-    <div v-if="loading">
-      <Loading />
-    </div>
-
-    <div v-if="services" class="w-full h-auto">
-      selectedFilters: {{ selectedFilters }}
-
-      <!-- filters -->
+    <!-- filters -->
+    <div class="w-full h-auto">
       <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
         <li>
           <button
@@ -32,19 +26,41 @@
           </button>
         </li>
 
-        <!-- alphabetical -->
+        <!-- by's list -->
         <li class="relative">
-          <div class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <input id="alphabetical" v-model="selectedFilters.alphabetical" type="checkbox" checked class="w-3.5 h-3.5 mr-2 bg-purple-600 rounded dark:bg-gray-700 border-color" />
-            <label for="alphabetical" class="ml-0 font-medium">Alphabetical</label>
+          <div @click="showBy = !showBy" :class="selectedFilters.by?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.by }}</div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div v-show="showBy" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showBy = false">
+              <li v-for="(by, i) in order_by" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.by = by">
+                  {{ by }}
+                </span>
+              </li>
+            </ul>
           </div>
         </li>
 
-        <!-- ascending -->
+        <!-- order's list -->
         <li class="relative">
-          <div class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <input id="ascending" v-model="selectedFilters.ascending" type="checkbox" checked class="w-3.5 h-3.5 mr-2 bg-purple-600 rounded dark:bg-gray-700 border-color" />
-            <label for="ascending" class="ml-0 font-medium">Ascending</label>
+          <div @click="showOrder = !showOrder" :class="selectedFilters.order?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.order }}</div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div v-show="showOrder" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showOrder = false">
+              <li v-for="(order, i) in asc_desc" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.order = order">
+                  {{ order }}
+                </span>
+              </li>
+            </ul>
           </div>
         </li>
 
@@ -59,7 +75,7 @@
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </div>
-          <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 h-[170px] dropdown">
+          <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showAgency = false">
               <li class="border-b border-color">
                 <span class="dropdown-item-filter" @click="selectedFilters.agency = ''">
@@ -87,7 +103,7 @@
             </svg>
           </div>
       
-          <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 h-[170px] dropdown">
+          <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showValidity = false">
               <li class="border-b border-color">
                 <span class="dropdown-item-filter" @click="selectedFilters.validity = ''">
@@ -115,7 +131,7 @@
             </svg>
           </div>
       
-          <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 h-[170px] dropdown">
+          <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showService_type = false">
               <li class="border-b border-color">
                 <span class="dropdown-item-filter" @click="selectedFilters.service_type = ''">
@@ -131,19 +147,37 @@
           </div>
         </li>
 
+        <!-- order -->
+        <!-- <li class="relative">
+          <div class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <input id="order" v-model="selectedFilters.order" type="checkbox" checked class="w-3.5 h-3.5 mr-2 bg-purple-600 rounded dark:bg-gray-700 border-color" />
+            <label for="order" class="ml-0 font-medium">Ascending</label>
+          </div>
+        </li> -->
+
         <!-- reset -->
         <li @click="reset">
           <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
         </li>
       </ul>
+    </div>
 
+    <div v-if="loading">
+      <Loading />
+    </div>
+    <div v-else>
+    <div v-if="errors">
+      <Empty :message="errors" />
+    </div>
+
+    <div v-if="services" class="w-full h-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
         <div v-for="service in services" :key="service.id" class="col-span-1">
           <ServiceCard :service="service" :recentServiceId="recentServiceId" />
         </div>
       </div>
     </div>
-
+</div>
     <!-- new service -->
     <div class="fixed z-40 bottom-14 right-2.5">
       <router-link class="flex justify-end" to="service/create">
@@ -161,6 +195,8 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import ServiceCard from '@/Components/Card/Service.vue'
 import Loading from '@/Components/Loading.vue'
+import Empty from '@/Components/Empty.vue'
+
 
 import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
@@ -172,6 +208,7 @@ export default {
     Breadcrumb,
     ServiceCard,
     Loading,
+    Empty
   },
 
   data() {
@@ -179,17 +216,22 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
+      order_by: ['name', 'created_at'],
+      asc_desc: ['asc', 'desc'],
+
       loading: false,
       services: null,
+      errors: null,
       recentServiceId: null,
-      filters : ['bootstrap', 'templates', 'tailwing', 'landing page', 'vue js', 'materialise', 'html', 'java'],
       selectedFilters: {
-        alphabetical: true,
-        ascending: true,
+        by: 'name',
+        order: 'asc',
         agency: '',
         validity: '',
         service_type: '',
       },
+      showBy: false,
+      showOrder: false,
       showAgency: false,
       showService_type: false,
       showValidity: false,
@@ -197,15 +239,48 @@ export default {
   },
 
   mounted() {
+    this.getAllServices(),
+    this.getRecentServiceId()
+    
+    this.$watch(
+      () => this.selectedFilters,
+      this.getAllServices,
+      { immediate: true,
+        
+        deep: true
+       }
+    )
+  },
+  
+  methods: {
+    reset() {
+      this.selectedFilters.by = 'name'
+      this.selectedFilters.order = 'asc'
+      this.selectedFilters.agency = ''
+      this.selectedFilters.validity = ''
+      this.selectedFilters.service_type = ''
+    },
+    getAllServices() {
+      this.errors = null
+      this.loading = true
+      this.$store.dispatch("services/getAllServices", this.selectedFilters)
+          .then((res) => {
+            if(res) {
+              this.services = res.services
+            }
+            this.loading = false
+          })
+          .catch(err => {
+            if(err.response) {
+              this.services = err.response.data.services
+              this.errors = err.response.data.errors
+            }
+            console.log(err)
+          })
+          .finally(() => this.loading = false)
+    },
+    getRecentServiceId() {
     this.loading = true
-    this.$store.dispatch("services/getAllServices")
-        .then((res) => {
-          if(res) {
-            this.services = res.services
-          }
-          this.loading = false
-        })
-
     this.$store.dispatch("services/getRecentServiceId")
         .then((res) => {
           if(res) {
@@ -213,15 +288,6 @@ export default {
           }
           this.loading = false
         })
-  },
-  
-  methods: {
-    reset() {
-      this.selectedFilters.alphabetical = true
-      this.selectedFilters.ascending = true
-      this.selectedFilters.agency = ''
-      this.selectedFilters.validity = ''
-      this.selectedFilters.service_type = ''
     }
   }
 }

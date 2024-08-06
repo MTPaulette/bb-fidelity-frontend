@@ -1,5 +1,4 @@
 <template>
-  {{service}}
   <div>
     <div v-if="message !=''">
       <FlashAlert :message="message" />
@@ -158,18 +157,18 @@ export default {
   },
 
   mounted() {
-    this.getServiceById(this.$route.params.id)
+    this.getServiceById()
   },
 
   methods: {
     toggleModal() {
       document.getElementById('confirm-button').click()
     },
-    getServiceById(id) {
+    getServiceById() {
       this.loading = true
       this.$store
         .dispatch('services/getServiceById', {
-          id: id
+          id: this.$route.params.id
         })
         .then((res) => {
           if(res) {

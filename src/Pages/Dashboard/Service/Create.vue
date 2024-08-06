@@ -31,50 +31,51 @@
             <span v-if="errors.price">{{ errors.price[0] }}</span>
           </p>
         </div>
-      <div class="grid gap-2 sm:gap-6 grid-cols-2">
-        <div>
-          <label for="credit" class="label">Credit Point</label>
-          <input id="credit" v-model="service.credit" type="number" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.credit">{{ errors.credit[0] }}</span>
-          </p>
-        </div>
-        <div>
-          <label for="debit" class="label">Debit Point</label>
-          <input id="debit" v-model="service.debit" type="number" class="input" required />
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.debit">{{ errors.debit[0] }}</span>
-          </p>
-        </div>
-        <!-- validity -->
-        <div>
-          <label for="validity" class="label">Validity</label>
-          <select id="validity" v-model="service.validity" name="validity" class="input" required>
-            <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
-          </select>
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.validity">{{ errors.validity[0] }}</span>
-          </p>
-        </div>
+        
+        <div class="grid gap-2 sm:gap-6 grid-cols-2">
+          <div>
+            <label for="credit" class="label">Credit Point</label>
+            <input id="credit" v-model="service.credit" type="number" class="input" required />
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.credit">{{ errors.credit[0] }}</span>
+            </p>
+          </div>
+          <div>
+            <label for="debit" class="label">Debit Point</label>
+            <input id="debit" v-model="service.debit" type="number" class="input" required />
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.debit">{{ errors.debit[0] }}</span>
+            </p>
+          </div>
+          <!-- validity -->
+          <div>
+            <label for="validity" class="label">Validity</label>
+            <select id="validity" v-model="service.validity" name="validity" class="input" required>
+              <option v-for="(validity, i) in validities" :key="i" :value="validity">{{ validity }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.validity">{{ errors.validity[0] }}</span>
+            </p>
+          </div>
 
-        <!-- agency -->
-        <div>
-          <label for="agency" class="label">Agency</label>
-          <select id="agency" v-model="service.agency" name="agency" class="input" required>
-            <option v-for="(agency, i) in agencies" :key="i" :value="agency">{{ agency }}</option>
-          </select>
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.agency">{{ errors.agency[0] }}</span>
-          </p>
+          <!-- agency -->
+          <div>
+            <label for="agency" class="label">Agency</label>
+            <select id="agency" v-model="service.agency" name="agency" class="input" required>
+              <option v-for="(agency, i) in agencies" :key="i" :value="agency">{{ agency }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.agency">{{ errors.agency[0] }}</span>
+            </p>
+          </div>
         </div>
-      </div>
 
         <!-- service_type -->
         <div>
           <label for="service_type" class="label">Type</label>
           <select id="service_type" v-model="service.service_type" name="service_type" class="input" required>
             <!-- <option selected>No service_type selected</option> -->
-            <option v-for="(service_type, i) in validities" :key="i" :value="service_type">{{ service_type }}</option>
+            <option v-for="(service_type, i) in service_types" :key="i" :value="service_type">{{ service_type }}</option>
           </select>
           <p v-if="errors" class="input-error">
             <span v-if="errors.service_type">{{ errors.service_type[0] }}</span>
@@ -115,9 +116,9 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
-      // new Service(name, price, credit, debit, validity, agency, service_type, description, user_id)
+      // new Service(name, price, credit, debit, validity, service_type, agency, description, user_id)
       // service: new Service('', '', '', '', '', '', '', '', ''),
-      service: new Service('service', '2000', '1', '3', '01 hour', '', 'Etoa-Meki', 'space', 'service 1', ''),
+      service: new Service('service', '2000', '1', '3', '01 hour', 'space', 'Etoa-Meki', 'service 1', ''),
       message: '',
       loading: false,
       errors: null,
@@ -129,7 +130,7 @@ export default {
       this.loading = true
       this.errors = null
 
-      console.log(this.service)
+      console.log(this.service.service_type)
       this.$store
       .dispatch('services/createService', this.service)
       .then((res) => {

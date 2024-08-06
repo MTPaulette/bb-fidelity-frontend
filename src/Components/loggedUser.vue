@@ -18,7 +18,7 @@
         <router-link to="/login" class="px-4 py-2 item-dropdown">Login</router-link>
       </li>
       <li v-if="user">
-        <button type="button" @click="logout()" class="flex items-center w-full px-4 py-2 hover:text-danger">Deconnexion</button>
+        <button type="button" @click="logout()" :class="logout_processing?'cursor-progress':''" class="flex items-center w-full px-4 py-2 hover:text-danger">Logout</button>
       </li>
     </ul>
   </div>
@@ -45,9 +45,15 @@ export default {
       // return localStorage.getItem('user')
     },
   },
+  data() {
+    return {
+      logout_processing: false
+    }
+  },
 
   methods: {
     logout () {
+      this.logout_processing = true
       this.$store
         .dispatch('auth/logout')
     }

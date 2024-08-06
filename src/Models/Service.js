@@ -5,8 +5,8 @@ export default class Service {
     credit,
     debit,
     validity,
-    agency,
     service_type,
+    agency,
     description,
     user_id
   ) {
@@ -15,8 +15,8 @@ export default class Service {
     this.credit = credit
     this.debit = debit
     this.validity = validity
-    this.agency = agency
     this.service_type = service_type
+    this.agency = agency
     this.description = description
     this.user_id = user_id
   }

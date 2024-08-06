@@ -15,15 +15,14 @@ const mutations = {
 }
 
 const actions = {
-  async getAllServices ({ commit }) {
+  async getAllServices ({ commit }, credentials) {
     return await axios
-      .get('/services')
+      .get('/services', {
+        params: credentials
+      })
       .then(({ data }) => {
         commit('setAllServicesData', data)
         return data
-      })
-      .catch(err => {
-        console.log(err)
       })
   },
 
@@ -51,9 +50,11 @@ const actions = {
 
   async createService ({ dispatch }, credentials) {
     console.log("=======credentials.service==============")
-    console.log(credentials.service)
+    console.log(credentials)
     return axios.post('/service/store', credentials)
             .then((data) => {
+              console.log("=======")
+              console.log(data)
               return data
             })
   },

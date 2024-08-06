@@ -5,7 +5,9 @@
       <Loading />
     </div>
 
-    <div v-if="errors" class="my-32 text-2xl md:text-3xl font-light leading-tight tracking-tight text-primary text-center">{{ errors }}</div>
+    <div v-if="errors">
+      <Empty :message="errors" />
+    </div>
 
     <div v-if="users">
       <h1 class="ml-3 my-6 sm:my-8 title"> {{ users[0].service_name }} Historic </h1>
@@ -18,12 +20,15 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
 import ListUser from '@/Components/List/User.vue'
+import Empty from '@/Components/Empty.vue'
+
 
 export default {
   components: {
     Breadcrumb,
     Loading,
-    ListUser
+    ListUser,
+    Empty
   },
   data() {
     return {
