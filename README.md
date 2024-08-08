@@ -1,10 +1,14 @@
 # BB-FIDELITY-SYST
 
-This template should help get you started developing with Vue 3 in Vite.
+Concerned about customer loyalty, the company Brain-booster had the idea of setting up a reward system for its customers. The system designed here was created for this purpose.
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+# Languages and dependencies
+
+Project built using [TailwindCSS](https://tailwindcss.com) & [Vue.js](https://vuejs.org). This project is also running [Vuex](https://vuex.vuejs.org) in order to control the sidebar state throughout components.
 
 ## Customize configuration
 
