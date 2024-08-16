@@ -33,7 +33,7 @@ export default {
     return {
       services: null,
       loading: false,
-      errors: null
+      errors: null,
     }
   },
 

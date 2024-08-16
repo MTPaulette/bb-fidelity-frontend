@@ -35,150 +35,6 @@
         <div>
           <label for="service" class="label">Choose Service</label>
 
-          
-    <!-- filters -->
-    <div class="w-full h-auto">
-      <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
-        <li>
-          <button
-            class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium border rounded-full
-            disabled text-purple-700 border-purple-700 focus:ring-purple-300 dark:border-purple-400 dark:text-purple-400"
-          >
-            <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
-              <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z" />
-            </svg>
-            <span class="ml-1">Filters</span>
-          </button>
-        </li>
-
-        <!-- by's list -->
-        <li class="relative">
-          <div @click="showBy = !showBy" :class="selectedFilters.by?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.by }}</div>
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div v-show="showBy" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-            <ul class="py-2 text-sm" @click="showBy = false">
-              <li v-for="(by, i) in order_by" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.by = by">
-                  {{ by }}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- order's list -->
-        <li class="relative">
-          <div @click="showOrder = !showOrder" :class="selectedFilters.order?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.order }}</div>
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div v-show="showOrder" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-            <ul class="py-2 text-sm" @click="showOrder = false">
-              <li v-for="(order, i) in asc_desc" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.order = order">
-                  {{ order }}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- Agency's list -->
-        <li class="relative">
-          <div @click="showAgency = !showAgency" :class="selectedFilters.agency?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <div class="ml-3 mr-2 font-medium">
-              <span v-if="selectedFilters.agency">{{ selectedFilters.agency }}</span>
-              <span v-else>All agency</span>
-            </div>
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-          <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-            <ul class="py-2 text-sm" @click="showAgency = false">
-              <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.agency = ''">
-                  All agency
-                </span>
-              </li>
-              <li v-for="(agency, i) in agencies" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.agency = agency">
-                  {{ agency }}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- Validity's list -->
-        <li class="relative">
-          <div @click="showValidity = !showValidity" :class="selectedFilters.validity?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <div class="ml-3 mr-2 font-medium">
-              <span v-if="selectedFilters.validity">{{ selectedFilters.validity }}</span>
-              <span v-else>All validity</span>
-            </div>
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-      
-          <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-            <ul class="py-2 text-sm" @click="showValidity = false">
-              <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.validity = ''">
-                  All validity
-                </span>
-              </li>
-              <li v-for="(validity, i) in validities" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.validity = validity">
-                  {{ validity }}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- Service_type's list -->
-        <li class="relative">
-          <div @click="showService_type = !showService_type" :class="selectedFilters.service_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <div class="ml-3 mr-2 font-medium">
-              <span v-if="selectedFilters.service_type">{{ selectedFilters.service_type }}</span>
-              <span v-else>All Type</span>
-            </div>
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-            </svg>
-          </div>
-      
-          <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-            <ul class="py-2 text-sm" @click="showService_type = false">
-              <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.service_type = ''">
-                  All type
-                </span>
-              </li>
-              <li v-for="(service_type, i) in service_types" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.service_type = service_type">
-                  {{ service_type }}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- reset -->
-        <li @click="reset">
-          <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
-        </li>
-      </ul>
-    </div>
-
           <select id="service" v-model="selectedService" name="service" class="input" required>
             <option selected>No service selected</option>
             <option v-for="service in services" :key="service.id" :value="service">{{ service.name }}</option>
@@ -207,6 +63,10 @@
         <!-- Modal header -->
         <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 border-color">
           <h3 class="title"> Purchase summary </h3>
+          <!-- <button type="button" class="text-primary hover:text-danger" data-modal-toggle="summaryModal">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            <span class="sr-only">Close modal</span>
+          </button> -->
         </div>
         
         <div v-if="errors">
@@ -248,6 +108,10 @@
                 <p>Credit Point: &nbsp;<span class="text-green-500"> {{ selectedService.credit }} Point(s) </span></p>
                 <p>Debit Point: &nbsp;<span class="text-danger"> {{ selectedService.debit }} Point(s) </span></p>
               </div>
+              <!-- <div>
+                  Description: <br />
+                  <p class="mt-1 mb-3 w-full h-8 overflow-hidden text-secondary text-xs">{{ selectedService.description }}</p>
+                </div> -->
               <p class="mb-1 text-xs font-light">Created at {{ selectedService.created_at }}</p>
             </div>
           </div>
@@ -293,9 +157,6 @@ import Loading from '@/Components/Loading.vue'
 import Error from '@/Components/Error.vue'
 
 import Purchase from "@/Models/Purchase.js"
-import Agencies from '@/Database/Agencies.js'
-import Validities from "@/Database/Validities.js"
-import Service_types from "@/Database/Service_types.js"
 
 export default {
   components: {
@@ -319,41 +180,13 @@ export default {
       loading: false,
       canSubmit: true,
       sending: false,
-      newBalance: 0,
-
-      
-      agencies: Agencies,
-      validities: Validities,
-      service_types: Service_types,
-      order_by: ['name', 'created_at'],
-      asc_desc: ['asc', 'desc'],
-      selectedFilters: {
-        by: 'name',
-        order: 'asc',
-        agency: '',
-        validity: '',
-        service_type: '',
-      },
-      showBy: false,
-      showOrder: false,
-      showAgency: false,
-      showService_type: false,
-      showValidity: false,
+      newBalance: 0
     }
   },
 
   mounted() {
     this.getAllUsers()
     this.getAllServices()
-    
-    this.$watch(
-      () => this.selectedFilters,
-      this.getAllServices,
-      { immediate: true,
-        
-        deep: true
-       }
-    )
   },
 
   methods: {
@@ -366,25 +199,6 @@ export default {
           })
     },
     getAllServices() {
-      this.errors = null
-      this.loading = true
-      this.$store.dispatch("services/getAllServices", this.selectedFilters)
-          .then((res) => {
-            if(res) {
-              this.services = res.services
-            }
-            this.loading = false
-          })
-          .catch(err => {
-            if(err.response) {
-              this.services = err.response.data.services
-              this.errors = err.response.data.errors
-            }
-            console.log(err)
-          })
-          .finally(() => this.loading = false)
-    },
-    getAllServicess() {
       this.$store.dispatch("services/getAllServices")
         .then((res) => {
           if(res) {

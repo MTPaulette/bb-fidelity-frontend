@@ -177,7 +177,7 @@
         </div>
       </div>
     </div>
-</div>
+  </div>
     <!-- new service -->
     <div class="fixed z-40 bottom-14 right-2.5">
       <router-link class="flex justify-end" to="service/create">
