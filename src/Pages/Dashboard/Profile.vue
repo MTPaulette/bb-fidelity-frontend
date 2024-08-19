@@ -6,11 +6,19 @@
     <Breadcrumb link1="dashboard" link2="profile" />
     <h1 class="ml-3 my-6 sm:my-8 title"> Profile </h1>
 
+    
+    <div v-if="!user.is_registered">
+      <!-- <div v-if="!user.is_registered && user.role-id==2 "> -->
+      <Error message="You are not yet registered with the loyalty program" />
+    </div>
+
     <div class="w-full h-auto">
         <!-- general informations -->
         <div class="mt-4 md:mt-0 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
-          <div class="mb-4">
+          <div class="mb-4 flex justify-between items-center">
             <h2 class="title"> General Information </h2>
+            <UserType :label="user.user_type" />
+
           </div>
           <div class="p-4 mb-8 bg-secondary rounded-lg">
             You have: <span  :class="[user.balance> 0 ? 'text-green-400' : 'text-danger']">{{ user.balance }} point(s)</span>
@@ -90,12 +98,16 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
+import Error from '@/Components/Error.vue'
+import UserType from '@/Components/UserType.vue'
 
 export default {
   components: {
     Breadcrumb,
     FlashAlert,
     ButtonLoading,
+    Error,
+    UserType
   },
   data () {
     return {
@@ -106,16 +118,29 @@ export default {
       showpassord: false,
       message: '',
       loading: false,
-      errors: null
+      errors: null,
+      user: null
     }
   },
   
-  computed: {
-    user() {
-      return JSON.parse(localStorage.getItem('user'))
-      //return localStorage.getItem('user')
-    },
+  // computed: {
+  //   user() {
+  //     return JSON.parse(localStorage.getItem('user'))
+  //     //return localStorage.getItem('user')
+  //   },
+  // },
+
+  mounted() {
+    this.loading = true
+    this.$store.dispatch("auth/getAuthenticatedUser")
+        .then((res) => {
+          if(res) {
+            this.user = res.user
+          }
+          this.loading = false
+        })
   },
+
 
   methods: {
     updateUserInformation () {

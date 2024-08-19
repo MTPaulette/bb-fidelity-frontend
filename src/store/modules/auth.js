@@ -88,6 +88,16 @@ const actions = {
         })
   },
 
+  async getAuthenticatedUser ({ commit }) {
+    return await axios
+      .get('/user')
+      .then(({ data }) => {
+        return data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
   async getAllUsers ({ commit }) {
     return await axios
       .get('/users')
