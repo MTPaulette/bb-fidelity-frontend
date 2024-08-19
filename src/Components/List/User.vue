@@ -32,55 +32,67 @@
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
         <tr>
-          <th scope="col" class="px-4 py-3">
-            Name
-          </th>
-          <th scope="col" class="px-4 py-3">
-            balance
-          </th>
-          <th scope="col" class="px-4 py-3">
-            role
-          </th>
+          <th scope="col" class="pl-4 pr-1 py-3">Is registered</th>
+          <th scope="col" class="px-4 py-3">Name</th>
+          <th scope="col" class="px-4 py-3">Balance</th>
+          <th scope="col" class="px-4 py-3">Role</th>
+          <th scope="col" class="px-4 py-3">User type</th>
           <th scope="col" class="px-4 py-3">Date</th>
-          <th scope="col" class="px-4 py-3">
-            Action
-          </th>
+          <th scope="col" class="px-4 py-3">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-600/30': '']"  class="border-b border-color hover:bg-highlight">
-          <th scope="row" class="flex items-center px-4 py-3 whitespace-nowrap">
-            <div class="pl-3">
-              <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
-              <p class="font-light font-[roboto]">{{ user.email }}</p>
-            </div>  
+          <th scope="row"  class="px-2 py-1 text-center">
+            <div v-if="user.role_id == 2">
+              <span v-if="user.is_registered" class="text-green-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+              </span>
+              <span v-else class="text-red-500">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </span>
+            </div>
           </th>
+          <td class="px-4 py-3 whitespace-nowrap">
+            <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
+            <p v-if="user.role_id != 3" class="font-light font-[roboto]">{{ user.email }}</p>
+          </td>
           <td class="px-4 py-3 whitespace-nowrap text-black-white">
-            <div v-if="user.role_id != 1" class="flex items-center">
+            <div v-if="user.role_id == 2" class="flex items-center">
               <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
               {{ user.balance }} point(s)
             </div>
-            <!-- <div v-if="user.balance>0" class="text-green-500 p-2">{{ user.balance }}</div>
-            <div v-else class="text-danger p-2">{{ user.balance }}</div> -->
           </td>
-          <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
           <td class="px-4 py-3">
             <div v-if="user.role_id==1">
-              Admin (Entreprise)
+              Admin
+            </div>
+            <div v-else-if="user.role_id==3">
+              SuperAdmin
             </div>
             <div v-else>
               client
             </div>
           </td>
+          <td class="px-4 py-2 text-black-white whitespace-nowrap">
+            <div v-if="user.role_id==2">
+              <UserType :label="user.user_type" />
+            </div>
+          </td>
+          <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
           <td>
             <div class="px-4 py-3 flex w-full">
-              <div>
+              <div v-if="user.role_id != 3">
                 <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="voir profil client">
                   Profile
                 </router-link>
               </div>
               
-              <div v-if="user.role_id != 1" class="mx-2">
+              <div v-if="user.role_id == 2" class="mx-2">
                 <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
                   Historique
                 </router-link>
@@ -99,10 +111,12 @@
 
 <script>
 import Loading from '@/Components/Loading.vue'
+import UserType from '@/Components/UserType.vue'
 
 export default {
   components: {
-    Loading
+    Loading,
+    UserType
   },
   props: {
     users: Object

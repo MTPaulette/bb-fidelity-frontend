@@ -147,20 +147,28 @@
           </div>
         </li>
 
-        <!-- order -->
-        <!-- <li class="relative">
-          <div class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-            <input id="order" v-model="selectedFilters.order" type="checkbox" checked class="w-3.5 h-3.5 mr-2 bg-purple-600 rounded dark:bg-gray-700 border-color" />
-            <label for="order" class="ml-0 font-medium">Ascending</label>
-          </div>
-        </li> -->
-
         <!-- reset -->
         <li @click="reset">
           <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
         </li>
       </ul>
     </div>
+
+    <!--display type -->
+    <div class="flex justify-end items-center gap-2">
+      <button class="p-2 rounded-lg shadow-md" title="card display" @click="cardDisplay = !cardDisplay" :class="cardDisplay?'bg-highlight text-black-white':''">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+          <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+        </svg>
+      </button>
+      <button class="p-2 rounded-lg shadow-md" title="table display" @click="cardDisplay = !cardDisplay" :class="!cardDisplay?'bg-highlight text-black-white':''">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+        </svg>
+      </button>
+    </div>
+
 
     <div v-if="loading">
       <Loading />
@@ -171,10 +179,13 @@
     </div>
 
     <div v-if="services" class="w-full h-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
+      <div v-if="cardDisplay" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
         <div v-for="service in services" :key="service.id" class="col-span-1">
           <ServiceCard :service="service" :recentServiceId="recentServiceId" />
         </div>
+      </div>
+      <div v-else>
+        <ServiceList :services="services" :recentServiceId="recentServiceId" />
       </div>
     </div>
   </div>
@@ -193,6 +204,7 @@
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
+import ServiceList from '@/Components/List/Service.vue'
 import ServiceCard from '@/Components/Card/Service.vue'
 import Loading from '@/Components/Loading.vue'
 import Empty from '@/Components/Empty.vue'
@@ -206,6 +218,7 @@ import Service_types from "@/Database/Service_types.js"
 export default {
   components: {
     Breadcrumb,
+    ServiceList,
     ServiceCard,
     Loading,
     Empty
@@ -235,6 +248,7 @@ export default {
       showAgency: false,
       showService_type: false,
       showValidity: false,
+      cardDisplay: true,
     }
   },
 
