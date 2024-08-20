@@ -1,12 +1,15 @@
 <template>
-  <div v-if="user">
-    <div v-if="this.message !=''">
-      <FlashAlert :message="this.message" />
-    </div>
-    <Breadcrumb link1="dashboard" link2="profile" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> Profile </h1>
+  <div v-if="this.message !=''">
+    <FlashAlert :message="this.message" />
+  </div>
+  <Breadcrumb link1="dashboard" link2="profile" />
+  <h1 class="ml-3 my-6 sm:my-8 title"> Profile </h1>
 
-    
+  <div v-if="!user">
+    <Loading />
+  </div>
+  <div v-if="user">
+
     <div v-if="!user.is_registered">
       <!-- <div v-if="!user.is_registered && user.role-id==2 "> -->
       <Error message="You are not yet registered with the loyalty program" />
@@ -100,6 +103,7 @@ import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Error from '@/Components/Error.vue'
 import UserType from '@/Components/UserType.vue'
+import Loading from '@/Components/Loading.vue'
 
 export default {
   components: {
@@ -107,6 +111,7 @@ export default {
     FlashAlert,
     ButtonLoading,
     Error,
+    Loading,
     UserType
   },
   data () {
@@ -122,13 +127,6 @@ export default {
       user: null
     }
   },
-  
-  // computed: {
-  //   user() {
-  //     return JSON.parse(localStorage.getItem('user'))
-  //     //return localStorage.getItem('user')
-  //   },
-  // },
 
   mounted() {
     this.loading = true

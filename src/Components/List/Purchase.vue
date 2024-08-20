@@ -1,5 +1,5 @@
 <template>
-  <section class="px-4 mx-auto max-w-screen-2xl relative overflow-hidden bg-default shadow sm:rounded-lg">
+  <section v-if="user" class="px-4 mx-auto max-w-screen-2xl relative overflow-hidden bg-default shadow sm:rounded-lg">
     <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
       <h5 class="space-x-4">
         <span class="text-gray-500">Total purchases:</span>
@@ -111,10 +111,19 @@
   
 <script>
 export default {
-  computed: {
-    user() {
-      return JSON.parse(localStorage.getItem('user'))
-    },
+  data() {
+    return {
+      user: null,
+    }
+  },
+
+  mounted() {
+    this.$store.dispatch("auth/getAuthenticatedUser")
+        .then((res) => {
+          if(res) {
+            this.user = res.user
+          }
+        })
   },
 }
 </script>

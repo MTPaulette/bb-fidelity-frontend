@@ -1,14 +1,14 @@
 <template>
   <div>
-    <Breadcrumb link1="dashboard" link2="users" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
+    <Breadcrumb link1="dashboard" link2="purchases" />
+    <h1 class="ml-3 my-6 sm:my-8 title"> All purchase </h1>
     <div v-if="loading">
       <Loading />
     </div>
-    <div v-if="users">
-      <ListUser :users="users.data" />
-      <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
-        <Pagination :links="users.links" @nextPage="nextPage" />
+    <div v-if="purchases">
+      <ListPurchase :services="purchases.data" />
+      <div v-if="purchases.data.length" class="w-full flex mt-8 mb-12">
+        <Pagination :links="purchases.links" @nextPage="nextPage" />
       </div>
     </div>
   </div>
@@ -16,14 +16,14 @@
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
-import ListUser from '@/Components/List/User.vue'
+import ListPurchase from '@/Components/List/Purchase.vue'
 import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 
 export default {
   components: {
     Breadcrumb,
-    ListUser,
+    ListPurchase,
     Loading,
     Pagination,
   },
@@ -31,32 +31,31 @@ export default {
   data() {
     return {
       loading: false,
-      users: null,
+      purchases: null,
     }
   },
 
   mounted() {
     this.loading = true
-    this.$store.dispatch("auth/getAllUsers")
+    this.$store.dispatch("purchases/getAllPurchases")
         .then((res) => {
           if(res) {
-            this.users = res.users
+            this.purchases = res.purchases
           }
           this.loading = false
         })
   },
   methods: {
     nextPage (nb) {
-      this.$store.dispatch("auth/getAllUsers", {
+      this.$store.dispatch("purchases/getAllPurchases", {
         page: nb
       })
         .then((res) => {
           if(res) {
-            this.users = res.users
+            this.purchases = res.data.purchases
           }
         })
     },
   },
 }
 </script>
-

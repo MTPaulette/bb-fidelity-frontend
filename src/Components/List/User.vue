@@ -32,8 +32,8 @@
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
         <tr>
-          <th scope="col" class="pl-4 pr-1 py-3">Is registered</th>
           <th scope="col" class="px-4 py-3">Name</th>
+          <th scope="col" class="px-4 py-3">Is registered</th>
           <th scope="col" class="px-4 py-3">Balance</th>
           <th scope="col" class="px-4 py-3">Role</th>
           <th scope="col" class="px-4 py-3">User type</th>
@@ -43,7 +43,11 @@
       </thead>
       <tbody>
         <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-600/30': '']"  class="border-b border-color hover:bg-highlight">
-          <th scope="row"  class="px-2 py-1 text-center">
+          <th scope="row" class="px-4 py-3 pr-3 whitespace-nowrap">
+            <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
+            <p v-if="user.role_id != 3" class="font-light font-[roboto]">{{ user.email }}</p>
+          </th>
+          <td  class="px-2 py-1 text-center">
             <div v-if="user.role_id == 2">
               <span v-if="user.is_registered" class="text-green-500">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -56,10 +60,6 @@
                 </svg>
               </span>
             </div>
-          </th>
-          <td class="px-4 py-3 whitespace-nowrap">
-            <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
-            <p v-if="user.role_id != 3" class="font-light font-[roboto]">{{ user.email }}</p>
           </td>
           <td class="px-4 py-3 whitespace-nowrap text-black-white">
             <div v-if="user.role_id == 2" class="flex items-center">
@@ -102,6 +102,7 @@
         </tr>
       </tbody>
     </table>
+    
   </div>
 </template>
 
@@ -116,7 +117,7 @@ import UserType from '@/Components/UserType.vue'
 export default {
   components: {
     Loading,
-    UserType
+    UserType,
   },
   props: {
     users: Object

@@ -2,11 +2,11 @@
   <div>
     <Breadcrumb link1="dashboard" link2="purchases" />
     <h1 class="ml-3 my-6 sm:my-8 title"> All purchase </h1>
-    <div v-if="loading">
+    <div v-if="!(purchases && user)">
       <Loading />
     </div>
-    <div v-if="purchases">
-      <ListPurchase :services="purchases" />
+    <div v-if="purchases && user">
+      <ListPurchase :services="purchases" :user="user" />
     </div>
   </div>
 </template>
@@ -25,22 +25,25 @@ export default {
 
   data() {
     return {
-      loading: false,
       purchases: null,
+      user: null,
     }
   },
 
   mounted() {
-    this.loading = true
     this.$store.dispatch("purchases/getAllPurchases")
         .then((res) => {
           if(res) {
             this.purchases = res.purchases
           }
-          this.loading = false
+        })
+    this.$store.dispatch("auth/getAuthenticatedUser")
+        .then((res) => {
+          if(res) {
+            this.user = res.user
+          }
         })
   },
 }
-
 </script>
 

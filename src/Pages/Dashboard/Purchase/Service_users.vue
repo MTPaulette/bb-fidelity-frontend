@@ -10,8 +10,11 @@
     </div>
 
     <div v-if="users">
-      <h1 class="ml-3 my-6 sm:my-8 title"> {{ users[0].service_name }} Historic </h1>
-      <ListUser :users="users" />
+      <h1 class="ml-3 my-6 sm:my-8 title"> {{ users.data[0].service_name }} Historic </h1>
+      <ListUser :users="users.data" />
+      <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
+        <Pagination :links="users.links" @nextPage="nextPage" />
+      </div>
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@ import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
 import ListUser from '@/Components/List/User.vue'
 import Empty from '@/Components/Empty.vue'
+import Pagination from '@/Components/PaginationTable.vue'
 
 
 export default {
@@ -28,7 +32,8 @@ export default {
     Breadcrumb,
     Loading,
     ListUser,
-    Empty
+    Empty,
+    Pagination,
   },
   data() {
     return {
@@ -61,7 +66,19 @@ export default {
         })
         .finally(() => this.loading = false)
       }
-    }
+    },
+    nextPage (nb) {
+      this.$store
+        .dispatch('purchases/getAllUsersOfService', {
+          id: this.$route.params.id,
+          page: nb
+      })
+        .then((res) => {
+          if(res) {
+            this.users = res.data.users
+          }
+        })
+    },
   }
 }
 

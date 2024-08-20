@@ -98,9 +98,11 @@ const actions = {
         console.log(err)
       })
   },
-  async getAllUsers ({ commit }) {
+  async getAllUsers ({ commit }, credentials) {
     return await axios
-      .get('/users')
+      .get('/users', {
+        params: credentials
+      })
       .then(({ data }) => {
         commit('setAllUsersData', data)
         return data

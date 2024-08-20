@@ -180,12 +180,15 @@
 
     <div v-if="services" class="w-full h-auto">
       <div v-if="cardDisplay" class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        <div v-for="service in services" :key="service.id" class="col-span-1">
+        <div v-for="service in services.data" :key="service.id" class="col-span-1">
           <ServiceCard :service="service" :recentServiceId="recentServiceId" />
         </div>
       </div>
       <div v-else>
-        <ServiceList :services="services" :recentServiceId="recentServiceId" />
+        <ServiceList :services="services.data" :recentServiceId="recentServiceId" />
+        <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
+          <Pagination :links="services.links" @nextPage="nextPage" />
+        </div>
       </div>
     </div>
   </div>
@@ -208,6 +211,7 @@ import ServiceList from '@/Components/List/Service.vue'
 import ServiceCard from '@/Components/Card/Service.vue'
 import Loading from '@/Components/Loading.vue'
 import Empty from '@/Components/Empty.vue'
+import Pagination from '@/Components/PaginationTable.vue'
 
 
 import Agencies from '@/Database/Agencies.js'
@@ -221,7 +225,8 @@ export default {
     ServiceList,
     ServiceCard,
     Loading,
-    Empty
+    Empty,
+    Pagination
   },
 
   data() {
@@ -302,7 +307,17 @@ export default {
           }
           this.loading = false
         })
-    }
+    },
+    nextPage (nb) {
+      this.$store.dispatch("services/getAllServices", {
+        page: nb
+      })
+        .then((res) => {
+          if(res) {
+            this.services = res.services
+          }
+        })
+    },
   }
 }
 </script>

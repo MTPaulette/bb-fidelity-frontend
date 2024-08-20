@@ -15,9 +15,11 @@ const mutations = {
 }
 
 const actions = {
-  async getAllPurchases ({ commit }) {
+  async getAllPurchases ({ commit }, credentials) {
     return await axios
-      .get('/purchases')
+      .get('/purchases', {
+        params: credentials
+      })
       .then(({ data }) => {
         commit('setAllPurchasesData', data)
         return data
@@ -44,13 +46,14 @@ const actions = {
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {
+    console.log(credentials.page)
     return await axios
-      .get('/user/'+credentials.id+'/services')
+      .get('/user/'+credentials.id+'/services?page='+credentials.page)
   },
 
   async getAllUsersOfService ({ commit }, credentials) {
     return await axios
-      .get('/service/'+credentials.id+'/users')
+      .get('/service/'+credentials.id+'/users?page='+credentials.page)
   },
 }
 
