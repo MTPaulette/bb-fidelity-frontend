@@ -48,6 +48,10 @@
   .text-danger {
     @apply text-[#d50100] dark:text-red-400
   }
+  
+  .text-warning {
+    @apply text-yellow-600 dark:text-yellow-400
+  }
 
   .text-accentuate {
     @apply text-purple-600 dark:text-purple-400

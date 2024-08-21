@@ -12,7 +12,10 @@
     </div>
   
     <div v-if="services">
-      <ListPurchase :services="services" />
+      <ListPurchase :services="services.data" />
+      <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
+        <Pagination :links="services.links" @nextPage="nextPage" />
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +25,7 @@ import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
 import ListPurchase from '@/Components/List/Purchase.vue'
 import Empty from '@/Components/Empty.vue'
+import Pagination from '@/Components/PaginationTable.vue'
 
 
 export default {
@@ -29,7 +33,8 @@ export default {
     Breadcrumb,
     Loading,
     ListPurchase,
-    Empty
+    Empty,
+    Pagination,
   },
   data() {
     return {
@@ -61,7 +66,21 @@ export default {
           console.log(err)
         })
         .finally(() => this.loading = false)
-    }
+    },
+    nextPage (nb) {
+      this.$store
+        .dispatch('purchases/getAllServicesOfUser', {
+        id: this.$route.params.id,
+        page: nb
+      })
+        .then((res) => {
+          console.log(res)
+          if(res) {
+            this.services = res.data.services
+          }
+        })
+    },
+
   }
 }
 

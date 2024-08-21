@@ -21,6 +21,9 @@
           <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
           {{ user.balance }} point(s)
         </div>
+        <div v-if="user.role_id==2">
+          <UserType :label="user.user_type" />
+        </div>
         <p class="text-black-white"><span v-if="user.role_id == 1"> Admin (entreprise) <br /> </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
         <div v-if="user.role_id != 1" class="flex mt-4 md:mt-6">
           <router-link :to="{ name: 'user.historic', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
@@ -40,11 +43,14 @@ import { formatDate } from '@/Composables/formatDate'
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import Loading from '@/Components/Loading.vue'
+import UserType from '@/Components/UserType.vue'
+
 
 export default {
   components: {
     Breadcrumb,
-    Loading
+    Loading,
+    UserType,
   },
   data() {
     return {

@@ -39,7 +39,7 @@
     <!-- filters -->
     <div class="w-full h-auto">
       <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
-        <li>
+        <!-- <li>
           <button
             class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium border rounded-full
             disabled text-purple-700 border-purple-700 focus:ring-purple-300 dark:border-purple-400 dark:text-purple-400"
@@ -49,7 +49,7 @@
             </svg>
             <span class="ml-1">Filters</span>
           </button>
-        </li>
+        </li> -->
 
         <!-- by's list -->
         <li class="relative">
@@ -191,6 +191,7 @@
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
           <label for="payment" class="sr-onlyy">Payment by cash</label>
         </div>
+        {{ loading }}
         <ButtonLoading label="Save purchase" :loading="loading" />
       </form>
     </div>
@@ -333,6 +334,7 @@ export default {
         agency: '',
         validity: '',
         service_type: '',
+        no_pagination: true,
       },
       showBy: false,
       showOrder: false,
@@ -358,13 +360,16 @@ export default {
 
   methods: {
     getAllUsers() {
-      this.$store.dispatch("auth/getAllUsers")
+      this.$store.dispatch("auth/getAllUsers", {
+        no_pagination: true
+      })
           .then((res) => {
             if(res) {
               this.users = res.users
             }
           })
     },
+
     getAllServices() {
       this.errors = null
       this.loading = true
@@ -384,14 +389,7 @@ export default {
           })
           .finally(() => this.loading = false)
     },
-    getAllServicess() {
-      this.$store.dispatch("services/getAllServices")
-        .then((res) => {
-          if(res) {
-            this.services = res.services
-          }
-        })
-    },
+
     summary() {
       this.loading = !this.loading
       this.errors = null
@@ -413,6 +411,7 @@ export default {
         }
       }
     },
+
     newPurchase() {
       this.sending = true
       this.errors = null
@@ -424,10 +423,12 @@ export default {
       this.$store
         .dispatch('purchases/createPurchase', this.purchase)
         .then((res) => {
-          this.sending = false
-          this.loading = false
+        
+        this.sending = flashAlert
+          console.log('res')
+          console.log(res)
           document.getElementById('summaryButton').click()
-          this.message = res.data.message
+          if(res) { this.message = res.data.message }
 
           //flashAlert will disappear after 1s
           setTimeout(() => {
@@ -438,10 +439,14 @@ export default {
           //this.errors = res.response.data.errors
         })
         .catch(err => {
+          if(err) {
+          this.errors = err.response.data.errors}
+        
+
           console.log(err)
+        this.sending = false
         })
         .finally(() => {
-          this.loading = false
           this.sending = false
         })
     },

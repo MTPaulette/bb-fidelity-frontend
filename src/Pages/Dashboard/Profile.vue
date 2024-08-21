@@ -11,8 +11,7 @@
   <div v-if="user">
 
     <div v-if="!user.is_registered">
-      <!-- <div v-if="!user.is_registered && user.role-id==2 "> -->
-      <Error message="You are not yet registered with the loyalty program" />
+      <Warning message="You are not yet registered with the loyalty program" />
     </div>
 
     <div class="w-full h-auto">
@@ -101,7 +100,7 @@
 import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
-import Error from '@/Components/Error.vue'
+import Warning from '@/Components/Warning.vue'
 import UserType from '@/Components/UserType.vue'
 import Loading from '@/Components/Loading.vue'
 
@@ -110,7 +109,7 @@ export default {
     Breadcrumb,
     FlashAlert,
     ButtonLoading,
-    Error,
+    Warning,
     Loading,
     UserType
   },

@@ -16,7 +16,7 @@
             </svg>
           </button>
           <a href="#" class="shrink-0 ml-2 md:mr-24">
-            <img src="./../assets/logo_bb.png" alt="brain booster logo" class="h-12 w-24" />
+            <img src="./../assets/logo_bb.png" alt="brain booster logo" class="h-auto w-auto" />
           </a>
         </div>
         <div class="flex items-center">

@@ -37,12 +37,12 @@ const actions = {
   async createPurchase ({ dispatch }, credentials) {
     return axios
       .post('/purchase/store', credentials)
-      .then((data) => {
-        return data
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      // .then((data) => {
+      //   return data
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {

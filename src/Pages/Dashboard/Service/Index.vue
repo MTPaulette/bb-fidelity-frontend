@@ -11,6 +11,7 @@
         </ul>
     </div>
 
+    {{ selectedFilters }}
     <!-- filters -->
     <div class="w-full h-auto">
       <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
@@ -147,6 +148,34 @@
           </div>
         </li>
 
+        <!-- User_type's list -->
+        <li class="relative">
+          <div @click="showUser_type = !showUser_type" :class="selectedFilters.user_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium">
+              <span v-if="selectedFilters.user_type">{{ selectedFilters.user_type }}</span>
+              <span v-else>All User Type</span>
+            </div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+      
+          <div v-show="showUser_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showUser_type = false">
+              <li class="border-b border-color">
+                <span class="dropdown-item-filter" @click="selectedFilters.user_type = ''">
+                  All type
+                </span>
+              </li>
+              <li v-for="(user_type, i) in user_types" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.user_type = user_type">
+                  {{ user_type }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </li>
+
         <!-- reset -->
         <li @click="reset">
           <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
@@ -154,8 +183,10 @@
       </ul>
     </div>
 
+    <div class="w-full block sm:flex justify-center sm:justify-between items-center px-2">
+      <Search @search="search" />
     <!--display type -->
-    <div class="flex justify-end items-center gap-2">
+    <div class="flex justify-end items-center gap-2 mt-3 sm:mt-0">
       <button class="p-2 rounded-lg shadow-md" title="card display" @click="cardDisplay = !cardDisplay" :class="cardDisplay?'bg-highlight text-black-white':''">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
           <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -167,6 +198,7 @@
           <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
         </svg>
       </button>
+    </div>
     </div>
 
 
@@ -212,11 +244,13 @@ import ServiceCard from '@/Components/Card/Service.vue'
 import Loading from '@/Components/Loading.vue'
 import Empty from '@/Components/Empty.vue'
 import Pagination from '@/Components/PaginationTable.vue'
+import Search from '@/Components/Search.vue'
 
 
 import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
 import Service_types from "@/Database/Service_types.js"
+import User_types from "@/Database/User_types.js"
 
 
 export default {
@@ -226,7 +260,8 @@ export default {
     ServiceCard,
     Loading,
     Empty,
-    Pagination
+    Pagination,
+    Search
   },
 
   data() {
@@ -234,6 +269,7 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
+      user_types: User_types,
       order_by: ['name', 'created_at'],
       asc_desc: ['asc', 'desc'],
 
@@ -247,11 +283,14 @@ export default {
         agency: '',
         validity: '',
         service_type: '',
+        user_type: '',
+        q: '',
       },
       showBy: false,
       showOrder: false,
       showAgency: false,
       showService_type: false,
+      showUser_type: false,
       showValidity: false,
       cardDisplay: true,
     }
@@ -278,6 +317,8 @@ export default {
       this.selectedFilters.agency = ''
       this.selectedFilters.validity = ''
       this.selectedFilters.service_type = ''
+      this.selectedFilters.user_type = ''
+      this.selectedFilters.q = ''
     },
     getAllServices() {
       this.errors = null
@@ -317,6 +358,9 @@ export default {
             this.services = res.services
           }
         })
+    },
+    search(q) {
+      this.selectedFilters.q = q
     },
   }
 }
