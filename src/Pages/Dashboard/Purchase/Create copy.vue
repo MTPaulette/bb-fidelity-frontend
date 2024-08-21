@@ -18,11 +18,6 @@
         </p>
       </div>
       <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="summary">
-        
-        <div v-if="errors">
-          <Error :message="errors" />
-        </div>
-
         <!-- user -->
         <div>
           <label for="user" class="label">Choose User</label>
@@ -31,8 +26,6 @@
             <!-- <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option> -->
             <option v-for="user in users" :key="user.id" :value="user">
               <span v-if="user.role_id == 1"> {{ user.name }} (Admin)</span>
-              <span v-else-if="user.role_id == 3"> {{ user.name }} (SuperAdmin)</span>
-
               <span v-else>{{ user.name }}</span>
             </option>
           </select>
@@ -42,137 +35,149 @@
         <div>
           <label for="service" class="label">Choose Service</label>
 
-          <!-- filters -->
-          <div class="w-full h-auto">
-            <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
+          
+    <!-- filters -->
+    <div class="w-full h-auto">
+      <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">
+        <!-- <li>
+          <button
+            class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium border rounded-full
+            disabled text-purple-700 border-purple-700 focus:ring-purple-300 dark:border-purple-400 dark:text-purple-400"
+          >
+            <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+              <path d="M14 10.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0 0 1h3a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-7a.5.5 0 0 0 0 1h7a.5.5 0 0 0 .5-.5zm0-3a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z" />
+            </svg>
+            <span class="ml-1">Filters</span>
+          </button>
+        </li> -->
 
-              <!-- by's list -->
-              <li class="relative">
-                <div @click="showBy = !showBy" :class="selectedFilters.by?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.by }}</div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <div v-show="showBy" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showBy = false">
-                    <li v-for="(by, i) in order_by" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.by = by">
-                        {{ by }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <!-- order's list -->
-              <li class="relative">
-                <div @click="showOrder = !showOrder" :class="selectedFilters.order?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.order }}</div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <div v-show="showOrder" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showOrder = false">
-                    <li v-for="(order, i) in asc_desc" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.order = order">
-                        {{ order }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <!-- Agency's list -->
-              <li class="relative">
-                <div @click="showAgency = !showAgency" :class="selectedFilters.agency?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium">
-                    <span v-if="selectedFilters.agency">{{ selectedFilters.agency }}</span>
-                    <span v-else>All agency</span>
-                  </div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-                <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showAgency = false">
-                    <li class="border-b border-color">
-                      <span class="dropdown-item-filter" @click="selectedFilters.agency = ''">
-                        All agency
-                      </span>
-                    </li>
-                    <li v-for="(agency, i) in agencies" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.agency = agency">
-                        {{ agency }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <!-- Validity's list -->
-              <li class="relative">
-                <div @click="showValidity = !showValidity" :class="selectedFilters.validity?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium">
-                    <span v-if="selectedFilters.validity">{{ selectedFilters.validity }}</span>
-                    <span v-else>All validity</span>
-                  </div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-            
-                <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showValidity = false">
-                    <li class="border-b border-color">
-                      <span class="dropdown-item-filter" @click="selectedFilters.validity = ''">
-                        All validity
-                      </span>
-                    </li>
-                    <li v-for="(validity, i) in validities" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.validity = validity">
-                        {{ validity }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <!-- Service_type's list -->
-              <li class="relative">
-                <div @click="showService_type = !showService_type" :class="selectedFilters.service_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium">
-                    <span v-if="selectedFilters.service_type">{{ selectedFilters.service_type }}</span>
-                    <span v-else>All Type</span>
-                  </div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-            
-                <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showService_type = false">
-                    <li class="border-b border-color">
-                      <span class="dropdown-item-filter" @click="selectedFilters.service_type = ''">
-                        All type
-                      </span>
-                    </li>
-                    <li v-for="(service_type, i) in service_types" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.service_type = service_type">
-                        {{ service_type }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
-              <!-- reset -->
-              <li @click="reset">
-                <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
+        <!-- by's list -->
+        <li class="relative">
+          <div @click="showBy = !showBy" :class="selectedFilters.by?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.by }}</div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div v-show="showBy" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showBy = false">
+              <li v-for="(by, i) in order_by" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.by = by">
+                  {{ by }}
+                </span>
               </li>
             </ul>
           </div>
+        </li>
+
+        <!-- order's list -->
+        <li class="relative">
+          <div @click="showOrder = !showOrder" :class="selectedFilters.order?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium"> {{ selectedFilters.order }}</div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div v-show="showOrder" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showOrder = false">
+              <li v-for="(order, i) in asc_desc" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.order = order">
+                  {{ order }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Agency's list -->
+        <li class="relative">
+          <div @click="showAgency = !showAgency" :class="selectedFilters.agency?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium">
+              <span v-if="selectedFilters.agency">{{ selectedFilters.agency }}</span>
+              <span v-else>All agency</span>
+            </div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showAgency = false">
+              <li class="border-b border-color">
+                <span class="dropdown-item-filter" @click="selectedFilters.agency = ''">
+                  All agency
+                </span>
+              </li>
+              <li v-for="(agency, i) in agencies" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.agency = agency">
+                  {{ agency }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Validity's list -->
+        <li class="relative">
+          <div @click="showValidity = !showValidity" :class="selectedFilters.validity?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium">
+              <span v-if="selectedFilters.validity">{{ selectedFilters.validity }}</span>
+              <span v-else>All validity</span>
+            </div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+      
+          <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showValidity = false">
+              <li class="border-b border-color">
+                <span class="dropdown-item-filter" @click="selectedFilters.validity = ''">
+                  All validity
+                </span>
+              </li>
+              <li v-for="(validity, i) in validities" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.validity = validity">
+                  {{ validity }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Service_type's list -->
+        <li class="relative">
+          <div @click="showService_type = !showService_type" :class="selectedFilters.service_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+            <div class="ml-3 mr-2 font-medium">
+              <span v-if="selectedFilters.service_type">{{ selectedFilters.service_type }}</span>
+              <span v-else>All Type</span>
+            </div>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </div>
+      
+          <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+            <ul class="py-2 text-sm" @click="showService_type = false">
+              <li class="border-b border-color">
+                <span class="dropdown-item-filter" @click="selectedFilters.service_type = ''">
+                  All type
+                </span>
+              </li>
+              <li v-for="(service_type, i) in service_types" :key="i" class="cursor-pointer">
+                <span class="dropdown-item-filter" @click="selectedFilters.service_type = service_type">
+                  {{ service_type }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- reset -->
+        <li @click="reset">
+          <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
+        </li>
+      </ul>
+    </div>
 
           <select id="service" v-model="selectedService" name="service" class="input" required>
             <option selected>No service selected</option>
@@ -186,6 +191,7 @@
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
           <label for="payment" class="sr-onlyy">Payment by cash</label>
         </div>
+        {{ loading }}
         <ButtonLoading label="Save purchase" :loading="loading" />
       </form>
     </div>
@@ -207,12 +213,6 @@
         <div v-if="errors">
           <Error :message="errors" />
         </div>
-        
-        <div v-if="selectedUser">
-          <div v-if="!selectedUser.is_registered">
-            <Warning message="This user is not yet registered with the loyalty program. He can just make cash payment" />
-          </div>
-        </div>
       
         <div class="grid gap-4 mt-6 pb-6 mb-10 sm:grid-cols-2 rounded-t border-b ">
           <div class="border-r border-color mb-6 sm:mb-0">
@@ -224,23 +224,7 @@
                   <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                 </svg>
               </div>
-              <h5 class="subtitle flex items-center">
-                {{ selectedUser.name }}
-                <div v-if="selectedUser.role_id == 2" class="ms-2">
-                  <span v-if="selectedUser.is_registered" title="registered user" class="text-green-500">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-                    </svg>
-                  </span>
-                  <span v-else class="text-red-500" title="unregistered user">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                    </svg>
-                  </span>
-                </div>
-              </h5>
+              <h5 class="subtitle">{{ selectedUser.name }}</h5>
               <span class="text-sm text-blue-500 my-1">{{ selectedUser.email }}</span>
               <div v-if="selectedUser.role_id != 1" class="flex items-center">
                 <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[selectedUser.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
@@ -260,12 +244,6 @@
 
               <h5 class="subtitle">{{ selectedService.name }}</h5>
               <div class="my-2">
-                <p class="flex items-center">
-                  User Type: &nbsp;
-                  <span class="text-black-white font-medium">
-                    <span><UserType :label="selectedService.user_type" /></span>
-                  </span>
-                </p>
                 <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ selectedService.validity }} </span></p>
                 <p>Price: &nbsp;<span class="text-accentuate"> {{ selectedService.price }} XAF </span></p>
                 <p>Credit Point: &nbsp;<span class="text-green-500"> {{ selectedService.credit }} Point(s) </span></p>
@@ -292,12 +270,16 @@
             <span v-if="purchase.by_cash" class="text-green-400">credit on {{ selectedService.credit }} points.</span>
             <span v-else class="text-danger">debit on {{ selectedService.debit }} points.</span><br />
           </p>
+          <p class="text-black-white font-[Roboto] font-bold text-2xl mt-4 mb-12">
+            The user new balance is 
+            <span :class="[newBalance < 0 ? 'text-danger': 'text-accentuate']"> {{ newBalance }} points.</span><br />
+          </p>
         </div>
 
         <!-- confirm and cancel btn-->
-        <div class="flex items-center space-x-4 mt-12">
+        <div class="flex items-center space-x-4">
           <ButtonLoading @click="newPurchase" :loading="sending" :disabled="!canSubmit" type="button" class="btn-base btn-blue" label="Confirm purchase" />
-          <button @click="close" type="button" class="btn-base btn-light-2">Cancel</button>
+          <button @click="summary" type="button" class="btn-base btn-light-2">Cancel</button>
         </div>
       </div>
     </div>
@@ -310,8 +292,6 @@ import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
 import Error from '@/Components/Error.vue'
-import Warning from '@/Components/Warning.vue'
-import UserType from '@/Components/UserType.vue'
 
 import Purchase from "@/Models/Purchase.js"
 import Agencies from '@/Database/Agencies.js'
@@ -324,9 +304,7 @@ export default {
     FlashAlert,
     ButtonLoading,
     Loading,
-    Error,
-    Warning,
-    UserType,
+    Error
   },
 
   data() {
@@ -342,7 +320,7 @@ export default {
       loading: false,
       canSubmit: true,
       sending: false,
-      new_balance: null,
+      newBalance: 0,
 
       
       agencies: Agencies,
@@ -413,51 +391,66 @@ export default {
     },
 
     summary() {
-      this.loading = true
+      this.loading = !this.loading
       this.errors = null
       document.getElementById('summaryButton').click()
-
-      if(this.selectedUser.role_id != 2) {
+      if(this.selectedUser.role_id == 1) {
         this.errors = "Only client can make purchase. not Admin."
         this.canSubmit = false
       }
-      /*
+
       if(this.purchase.by_cash) {
         this.newBalance = parseFloat(this.selectedUser.balance) + parseFloat(this.selectedService.credit)
       } else {
         this.newBalance = parseFloat(this.selectedUser.balance) - parseFloat(this.selectedService.debit)
+        // this.newBalance = this.selectedUser.balance - this.selectedService.price
         if(this.newBalance < 0) {
           this.errors = "The user's balance is insuffisant to buy this service."
           this.canSubmit = false
           this.loading = false
         }
       }
-        */
     },
 
-    close() {
-      this.canSubmit = true
+    summaryy() {
+      this.loading = !this.loading
+      this.errors = null
       document.getElementById('summaryButton').click()
-      this.loading = false
+      if(this.selectedUser.role_id == 1) {
+        this.errors = "Only client can make purchase. not Admin."
+        this.canSubmit = false
+      }
+
+      if(this.purchase.by_cash) {
+        this.newBalance = parseFloat(this.selectedUser.balance) + parseFloat(this.selectedService.credit)
+      } else {
+        this.newBalance = parseFloat(this.selectedUser.balance) - parseFloat(this.selectedService.debit)
+        // this.newBalance = this.selectedUser.balance - this.selectedService.price
+        if(this.newBalance < 0) {
+          this.errors = "The user's balance is insuffisant to buy this service."
+          this.canSubmit = false
+          this.loading = false
+        }
+      }
     },
 
     newPurchase() {
       this.sending = true
       this.errors = null
 
+      // this.purchase.admin_id = this.admin_id
       this.purchase.service_id = this.selectedService.id
       this.purchase.user_id = this.selectedUser.id
       
       this.$store
         .dispatch('purchases/createPurchase', this.purchase)
         .then((res) => {
-          this.sending = false
+        
+        this.sending = flashAlert
           console.log('res')
           console.log(res)
-          this.close()
-          if(res) { 
-            this.message = res.data.message
-          }
+          document.getElementById('summaryButton').click()
+          if(res) { this.message = res.data.message }
 
           //flashAlert will disappear after 1s
           setTimeout(() => {
@@ -465,14 +458,16 @@ export default {
             this.getAllUsers()
           }, 5000)
 
+          //this.errors = res.response.data.errors
         })
         .catch(err => {
-          console.log('err')
-          console.log(err)
           if(err) {
             this.errors = err.response.data.errors
           }
-          this.sending = false
+        
+
+          console.log(err)
+        this.sending = false
         })
         .finally(() => {
           this.sending = false
