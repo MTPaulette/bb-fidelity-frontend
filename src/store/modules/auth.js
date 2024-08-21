@@ -133,6 +133,12 @@ const actions = {
         console.log(err)
       })
   },
+  
+  async updatePoint ({ commit }, credentials) {
+    console.log(credentials)
+    return await axios
+      .put('/user/update', credentials)
+  },
 }
 
 export default {

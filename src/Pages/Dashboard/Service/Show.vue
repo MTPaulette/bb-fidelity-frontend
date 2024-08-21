@@ -3,6 +3,7 @@
     <div v-if="message !=''">
       <FlashAlert :message="message" />
     </div>
+
     <Breadcrumb link1="dashboard" link2="service" />
     <h1 class=" ml-3 my-6 sm:my-8 title"> Service {{ $route.params.id }} Informations </h1>
 

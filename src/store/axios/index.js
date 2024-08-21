@@ -3,7 +3,7 @@ import router from '../../router';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
-  //baseURL: 'https://fidelity.brain-booster.net/backend/api',
+  //baseURL: 'https://fidelity.bbdesign.dev/backend/api',
   headers: {
     'Accept': 'application/json',
   },
