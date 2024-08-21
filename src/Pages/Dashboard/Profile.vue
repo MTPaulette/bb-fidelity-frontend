@@ -22,7 +22,7 @@
             <UserType :label="user.user_type" />
 
           </div>
-          <div class="p-4 mb-8 bg-secondary rounded-lg">
+          <div v-if="user.role_id == 2" class="p-4 mb-8 bg-secondary rounded-lg">
             You have: <span  :class="[user.balance> 0 ? 'text-green-400' : 'text-danger']">{{ user.balance }} point(s)</span>
           </div>
           <form method="PUT" class="flex flex-col justify-between w-full h-auto" @submit.prevent="updateUserInformation">

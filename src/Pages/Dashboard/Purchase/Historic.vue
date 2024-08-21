@@ -40,21 +40,28 @@ export default {
     return {
       services: null,
       loading: false,
-      errors: null
+      errors: null,
+      id: null
     }
   },
 
   mounted() {
-    this.getAllServicesOfUser()
+    this.$store.dispatch("auth/getAuthenticatedUser")
+        .then((res) => {
+          if(res) {
+            console.log(res.user.id)
+            this.id = res.user.id
+            this.getAllServicesOfUser(this.id)
+          }
+        })
   },
 
   methods: {
-    getAllServicesOfUser () {
-      this.id = JSON.parse(localStorage.getItem('user')).id
+    getAllServicesOfUser (id) {
       this.loading = true
       this.$store
         .dispatch('purchases/getAllServicesOfUser', {
-          id: this.id
+          id: id
         })
         .then((res) => {
           this.services = res.data.services
@@ -70,8 +77,8 @@ export default {
     nextPage (nb) {
       this.$store
         .dispatch('purchases/getAllServicesOfUser', {
-        id: this.$route.params.id,
-        page: nb
+          id: this.id,
+          page: nb
       })
         .then((res) => {
           console.log(res)

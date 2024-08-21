@@ -75,16 +75,30 @@
           </div>
         </div>
 
-        <!-- service_type -->
-        <div>
-          <label for="service_type" class="label">Type</label>
-          <select id="service_type" v-model="service.service_type" name="service_type" class="input" required>
-            <!-- <option selected>No service_type selected</option> -->
-            <option v-for="(service_type, i) in service_types" :key="i" :value="service_type">{{ service_type }}</option>
-          </select>
-          <p v-if="errors" class="input-error">
-            <span v-if="errors.service_type">{{ errors.service_type[0] }}</span>
-          </p>
+        <div class="grid gap-2 sm:gap-6 grid-cols-2">
+          <!-- service_type -->
+          <div>
+            <label for="service_type" class="label">Type</label>
+            <select id="service_type" v-model="service.service_type" name="service_type" class="input" required>
+              <!-- <option selected>No service_type selected</option> -->
+              <option v-for="(service_type, i) in service_types" :key="i" :value="service_type">{{ service_type }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.service_type">{{ errors.service_type[0] }}</span>
+            </p>
+          </div>
+
+          <!-- user_type -->
+          <div>
+            <label for="user_type" class="label">Type</label>
+            <select id="user_type" v-model="service.user_type" name="user_type" class="input" required>
+              <!-- <option selected>No user_type selected</option> -->
+              <option v-for="(user_type, i) in user_types" :key="i" :value="user_type">{{ user_type }}</option>
+            </select>
+            <p v-if="errors" class="input-error">
+              <span v-if="errors.user_type">{{ errors.user_type[0] }}</span>
+            </p>
+          </div>
         </div>
         <div>
           <label for="service" class="label">Description</label>
@@ -109,6 +123,7 @@ import Service from '@/Models/Service.js'
 import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
 import Service_types from "@/Database/Service_types.js"
+import User_types from "@/Database/User_types.js"
 
 export default {
   components: {
@@ -123,6 +138,7 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
+      user_types: User_types,
       service: null,
       message: '',
       loading: false,
@@ -144,7 +160,7 @@ export default {
         .then((res) => {
           if(res) {
             const serviceData = res.service
-            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.service_type, serviceData.agency, serviceData.description, serviceData.user_id)
+            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.service_type, serviceData.agency, serviceData.description, serviceData.user_type, serviceData.user_id)
           }
         })
         .catch(err => {

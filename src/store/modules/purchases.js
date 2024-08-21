@@ -46,7 +46,7 @@ const actions = {
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {
-    console.log(credentials.page)
+    console.log(credentials)
     return await axios
       .get('/user/'+credentials.id+'/services?page='+credentials.page)
   },
