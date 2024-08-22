@@ -461,18 +461,6 @@ export default {
         this.errors = "Only client can make purchase. not Admin."
         this.canSubmit = false
       }
-      /*
-      if(this.purchase.by_cash) {
-        this.newBalance = parseFloat(this.selectedUser.balance) + parseFloat(this.selectedService.credit)
-      } else {
-        this.newBalance = parseFloat(this.selectedUser.balance) - parseFloat(this.selectedService.debit)
-        if(this.newBalance < 0) {
-          this.errors = "The user's balance is insuffisant to buy this service."
-          this.canSubmit = false
-          this.loading = false
-        }
-      }
-        */
     },
 
     close() {

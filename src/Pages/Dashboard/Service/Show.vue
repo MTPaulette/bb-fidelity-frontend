@@ -165,28 +165,30 @@ export default {
   },
 
   mounted() {
-    this.getServiceById()
+    this.getServiceById(this.$route.params.id)
   },
 
   methods: {
     toggleModal() {
       document.getElementById('confirm-button').click()
     },
-    getServiceById() {
-      this.loading = true
-      this.$store
-        .dispatch('services/getServiceById', {
-          id: this.$route.params.id
-        })
-        .then((res) => {
-          if(res) {
-            this.service = res.service
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => this.loading = false)
+    getServiceById(id) {
+      if(id) {
+        this.loading = true
+        this.$store
+          .dispatch('services/getServiceById', {
+            id: id
+          })
+          .then((res) => {
+            if(res) {
+              this.service = res.service
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => this.loading = false)
+      }
     },
     deleteService() {
       this.errors.password = ''

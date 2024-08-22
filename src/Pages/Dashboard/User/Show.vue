@@ -49,8 +49,8 @@
               
               <div v-show="showMoreAction" class="over-y absolute ml-20 z-10 divide-y divide-[#dadce0] w-24 max-h-[100px] dropdown">
                 <ul class="py-2 text-sm" @click="showMoreAction = false">
-                  <li class="px-4 py-2 item-dropdown" @click="toggleBonusModal">Credit</li>
-                  <li class="px-4 py-2 item-dropdown border-t border-color" @click="toggleMalusModal">Debit</li>
+                  <li class="px-4 py-2 item-dropdown rounded-none" @click="toggleBonusModal">Credit</li>
+                  <li class="px-4 py-2 item-dropdown rounded-none border-t border-color" @click="toggleMalusModal">Debit</li>
                 </ul>
               </div>
             </div>
@@ -109,7 +109,7 @@
             </div>
             <div class="flex w-full justify-center mt-4">
               <div @click.stop="credit">
-                <ButtonLoading :loading="sending" type="button" class="btn-base btn-success" :label="malus?'Debit':'Credit'" />
+                <ButtonLoading :loading="sending" type="button" class="btn-base" :class="malus?'btn-danger':'btn-success-1'" :label="malus?'Debit':'Credit'" />
               </div>
               <button data-modal-hide="more-action-modal" type="button" class="btn-base btn-light-2 ms-2">No, cancel</button>
             </div>
@@ -182,20 +182,22 @@ export default {
 
   methods: {
     getUserById (id) {
-      this.loading = true
-      this.$store
-        .dispatch('auth/getUserById', {
-          id: id
-        })
-        .then((res) => {
-          if(res) {
-            this.user = res.user
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => this.loading = false)
+      if(id) {
+        this.loading = true
+        this.$store
+          .dispatch('auth/getUserById', {
+            id: id
+          })
+          .then((res) => {
+            if(res) {
+              this.user = res.user
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => this.loading = false)
+      }
     },
     
     toggleBonusModal() {

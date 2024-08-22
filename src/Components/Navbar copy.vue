@@ -4,13 +4,9 @@
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start">
-          <!-- <button @click="$emit('toggleSidebar')"
+          <!-- <button @click="emit(toggleSidebar)" -->
+          <button
             data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" 
-            class="inline-flex items-center p-2 text-sm rounded-lg sm:hidden
-            text-black-white hover:text-accentuate"
-            > -->
-          <button @click="$emit('toggleSidebar')"
-            type="button"
             class="inline-flex items-center p-2 text-sm rounded-lg sm:hidden
             text-black-white hover:text-accentuate"
             >

@@ -107,7 +107,7 @@
             <span v-if="errors.description">{{ errors.description[0] }}</span>
           </p>
         </div>
-        <ButtonLoading label="Update service" :loading="loading" />
+        <ButtonLoading label="Update service" :loading="sending" />
       </form>
     </div>
   </div>
@@ -142,6 +142,7 @@ export default {
       service: null,
       message: '',
       loading: false,
+      sending: false,
       errors: null,
     }
   },
@@ -152,25 +153,27 @@ export default {
 
   methods: {
     getServiceById (id) {
-      this.loading = true
-      this.$store
-        .dispatch('services/getServiceById', {
-          id: id
-        })
-        .then((res) => {
-          if(res) {
-            const serviceData = res.service
-            this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.service_type, serviceData.agency, serviceData.description, serviceData.user_type, serviceData.user_id)
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        .finally(() => this.loading = false)
+      if(id) {
+        this.loading = true
+        this.$store
+          .dispatch('services/getServiceById', {
+            id: id
+          })
+          .then((res) => {
+            if(res) {
+              const serviceData = res.service
+              this.service = new Service(serviceData.name, serviceData.price, serviceData.credit, serviceData.debit, serviceData.validity, serviceData.service_type, serviceData.agency, serviceData.description, serviceData.user_type, serviceData.user_id)
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => this.loading = false)
+      }
     },
 
     updateService () {
-      this.loading = true
+      this.sending = true
       this.errors = null
       
       this.$store
@@ -185,7 +188,7 @@ export default {
         setTimeout(() => {
           this.message = ''
           this.$router.push({ name: 'service.show', params: { id: this.$route.params.id }})
-          // location.reload()
+          //location.reload()
         }, 5000)
       })
       .catch(err => {
@@ -193,7 +196,7 @@ export default {
           this.errors = err.response.data.errors
         }
       })
-      .finally(() => this.loading = false)
+      .finally(() => this.sending = false)
     },
   }
 }
