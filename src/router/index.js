@@ -8,6 +8,7 @@ import Reset from '../Pages/Authentification/Reset.vue'
 import Profile from '../Pages/Dashboard/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
+import UserEdit from '../Pages/Dashboard/User/Edit.vue'
 
 import Services from '../Pages/Dashboard/Service/Index.vue'
 import Service from '../Pages/Dashboard/Service/Show.vue'
@@ -102,6 +103,12 @@ const router = createRouter({
           path: "/user/:id",
           name: "user.show",
           component: User,
+          props: true
+        },
+        {
+          path: "/user/:id/edit",
+          name: "user.edit",
+          component: UserEdit,
           props: true
         },
         {

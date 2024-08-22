@@ -98,6 +98,7 @@ const actions = {
         console.log(err)
       })
   },
+
   async getAllUsers ({ commit }, credentials) {
     return await axios
       .get('/users', {
@@ -134,10 +135,10 @@ const actions = {
       })
   },
   
-  async updatePoint ({ commit }, credentials) {
-    console.log(credentials)
+  async updateUser ({ commit }, credentials) {
+    // console.log(credentials.user)
     return await axios
-      .put('/user/update', credentials)
+      .put('/user/'+credentials.id+'/update', credentials.user)
   },
 }
 

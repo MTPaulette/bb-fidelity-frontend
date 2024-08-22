@@ -10,7 +10,7 @@
   </div>
   <div v-if="user">
 
-    <div v-if="!user.is_registered">
+    <div v-if="!user.is_registered && user.role_id == 2">
       <Warning message="You are not yet registered with the loyalty program" />
     </div>
 

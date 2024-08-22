@@ -30,7 +30,7 @@ instance.interceptors.response.use(function (response) {
   switch(error.response.status) {
     case 403: return router.push({ name: 'forbidden' });
     case 401: 
-      // localStorage.removeItem('user');
+      localStorage.removeItem('user');
       localStorage.removeItem('token');
       return router.push({ name: 'login' });
     case 404: return router.push({ name: 'notFound' });

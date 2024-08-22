@@ -5,10 +5,10 @@
           Create an account
         </h1>
         <form class="space-y-4 md:space-y-6" action="#" method="POST" @submit.prevent="newUser">
-            <div>
-              <label for="name" class="label">Full name</label>
-              <input id="name" v-model="name" type="text" class="input" />
-            </div>
+          <div>
+            <label for="name" class="label">Full name</label>
+            <input id="name" v-model="name" type="text" class="input" />
+          </div>
           <div>
             <label for="email" class="label">Your email</label>
             <input id="email" v-model="email" type="email" class="input" />

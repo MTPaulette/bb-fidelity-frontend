@@ -212,7 +212,7 @@
         <!-- by_cash -->
         <div class="flex items-center">
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
-          <label for="payment" class="sr-onlyy">Payment by cash</label>
+          <label for="payment">Payment by cash</label>
         </div>
         <ButtonLoading label="Save purchase" :loading="loading" />
       </form>
