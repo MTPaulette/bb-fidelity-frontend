@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar :user="user" />
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 sm:w-52 xl:w-64 h-screen pt-16 transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
     <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
       <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
@@ -110,27 +110,20 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Navbar from '@/Components/Navbar.vue'
 
 export default {
   components: {
     Navbar,
   },
+  props: {
+    user: Object
+  },
   data(){
     return {
       toggleDropdown: false,
       logout_processing: false
     }
-  },
-  computed: {
-    ...mapGetters([
-      'auth/isLogged'
-    ]),
-    user() {
-      return JSON.parse(localStorage.getItem('user'))
-      // return localStorage.getItem('user')
-    },
   },
 
   methods: {

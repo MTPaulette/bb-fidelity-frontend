@@ -76,7 +76,6 @@ export default {
         })
         .then((res) => {
           const loggedIn = JSON.parse(localStorage.getItem('user'))
-          console.log(loggedIn.role_id )
           if(loggedIn.role_id != 1) {
             return this.$router.push({ name: 'historic' })
           } else {

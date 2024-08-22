@@ -167,6 +167,34 @@
                 </div>
               </li>
 
+              <!-- User_type's list -->
+              <li class="relative">
+                <div @click="showUser_type = !showUser_type" :class="selectedFilters.user_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
+                  <div class="ml-3 mr-2 font-medium">
+                    <span v-if="selectedFilters.user_type">{{ selectedFilters.user_type }}</span>
+                    <span v-else>All User Type</span>
+                  </div>
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+            
+                <div v-show="showUser_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
+                  <ul class="py-2 text-sm" @click="showUser_type = false">
+                    <li class="border-b border-color">
+                      <span class="dropdown-item-filter" @click="selectedFilters.user_type = ''">
+                        All type
+                      </span>
+                    </li>
+                    <li v-for="(user_type, i) in user_types" :key="i" class="cursor-pointer">
+                      <span class="dropdown-item-filter" @click="selectedFilters.user_type = user_type">
+                        {{ user_type }}
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+
               <!-- reset -->
               <li @click="reset">
                 <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
@@ -317,6 +345,7 @@ import Purchase from "@/Models/Purchase.js"
 import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
 import Service_types from "@/Database/Service_types.js"
+import User_types from "@/Database/User_types.js"
 
 export default {
   components: {
@@ -348,6 +377,7 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
+      user_types: User_types,
       order_by: ['name', 'created_at'],
       asc_desc: ['asc', 'desc'],
       selectedFilters: {
@@ -356,12 +386,14 @@ export default {
         agency: '',
         validity: '',
         service_type: '',
+        user_type: '',
         no_pagination: true,
       },
       showBy: false,
       showOrder: false,
       showAgency: false,
       showService_type: false,
+      showUser_type: false,
       showValidity: false,
     }
   },
@@ -381,6 +413,14 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.selectedFilters.by = 'name'
+      this.selectedFilters.order = 'asc'
+      this.selectedFilters.agency = ''
+      this.selectedFilters.validity = ''
+      this.selectedFilters.service_type = ''
+      this.selectedFilters.user_type = ''
+    },
     getAllUsers() {
       this.$store.dispatch("auth/getAllUsers", {
         no_pagination: true

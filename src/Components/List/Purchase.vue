@@ -106,6 +106,7 @@
   
   defineProps({
     services: Object,
+    user: Object,
   })
 </script>
   
@@ -113,7 +114,7 @@
 export default {
   data() {
     return {
-      user: null,
+      userr: null,
     }
   },
 
@@ -121,7 +122,7 @@ export default {
     this.$store.dispatch("auth/getAuthenticatedUser")
         .then((res) => {
           if(res) {
-            this.user = res.user
+            this.userr = res.user
           }
         })
   },

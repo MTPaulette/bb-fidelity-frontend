@@ -15,11 +15,9 @@ const mutations = {
 }
 
 const actions = {
-  async getAllPurchases ({ commit }, credentials) {
+  async getAllPurchases ({ commit }) {
     return await axios
-      .get('/purchases', {
-        params: credentials
-      })
+      .get('/purchases')
       .then(({ data }) => {
         commit('setAllPurchasesData', data)
         return data
@@ -46,7 +44,6 @@ const actions = {
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {
-    console.log(credentials)
     return await axios
       .get('/user/'+credentials.id+'/services?page='+credentials.page)
   },

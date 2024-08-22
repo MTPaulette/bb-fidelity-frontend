@@ -39,16 +39,13 @@ onMounted(() => {
 
 <script>
 export default {
-  computed: {
-    user() {
-      return JSON.parse(localStorage.getItem('user'))
-      // return localStorage.getItem('user')
-    },
-  },
   data() {
     return {
       logout_processing: false
     }
+  },
+  props: {
+    user: Object
   },
 
   methods: {

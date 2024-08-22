@@ -11,42 +11,48 @@
       <Loading />
     </div>
 
-    <div class="w-full bg-default border border-color rounded-lg shadow" v-if="user">
-      <div class="flex flex-col items-center py-10">
-        <div>
-          <svg class="w-24 h-24 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-          </svg>
-        </div>
-        <h5 class="text-xl font-medium text-black-white">{{ user.name }}</h5>
-        <span class="text-sm text-blue-500 my-1">{{ user.email }}</span>
-        <div v-if="user.role_id != 1" class="flex items-center">
-          <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
-          {{ user.balance }} point(s)
-        </div>
-        <div v-if="user.role_id==2">
-          <UserType :label="user.user_type" />
-        </div>
-        <p class="text-black-white"><span v-if="user.role_id == 1"> Admin (entreprise) <br /> </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
-        <div v-if="user.role_id != 1" class="flex items-center mt-4 md:mt-6">
-          <router-link :to="{ name: 'user.historic', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
-            Historique
-          </router-link>
+    <div v-if="user">
+      <div v-if="!user.is_registered">
+        <Warning message="This user is not yet registered with the loyalty program. He can just make cash payment" />
+      </div>
+      
+      <div class="w-full bg-default border border-color rounded-lg shadow">
+        <div class="flex flex-col items-center py-10">
+          <div>
+            <svg class="w-24 h-24 mb-3 rounded-full shadow-lg" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+          </div>
+          <h5 class="text-xl font-medium text-black-white">{{ user.name }}</h5>
+          <span class="text-sm text-blue-500 my-1">{{ user.email }}</span>
+          <div v-if="user.role_id != 1" class="flex items-center">
+            <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
+            {{ user.balance }} point(s)
+          </div>
+          <div v-if="user.role_id==2">
+            <UserType :label="user.user_type" />
+          </div>
+          <p class="text-black-white"><span v-if="user.role_id == 1"> Admin (entreprise) <br /> </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
+          <div v-if="user.role_id != 1" class="flex items-center mt-4 md:mt-6">
+            <router-link :to="{ name: 'user.historic', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
+              Historique
+            </router-link>
 
-          <div class="relative ms-2">
-            <button @click="showMoreAction = !showMoreAction" class="inline-flex justify-center items-center btn-base">
-              More Action
-              <svg aria-hidden="true" class="w-5 h-5 ml-2" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-              </svg>
-            </button>
-            
-            <div v-show="showMoreAction" class="over-y absolute ml-20 z-10 divide-y divide-[#dadce0] w-24 max-h-[100px] dropdown">
-              <ul class="py-2 text-sm" @click="showMoreAction = false">
-                <li class="px-4 py-2 item-dropdown" @click="toggleBonusModal">Credit</li>
-                <li class="px-4 py-2 item-dropdown border-t border-color" @click="toggleMalusModal">Debit</li>
-              </ul>
+            <div class="relative ms-2">
+              <button @click="showMoreAction = !showMoreAction" class="inline-flex justify-center items-center btn-base">
+                More Action
+                <svg aria-hidden="true" class="w-5 h-5 ml-2" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                </svg>
+              </button>
+              
+              <div v-show="showMoreAction" class="over-y absolute ml-20 z-10 divide-y divide-[#dadce0] w-24 max-h-[100px] dropdown">
+                <ul class="py-2 text-sm" @click="showMoreAction = false">
+                  <li class="px-4 py-2 item-dropdown" @click="toggleBonusModal">Credit</li>
+                  <li class="px-4 py-2 item-dropdown border-t border-color" @click="toggleMalusModal">Debit</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -55,9 +61,9 @@
 
     
     <!-- more modal -->
-    <button id="credit-button" data-modal-target="credit-modal" data-modal-toggle="credit-modal" class="sr-only" type="button">Save purchase</button>
+    <button id="more-action-button" data-modal-target="more-action-modal" data-modal-toggle="more-action-modal" class="sr-only" type="button">Show modal</button>
 
-    <div id="credit-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div id="more-action-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-md max-h-full">
         <div class="relative bg-primary rounded-lg shadow">
           <form class="p-4 md:p-5">
@@ -105,7 +111,7 @@
               <div @click.stop="credit">
                 <ButtonLoading :loading="sending" type="button" class="btn-base btn-success" :label="malus?'Debit':'Credit'" />
               </div>
-              <button data-modal-hide="credit-modal" type="button" class="btn-base btn-light-2 ms-2">No, cancel</button>
+              <button data-modal-hide="more-action-modal" type="button" class="btn-base btn-light-2 ms-2">No, cancel</button>
             </div>
           </form>
         </div>
@@ -116,6 +122,14 @@
 
 <script setup>
 import { formatDate } from '@/Composables/formatDate'
+import { onMounted } from 'vue'
+import {
+  initModals
+} from 'flowbite'
+
+onMounted(() => {
+initModals()
+})
 </script>
 
 <script>
@@ -124,6 +138,7 @@ import Loading from '@/Components/Loading.vue'
 import UserType from '@/Components/UserType.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
+import Warning from '@/Components/Warning.vue'
 
 
 export default {
@@ -133,6 +148,7 @@ export default {
     UserType,
     ButtonLoading,
     FlashAlert,
+    Warning,
   },
   data() {
     return {
@@ -184,10 +200,10 @@ export default {
     
     toggleBonusModal() {
       this.malus = false
-      document.getElementById('credit-button').click()
+      document.getElementById('more-action-button').click()
     },
     toggleMalusModal() {
-      document.getElementById('credit-button').click()
+      document.getElementById('more-action-button').click()
       this.malus = true
     },
     credit() {

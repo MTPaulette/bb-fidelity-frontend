@@ -4,7 +4,7 @@
       <FlashAlert :message="this.message" />
     </div>
     <Breadcrumb link1="dashboard" link2="service" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> New Service  </h1>
+    <h1 class="ml-3 my-6 sm:my-8 title"> New Service </h1>
 
     <div class="w-full px-4 py-5 h-auto border border-color rounded-lg shadow">
       <div class="p-3 mb-4 rounded-lg bg-gray-50 dark:bg-gray-700">

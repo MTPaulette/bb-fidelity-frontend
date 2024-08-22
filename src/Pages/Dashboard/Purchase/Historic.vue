@@ -11,8 +11,8 @@
       <Empty :message="errors" />
     </div>
   
-    <div v-if="services">
-      <ListPurchase :services="services.data" />
+    <div v-if="services && user">
+      <ListPurchase :services="services.data" :user="user" />
       <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="services.links" @nextPage="nextPage" />
       </div>
@@ -41,7 +41,8 @@ export default {
       services: null,
       loading: false,
       errors: null,
-      id: null
+      id: null,
+      user: null,
     }
   },
 
@@ -49,8 +50,8 @@ export default {
     this.$store.dispatch("auth/getAuthenticatedUser")
         .then((res) => {
           if(res) {
-            console.log(res.user.id)
             this.id = res.user.id
+            this.user = res.user
             this.getAllServicesOfUser(this.id)
           }
         })

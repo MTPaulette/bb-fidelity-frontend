@@ -39,11 +39,11 @@ const actions = {
     // share csrf-token generate by laravel (avoid 419 csrf-token expired)
     await axios.get('/csrf-cookie')
         .then(() => {
-
               return axios
                 .post('/login', credentials)
                 .then(({ data }) => {
                   commit('setUserData', data)
+                  return data
                 })
     })
   },
@@ -90,7 +90,7 @@ const actions = {
 
   async getAuthenticatedUser ({ commit }) {
     return await axios
-      .get('/user')
+      .get('/authenticated-user')
       .then(({ data }) => {
         return data
       })

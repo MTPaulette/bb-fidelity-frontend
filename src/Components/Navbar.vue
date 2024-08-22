@@ -1,6 +1,5 @@
 
 <template>
-  <!-- <nav class="fixed top-0 z-50 w-full bg-white border-b border-color dark:bg-black"> -->
   <nav class="fixed top-0 z-50 w-full bg-default md:shadow-light md:dark:shadow-dark">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
@@ -31,7 +30,7 @@
           </div>
           <!-- user's info dropdown menu -->
           <div>
-            <LoggedUser />
+            <LoggedUser :user="user" />
           </div>
           <!-- </div> -->
         </div>
@@ -40,11 +39,20 @@
   </nav>
 </template>
 
-<script setup>
+<script>
 
 import SearchBar from '@/Components/SearchBar.vue'
 import LoggedUser from '@/Components/LoggedUser.vue'
 import DarkMode from '@/Components/DarkMode.vue'
 
-
+export default {
+  components: {
+    SearchBar,
+    LoggedUser,
+    DarkMode,
+  },
+  props: {
+    user: Object
+  },
+}
 </script>

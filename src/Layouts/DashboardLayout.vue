@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <Sidebar />
+  <div v-if="user">
+    <Sidebar :user="user" />
   
     <div class="p-4 sm:ml-52 xl:ml-64 mt-14">
       <router-view />
@@ -17,7 +17,20 @@ export default {
   components: {
     Sidebar,
     Footer,
-  }
+  },
+  data() {
+    return {
+      user: null
+    }
+  },
+  beforeMount() {
+    this.$store.dispatch("auth/getAuthenticatedUser")
+        .then((res) => {
+          if(res) {
+            this.user = res.user
+          }
+        })
+  },
 }
 
 </script>
