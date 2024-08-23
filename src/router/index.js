@@ -4,7 +4,9 @@ import NProgress from 'nprogress'
 // import Home from '../Components/Home.vue'
 import Login from '../Pages/Authentification/Login.vue'
 import Register from '../Pages/Authentification/Register.vue'
-import Reset from '../Pages/Authentification/Reset.vue'
+import ForgotPassword from '../Pages/Authentification/ForgotPassword.vue'
+import ResetPassword from '../Pages/Authentification/ResetPassword.vue'
+
 import Profile from '../Pages/Dashboard/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
@@ -48,9 +50,14 @@ const router = createRouter({
           component: Login,
         },
         {
-          path: "/reset",
-          name: "reset",
-          component: Reset,
+          path: "/forgot-password",
+          name: "forgot-password",
+          component: ForgotPassword,
+        },
+        {
+          path: "/reset-password",
+          name: "reset-passord",
+          component: ResetPassword,
         },
       ],
     },

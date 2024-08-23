@@ -12,7 +12,7 @@
             <p v-if="errors" class="input-error">
               <span v-if="errors.email">{{ errors.email[0] }}</span>
             </p>
-          </div> 
+          </div>
           <div>
             <label for="password" class="label">Password</label>
             <div class="w-full relative">
@@ -39,7 +39,7 @@
               <a href="/register" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Register</a>
             </p>
             <p class="text-gray-500 dark:text-gray-400">
-              Forgot password? <a href="#" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Reset</a>
+              Forgot password? <a href="/forgot-password" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Reset</a>
             </p>
           </div>
         </form>
@@ -68,7 +68,6 @@ export default {
     login () {
       this.loading = true
       this.errors = null
-      // axios.get('/sanctum/csrf-cookie').then(response => {});
         this.$store
         .dispatch('auth/login', {
           email: this.email,

@@ -140,6 +140,17 @@ const actions = {
     return await axios
       .put('/user/'+credentials.id+'/update', credentials.user)
   },
+
+  async forgotPassword ({ commit }, credentials) {
+    return await axios
+      .post('/forgot-password', credentials)
+  },
+  
+  async resetPassword ({ commit }, credentials) {
+    console.log(credentials)
+    return await axios
+      .post('/reset-password', credentials)
+  },
 }
 
 export default {

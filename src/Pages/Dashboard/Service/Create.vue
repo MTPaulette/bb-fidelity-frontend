@@ -133,7 +133,7 @@ export default {
       service_types: Service_types,
       user_types: User_types,
       // new Service(name, price, credit, debit, validity, service_type, agency, description, user_type, user_id)
-      service: new Service('service', '2000', '1', '3', '01 hour', 'space', 'Etoa-Meki', 'service 1', '',''),
+      service: new Service('', '', '', '', '01 hour', 'space', 'Etoa-Meki', '', 'sample',''),
       message: '',
       loading: false,
       errors: null,

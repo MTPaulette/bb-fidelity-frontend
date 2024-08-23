@@ -56,8 +56,8 @@
             </div>
 
             <div>
-              <label for="point" class="label">Point</label>
-              <input id="credit" v-model="userInfos.point" type="number" class="input" :disabled="userInfos.malus == ''" :class="userInfos.malus == ''? 'cursor-not-allowed' : ''" required />
+              <label for="point" class="label">Point to add or remove</label>
+              <input id="credit" v-model="userInfos.point" type="number" class="input" :disabled="userInfos.malus == ''" :class="userInfos.malus == ''? 'cursor-not-allowed' : ''" />
               <p v-if="errors" class="input-error">
                 <span v-if="errors.point">{{ errors.point[0] }}</span>
               </p>
@@ -66,7 +66,7 @@
             <!-- user_type -->
             <div>
               <label for="user_type" class="label">Type</label>
-              <select id="user_type" v-model="userInfos.user_type" name="user_type" class="input" required>
+              <select id="user_type" v-model="userInfos.user_type" name="user_type" class="input">
                 <option v-for="(user_type, i) in user_types" :key="i" :value="user_type">{{ user_type }}</option>
               </select>
               <p v-if="errors" class="input-error">
@@ -117,7 +117,7 @@ export default {
         is_registered: null,
         user_type: null,
         point: 0,
-        malus: '',
+        malus: true,
       }
     }
   },

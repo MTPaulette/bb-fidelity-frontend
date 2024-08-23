@@ -11,7 +11,7 @@
 
     <div v-if="services">
       <h1 class="ml-3 my-6 sm:my-8 title"> {{ services.data[0].user_name }} Historic </h1>
-      <ListPurchase :services="services.data" />
+      <ListPurchase :services="services.data" :user="user" />
       <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="services.links" @nextPage="nextPage" />
       </div>
@@ -39,24 +39,34 @@ export default {
       services: null,
       loading: false,
       errors: null,
+      user: null,
     }
   },
 
   mounted() {
     this.getAllServicesOfUser(this.$route.params.id)
-  },
-  createdd() {
-    // watch the params of the route to fetch the data again
-    this.$watch(
-      () => this.$route.params.id,
-      this.getAllServicesOfUser,
-
-      // fetch the data when the view is created and the data is already being observed
-      { immediate: true }
-    )
+    this.getUserById(this.$route.params.id)
   },
 
   methods: {
+    getUserById (id) {
+      if(id) {
+        this.loading = true
+        this.$store
+          .dispatch('auth/getUserById', {
+            id: id
+          })
+          .then((res) => {
+            if(res) {
+              this.user = res.user
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => this.loading = false)
+      }
+    },
     getAllServicesOfUser (id) {
       if(id) {
       this.loading = true
