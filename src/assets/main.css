@@ -78,7 +78,7 @@
   }
 
   .disabled {
-    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-highlight
+    @apply disabled:cursor-not-allowed disabled:opacity-50
   }
   
   .required {

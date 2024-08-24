@@ -57,6 +57,12 @@ const actions = {
       })
   },
   
+  async newUser ({ commit }, credentials) {
+    console.log(credentials)
+    return await axios
+      .post('/user/store', credentials)
+  },
+
   async profile ({ commit }, credentials) {
     return await axios
       .put('/profile', credentials)
