@@ -24,9 +24,6 @@
               </svg>
               <span class="ml-2">{{ service.agency }}</span>
             </div>
-            <div class="pl-4 flex items-center">
-              <UserType :label="service.user_type" />
-            </div>
           </div>
         <div class="my-3">
           <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ service.validity }} </span></p>
@@ -48,7 +45,6 @@
 
 <script setup>
 import { formatDate } from '@/Composables/formatDate'
-import UserType from '@/Components/UserType.vue'
 
 defineProps({
   service: Object,

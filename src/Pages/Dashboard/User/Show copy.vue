@@ -35,7 +35,7 @@
           </div>
           <p class="text-black-white"><span v-if="user.role_id == 1"> Admin (entreprise) <br /> </span> <span v-else>Client</span> depuis le {{ formatDate(user.created_at) }}</p>
           <div v-if="user.role_id != 1" class="flex items-center mt-4 md:mt-6">
-            <router-link :to="{ name: 'user.historic', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
+            <router-link :to="{ name: 'user.history', params: { id: user.id }}"  class="btn-base btn-blue" title="voir historique">
               Historique
             </router-link>
 

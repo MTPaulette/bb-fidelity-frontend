@@ -10,8 +10,7 @@
       </h5>
       <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
         <!-- <div class="flex mt-5 sm:mt-0"> -->
-        <router-link class="flex justify-end" to="#">
-          <!-- <router-link class="flex justify-end" :to="{ name: 'user.create'}"> -->
+          <router-link class="flex justify-end" :to="{ name: 'user.create'}">
           <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base">
             <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
@@ -36,7 +35,6 @@
           <th scope="col" class="px-4 py-3">Is registered</th>
           <th scope="col" class="px-4 py-3">Balance</th>
           <th scope="col" class="px-4 py-3">Role</th>
-          <th scope="col" class="px-4 py-3">User type</th>
           <th scope="col" class="px-4 py-3">Date</th>
           <th scope="col" class="px-4 py-3">Action</th>
         </tr>
@@ -78,11 +76,6 @@
               client
             </div>
           </td>
-          <td class="px-4 py-2 text-black-white whitespace-nowrap">
-            <div v-if="user.role_id==2">
-              <UserType :label="user.user_type" />
-            </div>
-          </td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
           <td>
             <div class="px-4 py-3 flex w-full">
@@ -93,7 +86,7 @@
               </div>
               
               <div v-if="user.role_id == 2" class="mx-2">
-                <router-link :to="{ name: 'user.historic', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
+                <router-link :to="{ name: 'user.history', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
                   Historique
                 </router-link>
               </div>
@@ -112,12 +105,10 @@
 
 <script>
 import Loading from '@/Components/Loading.vue'
-import UserType from '@/Components/UserType.vue'
 
 export default {
   components: {
     Loading,
-    UserType,
   },
   props: {
     users: Object

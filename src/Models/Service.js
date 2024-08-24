@@ -8,7 +8,6 @@ export default class Service {
     service_type,
     agency,
     description,
-    user_type,
     user_id
   ) {
     this.name = name
@@ -19,7 +18,6 @@ export default class Service {
     this.service_type = service_type
     this.agency = agency
     this.description = description
-    this.user_type = user_type
     this.user_id = user_id
   }
 }

@@ -50,9 +50,6 @@
               </svg>
               <span class="ml-2">{{ service.price }} XAF</span>
             </div>
-            <div class="pl-4 flex items-center">
-              <UserType :label="service.user_type" />
-            </div>
           </div>
         </div>
         <div class="mt-3 mb-5">
@@ -62,7 +59,6 @@
           <p>Credit Point: &nbsp;<span class="text-green-500"> {{ service.credit }} Point(s) </span></p>
           <p>Debit Point: &nbsp;<span class="text-danger"> {{ service.debit }} Point(s) </span></p>
           <p>Agency: &nbsp;<span class="text-black-white font-medium"> {{ service.agency }} </span></p>
-          <p>User type: This service is intended for &nbsp;<span class="text-black-white font-medium">{{ service.user_type }} </span> users.</p>
         </div>
         <div>
           Description: <br />
@@ -137,7 +133,6 @@ import FlashAlert from '@/Components/FlashAlert.vue'
 import Loading from '@/Components/Loading.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Error from '@/Components/Error.vue'
-import UserType from '@/Components/UserType.vue'
 
 
 export default {
@@ -147,7 +142,6 @@ export default {
     Loading,
     ButtonLoading,
     Error,
-    UserType,
   },
   data() {
     return {

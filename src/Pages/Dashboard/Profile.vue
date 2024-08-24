@@ -19,7 +19,7 @@
         <div class="mt-4 md:mt-0 w-full px-5 py-5 h-auto rounded-lg shadow-dropdown-light dark:shadow-dropdown-dark">
           <div class="mb-4 flex justify-between items-center">
             <h2 class="title"> General Information </h2>
-            <UserType :label="user.user_type" />
+            <!-- <UserType :label="user.user_type" /> -->
 
           </div>
           <div v-if="user.role_id == 2" class="p-4 mb-8 bg-secondary rounded-lg">
@@ -33,7 +33,7 @@
               </div>
               <div>
                 <label for="email" class="label">Email address</label>
-                <input id="email" disabled aria-label="disabled" type="email" class="input cursor-not-allowed disabled:bg-highlight dark:disabled:opacity-50 disabled:text-white" :placeholder="user.email" />
+                <input id="email" disabled aria-label="disabled" type="email" class="input disabled" :placeholder="user.email" />
               </div>
             </div>
             
@@ -101,7 +101,7 @@ import Breadcrumb from '@/Components/Breadcrumb.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Warning from '@/Components/Warning.vue'
-import UserType from '@/Components/UserType.vue'
+// import UserType from '@/Components/UserType.vue'
 import Loading from '@/Components/Loading.vue'
 
 export default {
@@ -111,7 +111,6 @@ export default {
     ButtonLoading,
     Warning,
     Loading,
-    UserType
   },
   data () {
     return {

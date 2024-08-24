@@ -29,17 +29,17 @@
         <form class="relative w-full space-y-4 md:space-y-6" @submit.prevent="updateUser">
           <div>
             <label for="name" class="label">Full name</label>
-            <input id="name" disabled aria-label="disabled" type="text" class="input cursor-not-allowed disabled:bg-highlight disabled:text-white" :placeholder="user.name" />
+            <input id="name" disabled aria-label="disabled" type="text" class="input disabled" :placeholder="user.name" />
           </div>
 
           <div>
             <label for="email" class="label">Your email</label>
-            <input id="email" disabled aria-label="disabled" type="email" class="input cursor-not-allowed disabled:bg-highlight disabled:text-white" :placeholder="user.email" />
+            <input id="email" disabled aria-label="disabled" type="email" class="input disabled" :placeholder="user.email" />
           </div>
 
           <div>
             <label for="balance" class="label">Your balance</label>
-            <input id="balance" disabled aria-label="disabled" type="number" class="input cursor-not-allowed disabled:bg-highlight disabled:text-white" :placeholder="user.balance" />
+            <input id="balance" disabled aria-label="disabled" type="number" class="input disabled" :placeholder="user.balance" />
           </div>
 
           <div class="grid gap-2 sm:gap-6 grid-cols-2">
@@ -63,17 +63,6 @@
               </p>
             </div>
 
-            <!-- user_type -->
-            <div>
-              <label for="user_type" class="label">Type</label>
-              <select id="user_type" v-model="userInfos.user_type" name="user_type" class="input">
-                <option v-for="(user_type, i) in user_types" :key="i" :value="user_type">{{ user_type }}</option>
-              </select>
-              <p v-if="errors" class="input-error">
-                <span v-if="errors.user_type">{{ errors.user_type[0] }}</span>
-              </p>
-            </div>
-
             <!-- is_registered -->
             <div class="flex items-center mt-6">
               <input id="is_registered" v-model="userInfos.is_registered" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
@@ -94,8 +83,6 @@ import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
 import Warning from '@/Components/Warning.vue'
 
-import User_types from "@/Database/User_types.js"
-
 export default {
   components: {
     Breadcrumb,
@@ -107,7 +94,6 @@ export default {
 
   data() {
     return {
-      user_types: User_types,
       user: null,
       message: '',
       loading: false,
@@ -115,7 +101,6 @@ export default {
       errors: null,
       userInfos: {
         is_registered: null,
-        user_type: null,
         point: 0,
         malus: true,
       }
@@ -138,7 +123,6 @@ export default {
             if(res) {
               this.user = res.user
               this.userInfos.is_registered = this.user.is_registered
-              this.userInfos.user_type = this.user.user_type
             }
           })
           .catch(err => {

@@ -76,7 +76,7 @@ export default {
         .then((res) => {
           const loggedIn = JSON.parse(localStorage.getItem('user'))
           if(loggedIn.role_id != 1) {
-            return this.$router.push({ name: 'historic' })
+            return this.$router.push({ name: 'history' })
           } else {
             return this.$router.push({ name: 'services' })
           }

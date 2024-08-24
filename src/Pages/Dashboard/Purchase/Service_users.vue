@@ -10,7 +10,7 @@
     </div>
 
     <div v-if="users">
-      <h1 class="ml-3 my-6 sm:my-8 title"> {{ users.data[0].service_name }} Historic </h1>
+      <h1 class="ml-3 my-6 sm:my-8 title"> {{ users.data[0].service_name }} History </h1>
       <ListUser :users="users.data" />
       <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="users.links" @nextPage="nextPage" />

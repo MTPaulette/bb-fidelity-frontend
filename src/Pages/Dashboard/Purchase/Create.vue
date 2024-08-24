@@ -25,10 +25,9 @@
 
         <!-- user -->
         <div>
-          <label for="user" class="label">Choose User</label>
+          <label for="user" class="label">User<span class="required">*</span></label>
           <select id="user" v-model="selectedUser" name="user" class="input" required>
-            <option selected>No user selected</option>
-            <!-- <option v-for="user in users" :key="user.id" :value="user">{{ user.name }}</option> -->
+            <option disabled value=''>Choose an user</option>
             <option v-for="user in users" :key="user.id" :value="user">
               <span v-if="user.role_id == 1"> {{ user.name }} (Admin)</span>
               <span v-else-if="user.role_id == 3"> {{ user.name }} (SuperAdmin)</span>
@@ -40,7 +39,7 @@
 
         <!-- service -->
         <div>
-          <label for="service" class="label">Choose Service</label>
+          <label for="service" class="label">Service to buy<span class="required">*</span></label>
 
           <!-- filters -->
           <div class="w-full h-auto">
@@ -167,34 +166,6 @@
                 </div>
               </li>
 
-              <!-- User_type's list -->
-              <li class="relative">
-                <div @click="showUser_type = !showUser_type" :class="selectedFilters.user_type?'bg-highlight':''" class="flex justify-between py-1 px-3 rounded-lg border border-color font-['roboto']">
-                  <div class="ml-3 mr-2 font-medium">
-                    <span v-if="selectedFilters.user_type">{{ selectedFilters.user_type }}</span>
-                    <span v-else>All User Type</span>
-                  </div>
-                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                  </svg>
-                </div>
-            
-                <div v-show="showUser_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
-                  <ul class="py-2 text-sm" @click="showUser_type = false">
-                    <li class="border-b border-color">
-                      <span class="dropdown-item-filter" @click="selectedFilters.user_type = ''">
-                        All type
-                      </span>
-                    </li>
-                    <li v-for="(user_type, i) in user_types" :key="i" class="cursor-pointer">
-                      <span class="dropdown-item-filter" @click="selectedFilters.user_type = user_type">
-                        {{ user_type }}
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-
               <!-- reset -->
               <li @click="reset">
                 <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
@@ -203,7 +174,7 @@
           </div>
 
           <select id="service" v-model="selectedService" name="service" class="input" required>
-            <option selected>No service selected</option>
+            <option disabled value>Choose a service</option>
             <option v-for="service in services" :key="service.id" :value="service">{{ service.name }}</option>
           </select>
           <p v-if="errors" class="input-error">{{ errors }}</p>
@@ -212,7 +183,7 @@
         <!-- by_cash -->
         <div class="flex items-center">
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
-          <label for="payment">Payment by cash</label>
+          <label for="payment"> <span class="text-black-white">Payment by cash</span> (uncheck if you want to use your loyalty points)</label>
         </div>
         <ButtonLoading label="Save purchase" :loading="loading" />
       </form>
@@ -257,13 +228,11 @@
                 <div v-if="selectedUser.role_id == 2" class="ms-2">
                   <span v-if="selectedUser.is_registered" title="registered user" class="text-green-500">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                      <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
                     </svg>
                   </span>
                   <span v-else class="text-red-500" title="unregistered user">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                       <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg>
                   </span>
@@ -288,12 +257,6 @@
 
               <h5 class="subtitle">{{ selectedService.name }}</h5>
               <div class="my-2">
-                <p class="flex items-center">
-                  User Type: &nbsp;
-                  <span class="text-black-white font-medium">
-                    <span><UserType :label="selectedService.user_type" /></span>
-                  </span>
-                </p>
                 <p>Validity: &nbsp;<span class="text-black-white font-medium"> {{ selectedService.validity }} </span></p>
                 <p>Price: &nbsp;<span class="text-accentuate"> {{ selectedService.price }} XAF </span></p>
                 <p>Credit Point: &nbsp;<span class="text-green-500"> {{ selectedService.credit }} Point(s) </span></p>
@@ -339,13 +302,11 @@ import ButtonLoading from '@/Components/ButtonLoading.vue'
 import Loading from '@/Components/Loading.vue'
 import Error from '@/Components/Error.vue'
 import Warning from '@/Components/Warning.vue'
-import UserType from '@/Components/UserType.vue'
 
 import Purchase from "@/Models/Purchase.js"
 import Agencies from '@/Database/Agencies.js'
 import Validities from "@/Database/Validities.js"
 import Service_types from "@/Database/Service_types.js"
-import User_types from "@/Database/User_types.js"
 
 export default {
   components: {
@@ -355,7 +316,6 @@ export default {
     Loading,
     Error,
     Warning,
-    UserType,
   },
 
   data() {
@@ -365,8 +325,8 @@ export default {
       services: null,
       purchase: new Purchase("", "", "", true),
       message: '',
-      selectedUser: null,
-      selectedService: null,
+      selectedUser: '',
+      selectedService: '',
       errors: null,
       loading: false,
       canSubmit: true,
@@ -377,7 +337,6 @@ export default {
       agencies: Agencies,
       validities: Validities,
       service_types: Service_types,
-      user_types: User_types,
       order_by: ['name', 'created_at'],
       asc_desc: ['asc', 'desc'],
       selectedFilters: {
@@ -386,14 +345,12 @@ export default {
         agency: '',
         validity: '',
         service_type: '',
-        user_type: '',
         no_pagination: true,
       },
       showBy: false,
       showOrder: false,
       showAgency: false,
       showService_type: false,
-      showUser_type: false,
       showValidity: false,
     }
   },
@@ -419,7 +376,6 @@ export default {
       this.selectedFilters.agency = ''
       this.selectedFilters.validity = ''
       this.selectedFilters.service_type = ''
-      this.selectedFilters.user_type = ''
     },
     getAllUsers() {
       this.$store.dispatch("auth/getAllUsers", {

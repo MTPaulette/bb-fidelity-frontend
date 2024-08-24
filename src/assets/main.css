@@ -78,7 +78,11 @@
   }
 
   .disabled {
-    @apply disabled:cursor-not-allowed disabled:opacity-25
+    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-highlight
+  }
+  
+  .required {
+    @apply ml-1 text-danger
   }
 
   .border-color {

@@ -1,7 +1,7 @@
 <template>
 <div id="main-sidebar" class="h-full px-3 pb-4 overflow-y-auto bg-secondary">
   <ul class="space-y-2 font-medium h-min-3/4 min-h-[60%] pt-6">
-    <!-- historic -->
+    <!-- history -->
     <li v-if="user.role_id == 1">
       <router-link :to="{ name: 'purchases'}" class="flex items-center w-full p-2 hover:text-accentuate">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -11,13 +11,13 @@
           <path d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z"/>
         </svg>
 
-        <span class="ml-3">Historics</span>
+        <span class="ml-3">History</span>
       </router-link>
     </li>
 
-    <!-- historic -->
+    <!-- history -->
     <li v-else>
-      <router-link :to="{ name: 'historic'}" class="flex items-center w-full p-2 hover:text-accentuate">
+      <router-link :to="{ name: 'history'}" class="flex items-center w-full p-2 hover:text-accentuate">
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223Z"/>
           <path d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z"/>
@@ -25,7 +25,7 @@
           <path d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972Z"/>
         </svg>
 
-        <span class="ml-3">Historic</span>
+        <span class="ml-3">History</span>
       </router-link>
     </li>
 

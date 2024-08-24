@@ -10,6 +10,7 @@ import ResetPassword from '../Pages/Authentification/ResetPassword.vue'
 import Profile from '../Pages/Dashboard/Profile.vue'
 import Users from '../Pages/Dashboard/User/Index.vue'
 import User from '../Pages/Dashboard/User/Show.vue'
+import UserCreate from '../Pages/Dashboard/User/Create.vue'
 import UserEdit from '../Pages/Dashboard/User/Edit.vue'
 
 import Services from '../Pages/Dashboard/Service/Index.vue'
@@ -20,7 +21,7 @@ import ServiceEdit from '../Pages/Dashboard/Service/Edit.vue'
 import PurchaseCreate from '../Pages/Dashboard/Purchase/Create.vue'
 import Purchases from '../Pages/Dashboard/Purchase/Index.vue'
 
-import Historic from '../Pages/Dashboard/Purchase/Historic.vue'
+import History from '../Pages/Dashboard/Purchase/History.vue'
 import User_Services from '../Pages/Dashboard/Purchase/User_services.vue'
 import Service_Users from '../Pages/Dashboard/Purchase/Service_users.vue'
 
@@ -81,9 +82,9 @@ const router = createRouter({
           component: Profile,
         },
         {
-          path: "/historic",
-          name: "historic",
-          component: Historic,
+          path: "/history",
+          name: "history",
+          component: History,
           props: true
         },
       ],
@@ -110,6 +111,12 @@ const router = createRouter({
           path: "/user/:id",
           name: "user.show",
           component: User,
+          props: true
+        },
+        {
+          path: "/user/create",
+          name: "user.create",
+          component: UserCreate,
           props: true
         },
         {
@@ -159,8 +166,8 @@ const router = createRouter({
           },
         },
         {
-          path: "/user/:id/historic",
-          name: "user.historic",
+          path: "/user/:id/history",
+          name: "user.history",
           component: User_Services,
           props: true,
           meta: {
@@ -209,7 +216,7 @@ router.beforeEach((to, from) => {
   // if user is already authenticated, redirect login to services page
   if(to.name == 'login' && loggedIn) {
     if(loggedIn.role_id != 1) {
-      return { name: 'historic'}
+      return { name: 'history'}
     } else {
       return { name: 'services'}
     }

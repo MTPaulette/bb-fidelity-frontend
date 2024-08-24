@@ -14,7 +14,6 @@
           <th scope="col" class="px-4 py-3">Debit Point</th>
           <th scope="col" class="px-4 py-3">Validity</th>
           <th scope="col" class="px-4 py-3">Agency</th>
-          <th scope="col" class="px-4 py-3">User Type</th>
           <th scope="col" class="px-4 py-3">Date</th>
           <th scope="col" class="px-4 py-3">Action</th>
         </tr>
@@ -29,12 +28,6 @@
           <td class="px-4 py-2 whitespace-nowrap text-danger">{{ service.debit }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.validity }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.agency }}</td>
-
-          <td class="px-4 py-2 text-black-white whitespace-nowrap">
-            <div>
-              <UserType :label="service.user_type" />
-            </div>
-          </td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(service.created_at) }}</td>
           <td>
             <div class="px-4 py-3 flex w-full">
@@ -59,7 +52,6 @@
 
 <script setup>
   import { formatDate } from '@/Composables/formatDate'
-  import UserType from '@/Components/UserType.vue'
 
   defineProps({
     services: Object,

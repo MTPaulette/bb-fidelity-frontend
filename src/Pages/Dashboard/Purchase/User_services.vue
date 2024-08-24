@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Breadcrumb link1="dashboard" link2="historic" />
+    <Breadcrumb link1="dashboard" link2="history" />
     <div v-if="loading">
       <Loading />
     </div>
@@ -10,7 +10,7 @@
     </div>
 
     <div v-if="services">
-      <h1 class="ml-3 my-6 sm:my-8 title"> {{ services.data[0].user_name }} Historic </h1>
+      <h1 class="ml-3 my-6 sm:my-8 title"> {{ services.data[0].user_name }} History </h1>
       <ListPurchase :services="services.data" :user="user" />
       <div v-if="services.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="services.links" @nextPage="nextPage" />
