@@ -138,11 +138,6 @@ const actions = {
         console.log(err)
       })
   },
-  
-  async updateUser ({ commit }, credentials) {
-    return await axios
-      .put('/user/'+credentials.id+'/update', credentials.user)
-  },
 
   async forgotPassword ({ commit }, credentials) {
     return await axios
@@ -152,6 +147,17 @@ const actions = {
   async resetPassword ({ commit }, credentials) {
     return await axios
       .post('/reset-password', credentials)
+  },
+  
+  async updateUser ({ commit }, credentials) {
+    console.log(credentials.user)
+    return await axios
+      .put('/user/'+credentials.id+'/update', credentials.user)
+  },
+
+  async deleteUser ({ dispatch }, credentials) {
+    return await axios
+      .put('/user/'+credentials.id+'/delete', credentials)
   },
 }
 

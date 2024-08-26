@@ -47,6 +47,7 @@
             <div>
               <label for="action" class="label">Action</label>
               <select id="action" v-model="userInfos.malus" name="action" class="input">
+                <option disabled value=0>Choose an action</option>
                 <option value=0>Credit</option>
                 <option value=1>Debit</option>
               </select>
@@ -56,7 +57,10 @@
             </div>
 
             <div>
-              <label for="point" class="label">Point to add or remove</label>
+              <label for="point" class="label">
+                Point to add or remove
+                <span class="text-primary font-light text-sm" v-show="userInfos.malus == ''">(choose an action first)</span>
+              </label>
               <input id="credit" v-model="userInfos.point" type="number" class="input" :disabled="userInfos.malus == ''" :class="userInfos.malus == ''? 'cursor-not-allowed' : ''" />
               <p v-if="errors" class="input-error">
                 <span v-if="errors.point">{{ errors.point[0] }}</span>
@@ -65,8 +69,8 @@
 
             <!-- is_registered -->
             <div class="flex items-center mt-6">
-              <input id="is_registered" v-model="userInfos.is_registered" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
-              <label for="is_registered">Register the user</label>
+              <input type="checkbox" id="is_registered" v-model="userInfos.is_registered" :ckecked="user.is_registered" class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
+              <label for="is_registered" class="text-black-white">Register the user</label>
             </div>
           </div>
           <ButtonLoading label="Update user" :loading="sending" />
@@ -102,7 +106,7 @@ export default {
       userInfos: {
         is_registered: null,
         point: 0,
-        malus: true,
+        malus: '',
       }
     }
   },
@@ -122,7 +126,9 @@ export default {
           .then((res) => {
             if(res) {
               this.user = res.user
-              this.userInfos.is_registered = this.user.is_registered
+              if(this.user.is_registered) {
+                this.userInfos.is_registered = true
+              }
             }
           })
           .catch(err => {
@@ -139,6 +145,10 @@ export default {
     updateUser () {
       this.sending = true
       this.errors = null
+
+      if(this.userInfos.malus == '') {
+        this.userInfos.malus = false
+      }
       
       this.$store
       .dispatch('auth/updateUser', {

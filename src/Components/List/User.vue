@@ -80,14 +80,14 @@
           <td>
             <div class="px-4 py-3 flex w-full">
               <div v-if="user.role_id != 3">
-                <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="voir profil client">
+                <router-link :to="{ name: 'user.show', params: { id: user.id }}" class="btn-blue btn-extrasmall" title="see profil client">
                   Profile
                 </router-link>
               </div>
               
               <div v-if="user.role_id == 2" class="mx-2">
-                <router-link :to="{ name: 'user.history', params: { id: user.id }}" class="btn-extrasmall btn-light" title="voir historique">
-                  Historique
+                <router-link :to="{ name: 'user.history', params: { id: user.id }}" class="btn-extrasmall btn-light" title="see user history">
+                  History
                 </router-link>
               </div>
             </div>

@@ -154,9 +154,11 @@
       </ul>
     </div>
 
-    <div class="w-full block sm:flex justify-center sm:justify-between items-center px-2">
+    <div class="w-full flex flex-wrap justify-between items-end px-2">
       <Search @search="search" />
       <!--display type -->
+      <div class="flex flex-col items-center ml-2 sm:ml-0 justify-center">
+      <span class="mb-1 sm:mb-0 hidden whitespace-nowrap sm:block">Display mode</span>
       <div class="flex justify-end items-center gap-2 mt-3 sm:mt-0">
         <button class="p-2 rounded-lg shadow-md" title="card display" :class="cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
@@ -169,7 +171,7 @@
             <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z" />
           </svg>
         </button>
-      </div>
+      </div></div>
     </div>
 
 

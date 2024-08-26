@@ -172,7 +172,7 @@ export default {
       .then((res) => {
         this.message = res.data.message
 
-        //flashAlert will disappear after 1s
+        //flashAlert will disappear after 5s
         setTimeout(() => {
           this.message = ''
           this.$router.push({ name: 'service.show', params: { id: this.$route.params.id }})

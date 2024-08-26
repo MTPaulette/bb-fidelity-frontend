@@ -20,7 +20,7 @@ defineProps({
   loading: false,
   class: {
     type: String,
-    default: 'btn-default'
+    default: 'btn-default-full'
   }
 })
 </script>

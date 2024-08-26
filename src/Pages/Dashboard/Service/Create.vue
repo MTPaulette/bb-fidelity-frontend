@@ -140,6 +140,7 @@ export default {
         //flashAlert will disappear after 1s
         setTimeout(() => {
           this.message = ''
+            this.$router.push({ name: 'service.show', params: { id: res.data.service_id }})
         }, 5000)
       })
       .catch(err => {

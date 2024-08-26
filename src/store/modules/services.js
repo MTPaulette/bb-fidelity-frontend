@@ -49,12 +49,8 @@ const actions = {
   },
 
   async createService ({ dispatch }, credentials) {
-    console.log("=======credentials.service==============")
-    console.log(credentials)
     return axios.post('/service/store', credentials)
             .then((data) => {
-              console.log("=======")
-              console.log(data)
               return data
             })
   },
