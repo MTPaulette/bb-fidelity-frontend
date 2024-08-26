@@ -71,7 +71,7 @@ export default {
           if(err.response) {
             this.errors = err.response.data.errors
           }
-          console.log(err)
+          // console.log(err)
         })
         .finally(() => this.loading = false)
     },
@@ -82,7 +82,6 @@ export default {
           page: nb
       })
         .then((res) => {
-          console.log(res)
           if(res) {
             this.services = res.data.services
           }

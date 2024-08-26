@@ -34,10 +34,10 @@
             </p>
           </div>
           <ButtonLoading label="Login" :loading="loading" />
-          <div class="flex justify-between items-center text-sm font-light">
-            <p>
+          <div class="flex justify-end items-center text-sm font-light">
+            <!-- <p>
               <a href="/register" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Register</a>
-            </p>
+            </p> -->
             <p class="text-gray-500 dark:text-gray-400">
               Forgot password? <a href="/forgot-password" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Reset</a>
             </p>
@@ -74,8 +74,8 @@ export default {
           password: this.password
         })
         .then((res) => {
-          const loggedIn = JSON.parse(localStorage.getItem('user'))
-          if(loggedIn.role_id != 1) {
+          const userRoleId = localStorage.getItem('user')
+          if(userRoleId != 1) {
             return this.$router.push({ name: 'history' })
           } else {
             return this.$router.push({ name: 'services' })

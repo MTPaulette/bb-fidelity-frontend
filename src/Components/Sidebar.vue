@@ -7,8 +7,8 @@
 
   <!-- mobile sidebar -->
   <div v-show="showSidebar" @click="showSidebar = false" class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30 sm:-translate-x-full" />
-  <aside v-show="showSidebar" @click="showSidebar = false" id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform translate-x-0 sm:-translate-x-full" aria-label="Sidebar">
-    <SidebarLinks :user="user" />
+  <aside v-show="showSidebar" id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform translate-x-0 sm:-translate-x-full" aria-label="Sidebar">
+    <SidebarLinks :user="user"  @closeSidebar="showSidebar = false" />
   </aside>
 </template>
 

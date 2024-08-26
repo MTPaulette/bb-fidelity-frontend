@@ -3,7 +3,7 @@ import NProgress from 'nprogress'
 
 // import Home from '../Components/Home.vue'
 import Login from '../Pages/Authentification/Login.vue'
-import Register from '../Pages/Authentification/Register.vue'
+//import Register from '../Pages/Authentification/Register.vue'
 import ForgotPassword from '../Pages/Authentification/ForgotPassword.vue'
 import ResetPassword from '../Pages/Authentification/ResetPassword.vue'
 
@@ -40,11 +40,13 @@ const router = createRouter({
       path: '/login',
       component: AuthentificationLayout,
       children: [
+        /*
         {
           path: "/register",
           name: "register",
           component: Register,
         },
+        */
         {
           path: "/login",
           name: "login",
@@ -211,25 +213,25 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from) => {
-  const loggedIn = localStorage.getItem('user')
+  const token = localStorage.getItem('token')
+  const userRoleId = localStorage.getItem('user')
   
   // if user is already authenticated, redirect login to services page
-  if(to.name == 'login' && loggedIn) {
-    if(loggedIn.role_id != 1) {
+  if(to.name == 'login' && token) {
+    if(userRoleId != 1) {
       return { name: 'history'}
     } else {
       return { name: 'services'}
     }
   }
 
-  if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+  if (to.matched.some(record => record.meta.auth) && !userRoleId) {
     return { name: 'login' }
   }
   else {
     // check if the user is authenticated
     if (to.meta.admin) {
-      const role_id = JSON.parse(loggedIn).role_id
-      if( role_id != 1) {
+      if( userRoleId != 1) {
         return { name: 'forbidden'}
       }
     }

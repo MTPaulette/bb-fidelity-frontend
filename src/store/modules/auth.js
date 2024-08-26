@@ -14,7 +14,7 @@ const mutations = {
   setUserData (state, userData) {
     state.user = userData.user
     
-    localStorage.setItem('user', JSON.stringify(userData.user))
+    localStorage.setItem('user', JSON.stringify(userData.user.role_id))
     if(userData.token) {
       localStorage.setItem('token', userData.token)
       // Mettre à jour le header Authorization immédiatement après l'authentification
@@ -58,7 +58,6 @@ const actions = {
   },
   
   async newUser ({ commit }, credentials) {
-    console.log(credentials)
     return await axios
       .post('/user/store', credentials)
   },
@@ -86,7 +85,6 @@ const actions = {
     return await axios
        .delete('/logout')
        .then(({ data }) => {
-        console.log(data)
           commit('clearUserData')
           // router.push({ name: 'login' })
         }).catch((err) =>{
@@ -115,7 +113,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        console.log(err)
+        console.log("getAllUsers"+err)
       })
   },
 
@@ -126,7 +124,7 @@ const actions = {
         return data
       })
       .catch(err => {
-        console.log(err)
+        console.log("getUserById"+err)
       })
   },
 
@@ -142,7 +140,6 @@ const actions = {
   },
   
   async updateUser ({ commit }, credentials) {
-    // console.log(credentials.user)
     return await axios
       .put('/user/'+credentials.id+'/update', credentials.user)
   },
@@ -153,7 +150,6 @@ const actions = {
   },
   
   async resetPassword ({ commit }, credentials) {
-    console.log(credentials)
     return await axios
       .post('/reset-password', credentials)
   },
