@@ -154,12 +154,14 @@
       </ul>
     </div>
 
-    <div class="w-full flex flex-wrap justify-between items-end px-2">
-      <Search @search="search" />
-      <!--display type -->
-      <div class="flex flex-col items-center ml-2 sm:ml-0 justify-center">
-      <span class="mb-1 sm:mb-0 hidden whitespace-nowrap sm:block">Display mode</span>
-      <div class="flex justify-end items-center gap-2 mt-3 sm:mt-0">
+    <div class="flex flex-wrap gap-y-4 justify-between items-end py-2">
+      <div class="w-full md:w-auto">
+        <Search @search="search" className="w-full md:w-auto" />
+      </div>
+      <div class="flex md:flex-col space-y-3 items-center w-full md:w-auto justify-end md:justify-center md:space-y-0 md:space-x-3">
+      <!-- <div class="flex flex-col items-center ml-2 sm:ml-0 justify-center"> -->
+      <span class="mb-1 sm:mb-0 hidden whitespace-nowrap md:block">Display mode</span>
+      <div class="flex items-center gap-2 mt-3 sm:mt-0">
         <button class="p-2 rounded-lg shadow-md" title="card display" :class="cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
             <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
@@ -266,16 +268,16 @@ export default {
   },
 
   mounted() {
-    this.getAllServices(),
+    // this.getAllServices(),
     this.getRecentServiceId()
     
     this.$watch(
       () => this.selectedFilters,
       this.getAllServices,
-      { immediate: true,
-        
-        deep: true,
-      },
+      { 
+        immediate: true,
+        deep: true
+      }
     )
   },
   

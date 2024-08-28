@@ -215,19 +215,19 @@ export default {
     this.$watch(
       () => this.selectedFilters,
       this.filteredUsers,
-      { immediate: true,
-        
-        deep: true,
-      },
+      { 
+        immediate: true,
+        deep: true
+      }
     )
 
     this.$watch(
       () => this.reset,
       this.clearFilters,
-      { immediate: true,
-        
-        deep: true,
-      },
+      { 
+        immediate: true,
+        deep: true
+      }
     )
   },
 

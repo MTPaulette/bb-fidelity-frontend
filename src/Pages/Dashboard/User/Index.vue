@@ -2,11 +2,11 @@
   <div>
     <Breadcrumb link1="dashboard" link2="users" />
     <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
-    <div class="flex flex-wrap-reverse gap-y-4 justify-between items-center py-3">
-      <div>
-        <Search @search="search" />
+    <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
+      <div class="w-full md:w-auto">
+        <Search @search="search" className="w-full md:w-auto" />
       </div>
-      <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
+      <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
         <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="reset = !reset">
           Clear filters
         </button>
@@ -15,7 +15,8 @@
             <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            <span class="ml-2 hidden sm:inline">New user</span>
+            <span class="ml-2">New user</span>
+            <!-- <span class="ml-2 hidden sm:inline">New user</span> -->
           </button>
         </router-link>
       </div>
@@ -71,15 +72,15 @@ export default {
   },
 
   mounted() {
-    this.getAllUsers()
+    //this.getAllUsers()
     
     this.$watch(
       () => this.selectedFilters,
       this.getAllUsers,
-      { immediate: true,
-        
-        deep: true,
-      },
+      { 
+        immediate: true,
+        deep: true
+      }
     )
   },
   
