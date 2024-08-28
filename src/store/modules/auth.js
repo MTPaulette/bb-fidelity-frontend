@@ -112,9 +112,6 @@ const actions = {
         commit('setAllUsersData', data)
         return data
       })
-      .catch(err => {
-        console.log("getAllUsers"+err)
-      })
   },
 
   async getUserById ({ commit }, credentials) {

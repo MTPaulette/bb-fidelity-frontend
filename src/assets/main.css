@@ -133,7 +133,7 @@
 
   /* authentification */
   .label {
-    @apply block mb-2 text-sm font-medium text-black-white whitespace-nowrap
+    @apply block mb-2 text-sm font-medium text-black-white
   }
 
   .input {

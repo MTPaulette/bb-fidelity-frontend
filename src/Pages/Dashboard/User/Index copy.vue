@@ -2,24 +2,6 @@
   <div>
     <Breadcrumb link1="dashboard" link2="users" />
     <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
-    <div class="flex flex-wrap-reverse gap-y-4 justify-between items-center py-3">
-      <div>
-        <Search @search="search" />
-      </div>
-      <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="reset = !reset">
-          Clear filters
-        </button>
-        <router-link class="flex justify-end" :to="{ name: 'user.create'}">
-          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create user">
-            <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            <span class="ml-2 hidden sm:inline">New user</span>
-          </button>
-        </router-link>
-      </div>
-    </div>
 
     <div v-if="!users && !errors">
       <Loading />
@@ -30,7 +12,7 @@
       </div>
     </div>
     <div v-if="users">
-      <ListUser @newFilters="filteredServices" :users="users.data" :reset="reset"/>
+      <ListUser @newFilters="filteredServices" :users="users.data" :errors="errors "/>
       <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="users.links" @nextPage="nextPage" />
       </div>
@@ -44,7 +26,6 @@ import ListUser from '@/Components/List/User.vue'
 import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Empty from '@/Components/Empty.vue'
-import Search from '@/Components/Search.vue'
 
 export default {
   components: {
@@ -53,7 +34,6 @@ export default {
     Loading,
     Pagination,
     Empty,
-    Search,
   },
 
   data() {
@@ -64,34 +44,17 @@ export default {
         by: 'name',
         order: 'asc',
         q: '',
-        is_registered: null
       },
-      reset: false,
     }
   },
 
   mounted() {
     this.getAllUsers()
-    
-    this.$watch(
-      () => this.selectedFilters,
-      this.getAllUsers,
-      { immediate: true,
-        
-        deep: true,
-      },
-    )
   },
   
   methods: {
-    search(q) {
-      this.selectedFilters.q = q
-      // this.getAllUsers()
-    },
-
     getAllUsers() {
       this.errors = null
-      this.reset = false,
       this.$store.dispatch("auth/getAllUsers", this.selectedFilters)
         .then((res) => {
           if(res) {
@@ -118,7 +81,7 @@ export default {
 
     filteredServices(selectedFilters) {
       this.selectedFilters = selectedFilters
-      // this.getAllUsers()
+      this.getAllUsers()
     },
   },
 }

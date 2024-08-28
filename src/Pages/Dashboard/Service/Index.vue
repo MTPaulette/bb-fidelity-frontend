@@ -300,10 +300,9 @@ export default {
         })
         .catch(err => {
           if(err.response) {
-            this.services = err.response.data.services
+            this.services = null //err.response.data.services
             this.errors = err.response.data.errors
           }
-          console.log(err)
         })
         .finally(() => this.loading = false)
     },

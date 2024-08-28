@@ -42,7 +42,7 @@
             <input id="balance" disabled aria-label="disabled" type="number" class="input disabled" :placeholder="user.balance" />
           </div>
 
-          <div class="grid gap-2 sm:gap-6 grid-cols-2">
+          <div class="grid gap-2 sm:gap-6 grid-cols-2 items-end">
             <!-- Action -->
             <div>
               <label for="action" class="label">Action</label>
@@ -59,7 +59,7 @@
             <div>
               <label for="point" class="label">
                 Point to add or remove
-                <span class="text-primary font-light text-sm" v-show="userInfos.malus == ''">(choose an action first)</span>
+                <!-- <span class="text-primary font-light text-sm" v-show="userInfos.malus == ''">(choose an action first)</span> -->
               </label>
               <input id="credit" v-model="userInfos.point" type="number" class="input" :disabled="userInfos.malus == ''" :class="userInfos.malus == ''? 'cursor-not-allowed' : ''" />
               <p v-if="errors" class="input-error">
