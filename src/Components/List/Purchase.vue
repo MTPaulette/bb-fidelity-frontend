@@ -6,7 +6,7 @@
         <span class="dark:text-white" v-if="services">{{ services.length }}</span>
       </h5>
         <h5 v-if="user.role_id != 1" class="space-x-4 flex">
-          <span class="text-gray-500">Your balance is:</span>
+          <span class="text-gray-500">User balance:</span>
             <div class="flex items-center text-lg">
               <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
               {{ user.balance }} point(s)

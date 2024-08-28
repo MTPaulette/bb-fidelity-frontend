@@ -104,7 +104,7 @@ export default {
       sending: false,
       errors: null,
       userInfos: {
-        is_registered: null,
+        is_registered: false,
         point: 0,
         malus: '',
       }
