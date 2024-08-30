@@ -11,7 +11,7 @@
   <!-- menu -->
   <div v-show="showList" class="z-10 h-64 over-y absolute bg-white rounded-lg shadow-md w-full dark:bg-gray-700">
     <div class="p-3">
-      <Search @search="search" className="w-full" />
+      <Search @search="search" className="w-full" :label="label" />
     </div>
     <div v-if="errors">
       <Empty :message="errors" />
@@ -70,6 +70,7 @@ export default {
     search(q) {
       this.selectedValue.q = q
     },
+
     setselectedValue() {
       this.$emit('selectedValue', this.selectedValue)
     }

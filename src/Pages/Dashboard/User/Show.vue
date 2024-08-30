@@ -176,11 +176,10 @@ export default {
               this.errors.password = err.response.data.password
             }
             if(err.response.data.error) {
-              this.errors.service = err.response.data.error
+              this.errors.user = err.response.data.error
               this.toggleModal()
             }
           }
-          console.log(err)
         })
         .finally(() => this.sending = false)
     }

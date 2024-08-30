@@ -147,7 +147,6 @@ const actions = {
   },
   
   async updateUser ({ commit }, credentials) {
-    console.log(credentials.user)
     return await axios
       .put('/user/'+credentials.id+'/update', credentials.user)
   },

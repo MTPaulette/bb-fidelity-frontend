@@ -109,22 +109,3 @@
     user: Object,
   })
 </script>
-  
-<script>
-export default {
-  data() {
-    return {
-      userr: null,
-    }
-  },
-
-  mounted() {
-    this.$store.dispatch("auth/getAuthenticatedUser")
-        .then((res) => {
-          if(res) {
-            this.userr = res.user
-          }
-        })
-  },
-}
-</script>
