@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Breadcrumb link1="dashboard" link2="users" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
+    <Breadcrumb link1="dashboard" link2="activity_log" />
+    <h1 class="ml-3 my-6 sm:my-8 title"> Activity Log </h1>
     <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
       <div class="w-full md:w-auto">
         <Search @search="search" :reset="reset" className="w-full md:w-auto" />
@@ -11,18 +11,17 @@
           Clear filters
         </button>
         <router-link class="flex justify-end" :to="{ name: 'user.create'}">
-          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create user">
+          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create log">
             <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            <span class="ml-2">New user</span>
-            <!-- <span class="ml-2 hidden sm:inline">New user</span> -->
+            <span class="ml-2">New log</span>
           </button>
         </router-link>
       </div>
     </div>
 
-    <div v-if="!users && !errors">
+    <div v-if="!logs && !errors">
       <Loading />
     </div>
     <div v-else>
@@ -30,10 +29,10 @@
         <Empty :message="errors" />
       </div>
     </div>
-    <div v-if="users">
-      <ListUser @newFilters="filteredUsers" :users="users.data" :reset="reset"/>
-      <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
-        <Pagination :links="users.links" @nextPage="nextPage" />
+    <div v-if="logs">
+      <ListLog @newFilters="filteredActivity" :logs="logs.data" :reset="reset"/>
+      <div v-if="logs.data.length" class="w-full flex mt-8 mb-12">
+        <Pagination :links="logs.links" @nextPage="nextPage" />
       </div>
     </div>
   </div>
@@ -41,7 +40,7 @@
 
 <script>
 import Breadcrumb from '@/Components/Breadcrumb.vue'
-import ListUser from '@/Components/List/User.vue'
+import ListLog from '@/Components/List/Activity_log.vue'
 import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Empty from '@/Components/Empty.vue'
@@ -50,7 +49,7 @@ import Search from '@/Components/Search.vue'
 export default {
   components: {
     Breadcrumb,
-    ListUser,
+    ListLog,
     Loading,
     Pagination,
     Empty,
@@ -59,12 +58,11 @@ export default {
 
   data() {
     return {
-      users: null,
+      logs: null,
       errors: null,
       selectedFilters: {
-        by: 'name',
+        by: 'description',
         order: 'asc',
-        is_registered: null,
         q: '',
       },
       reset: false,
@@ -72,11 +70,11 @@ export default {
   },
 
   mounted() {
-    //this.getAllUsers()
+    //this.getActivityLog()
     
     this.$watch(
       () => this.selectedFilters,
-      this.getAllUsers,
+      this.getActivityLog,
       { 
         immediate: true,
         deep: true
@@ -87,39 +85,39 @@ export default {
   methods: {
     search(q) {
       this.selectedFilters.q = q
-      // this.getAllUsers()
+      // this.getActivityLog()
     },
 
-    getAllUsers() {
+    getActivityLog() {
       this.errors = null
       this.reset = false,
-      this.$store.dispatch("auth/getAllUsers", this.selectedFilters)
+      this.$store.dispatch("utilities/getActivityLog", this.selectedFilters)
         .then((res) => {
           if(res) {
-            this.users = res.users
+            this.logs = res.logs
           }
         })
         .catch(err => {
           if(err.response) {
-            this.users = null
+            this.logs = null
             this.errors = err.response.data.errors
           }
         })
     },
     nextPage (nb) {
-      this.$store.dispatch("auth/getAllUsers", {
+      this.$store.dispatch("utilities/getActivityLog", {
         page: nb
       })
         .then((res) => {
           if(res) {
-            this.users = res.users
+            this.logs = res.logs
           }
         })
     },
 
-    filteredUsers(selectedFilters) {
+    filteredActivity(selectedFilters) {
       this.selectedFilters = selectedFilters
-      // this.getAllUsers()
+      // this.getActivityLog()
     },
   },
 }

@@ -37,7 +37,7 @@
           <div v-show="showBy" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showBy = false">
               <li v-for="(by, i) in order_by" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.by = by">
+                <span class="dropdown-item" @click="selectedFilters.by = by">
                   {{ by }}
                 </span>
               </li>
@@ -56,7 +56,7 @@
           <div v-show="showOrder" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showOrder = false">
               <li v-for="(order, i) in asc_desc" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.order = order">
+                <span class="dropdown-item" @click="selectedFilters.order = order">
                   {{ order }}
                 </span>
               </li>
@@ -78,12 +78,12 @@
           <div v-show="showAgency" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showAgency = false">
               <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.agency = ''">
+                <span class="dropdown-item" @click="selectedFilters.agency = ''">
                   All agency
                 </span>
               </li>
               <li v-for="(agency, i) in agencies" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.agency = agency">
+                <span class="dropdown-item" @click="selectedFilters.agency = agency">
                   {{ agency }}
                 </span>
               </li>
@@ -106,12 +106,12 @@
           <div v-show="showValidity" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showValidity = false">
               <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.validity = ''">
+                <span class="dropdown-item" @click="selectedFilters.validity = ''">
                   All validity
                 </span>
               </li>
               <li v-for="(validity, i) in validities" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.validity = validity">
+                <span class="dropdown-item" @click="selectedFilters.validity = validity">
                   {{ validity }}
                 </span>
               </li>
@@ -134,12 +134,12 @@
           <div v-show="showService_type" class="over-y absolute mt-1 z-10 divide-y divide-[#dadce0] w-32 max-h-[100px] dropdown">
             <ul class="py-2 text-sm" @click="showService_type = false">
               <li class="border-b border-color">
-                <span class="dropdown-item-filter" @click="selectedFilters.service_type = ''">
+                <span class="dropdown-item" @click="selectedFilters.service_type = ''">
                   All type
                 </span>
               </li>
               <li v-for="(service_type, i) in service_types" :key="i" class="cursor-pointer">
-                <span class="dropdown-item-filter" @click="selectedFilters.service_type = service_type">
+                <span class="dropdown-item" @click="selectedFilters.service_type = service_type">
                   {{ service_type }}
                 </span>
               </li>

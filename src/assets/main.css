@@ -221,13 +221,13 @@
     @apply bg-sheet-200 text-white
   }
 
-  .item-dropdown {
+  .item-dropdown-menu {
     @apply flex items-center w-full p-2 transition duration-75 hover:text-accentuate rounded-lg hover:bg-highlight
     /* @apply flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 */
   }
   
   /* dropdown */
-  .dropdown-item-filter {
+  .dropdown-item {
     @apply block px-4 py-2 hover:text-accentuate hover:bg-highlight border-b border-color
   }
   

@@ -12,10 +12,10 @@
     </div>
     <ul class="py-2" aria-labelledby="user-menu-button">
       <li v-if="user">
-        <router-link :to="{ name: 'profile'}" class="px-4 py-2 item-dropdown" title="see profile">Profile</router-link>
+        <router-link :to="{ name: 'profile'}" class="dropdown-item" title="see profile">Profile</router-link>
       </li>
       <li v-else>
-        <router-link :to="{ name: 'login'}" class="px-4 py-2 item-dropdown">Login</router-link>
+        <router-link :to="{ name: 'login'}" class="dropdown-item">Login</router-link>
       </li>
       <li v-if="user">
         <button type="button" @click="logout()" :class="logout_processing?'cursor-progress':''" class="flex items-center w-full px-4 py-2 hover:text-danger">Logout</button>

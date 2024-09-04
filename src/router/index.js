@@ -32,6 +32,9 @@ import Forbidden from '../Pages/Dashboard/Forbidden.vue'
 import NotFound from '../Pages/NotFound.vue'
 
 
+import Activity_log from '../Pages/Dashboard/Utility/Activity_log.vue'
+
+
 const router = createRouter({
   //history: createWebHistory(),
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -180,6 +183,15 @@ const router = createRouter({
           path: "/service/:id/users",
           name: "service.users",
           component: Service_Users,
+          props: true,
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: "/utilities/activity_log",
+          name: "activity_log",
+          component: Activity_log,
           props: true,
           meta: {
             admin: true,

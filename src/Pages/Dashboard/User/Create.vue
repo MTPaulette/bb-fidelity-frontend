@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       // new User(name, email, password, balance, is_registered, user_id)
-      user: new User('', '', '', '0', '', ''),
+      user: new User('', '', '', '0', false, ''),
       message: '',
       loading: false,
       errors: null,
