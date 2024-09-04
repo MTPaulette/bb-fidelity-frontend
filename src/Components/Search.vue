@@ -40,10 +40,33 @@ export default {
       type: String,
       default: '',
     },
+    reset: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       q: ''
+    }
+  },
+
+  mounted() {
+    this.$watch(
+      () => this.reset,
+      this.clearFilters,
+      { 
+        immediate: true,
+        deep: true
+      }
+    )
+  },
+
+  methods: {
+    clearFilters() {
+      if(this.reset) {
+        this.q = ''
+      }
     }
   }
 }

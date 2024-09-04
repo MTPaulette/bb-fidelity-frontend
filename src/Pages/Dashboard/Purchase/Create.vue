@@ -29,22 +29,39 @@
           <p class="label">User<span class="required">*</span></p>
           <MySelect :items="users" @selectedValue="setUser_q" label="user" :errors="errorUser" />
         </div>
-
         <!-- service -->
         <div>
           <p class="label">Service<span class="required">*</span></p>
           <MySelect :items="services" @selectedValue="setService_q" label="service" :errors="errorService"/>
         </div>
+        <!-- by_cash -->
+        <div>
+          <p class="label">Payment Mode<span class="required">*</span></p>
+          <div class="grid grid-cols-2 items-center mt-3">
+          <!-- <div class="flex justify-between items-center mt-2"> -->
+            <div class="flex items-center">
+              <input id="payment" type="radio" v-model="purchase.by_cash" :value="trueval" class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
+              <label for="payment" class="text-black-white">
+                By cash
+                <!-- <span class="text-primary font-light text-sm">(uncheck if you want to use your loyalty points)</span> -->
+              </label>
+            </div>
+            <div class="flex items-center">
+              <input id="payment" type="radio" v-model="purchase.by_cash" :value="!trueval" class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
+              <label for="payment" class="text-black-white">By point</label>
+            </div>
+          </div>
+        </div>
 
         <!-- by_cash -->
-        <div class="flex items-center">
+        <!-- <div class="flex items-center">
           <input id="payment" v-model="purchase.by_cash" type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
           <label for="payment" class="text-black-white">
             Payment by cash
             <span class="text-primary font-light text-sm">(uncheck if you want to use your loyalty points)</span>
           </label>
-        </div>
-        <ButtonLoading label="Save purchase" :loading="loading" :disabled="!(selectedUser && selectedService)" />
+        </div> -->
+        <ButtonLoading label="Save purchase" :loading="loading" :disabled="!(selectedUser && selectedService && purchase.by_cash != null)" />
       </form>
     </div>
   </div>
@@ -178,10 +195,11 @@ export default {
 
   data() {
     return {
+      trueval: true,
       // new Purchase(admin_id, service_id, admin_id, by_cash)
       users: null,
       services: null,
-      purchase: new Purchase("", "", "", true),
+      purchase: new Purchase("", "", "", null),
       message: '',
       selectedUser: '',
       selectedService: '',
@@ -242,6 +260,7 @@ export default {
           .then((res) => {
             if(res) {
               this.users = res.users
+              console.log('users')
             }
           })
           .catch(err => {
@@ -307,6 +326,7 @@ export default {
           //flashAlert will disappear after 1s
           setTimeout(() => {
             this.message = ''
+            this.users = null
             this.getAllUsers()
           }, 5000)
 

@@ -75,8 +75,6 @@ export default {
           password: this.password,
         })
         .then((res) => {
-          console.log('res')
-          console.log(res)
           if(res) {
             this.message = res.data.message[0]
             //flashAlert will disappear after 1s
@@ -87,8 +85,6 @@ export default {
           }
         })
         .catch(err => {
-          console.log('err')
-          console.log(err)
           if(err.response) {
             this.errors = err.response.data.errors
           }

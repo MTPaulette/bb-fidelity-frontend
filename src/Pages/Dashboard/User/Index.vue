@@ -4,7 +4,7 @@
     <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
     <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
       <div class="w-full md:w-auto">
-        <Search @search="search" className="w-full md:w-auto" />
+        <Search @search="search" :reset="reset" className="w-full md:w-auto" />
       </div>
       <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
         <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="reset = !reset">
@@ -64,8 +64,8 @@ export default {
       selectedFilters: {
         by: 'name',
         order: 'asc',
+        is_registered: null,
         q: '',
-        is_registered: null
       },
       reset: false,
     }
@@ -119,6 +119,7 @@ export default {
 
     filteredServices(selectedFilters) {
       this.selectedFilters = selectedFilters
+      console.log(selectedFilters)
       // this.getAllUsers()
     },
   },

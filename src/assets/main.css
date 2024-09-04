@@ -45,6 +45,10 @@
     @apply text-[#3c4043] dark:text-[#eceded]
   }
 
+  .text-success {
+    @apply text-green-500 dark:text-green-400
+  }
+
   .text-danger {
     @apply text-[#d50100] dark:text-red-400
   }

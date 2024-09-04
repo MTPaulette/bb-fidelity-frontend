@@ -62,9 +62,12 @@
         </div>
 
         <!-- is_registered -->
-        <div class="flex items-center mt-6">
+        <div class="col-span-2 flex items-center mt-6">
           <input id="is_registered"  v-model="user.is_registered"  type="checkbox" checked class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
-          <label for="is_registered" class="text-black-white">Register the user</label>
+          <label for="is_registered" class="text-black-white">
+            Register the user
+            <span class="text-primary font-light text-sm">(Check this box to register the user to the bb-fidelity program.)</span>
+          </label>
         </div>
         </div>
 
@@ -106,7 +109,6 @@ export default {
       this.$store
         .dispatch('auth/newUser', this.user)
         .then((res) => {
-          console.log(res.data)
           this.message = res.data.message
 
           //flashAlert will disappear after 1s

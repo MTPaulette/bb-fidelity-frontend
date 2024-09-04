@@ -206,11 +206,11 @@ export default {
 
   mounted() {
     this.$store.dispatch("auth/getRecentUserId")
-        .then((res) => {
-          if(res) {
-            this.recentUserId = res.id
-          }
-        })
+      .then((res) => {
+        if(res) {
+          this.recentUserId = res.id
+        }
+      }),
 
     this.$watch(
       () => this.selectedFilters,
@@ -219,7 +219,7 @@ export default {
         immediate: true,
         deep: true
       }
-    )
+    ),
 
     this.$watch(
       () => this.reset,
@@ -238,6 +238,7 @@ export default {
         this.selectedFilters.asc = true
         this.selectedFilters.is_registered = null
       }
+      console.log("clearfilter user: "+this.selectedFilters)
     },
     sortByName() {
       this.selectedFilters.by = 'name'

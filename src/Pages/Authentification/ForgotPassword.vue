@@ -51,15 +51,11 @@ export default {
           email: this.email,
         })
         .then((res) => {
-          console.log('res')
-          console.log(res)
           if(res) {
             this.message = res.data.message[0]
           }
         })
         .catch(err => {
-          console.log('err')
-          console.log(err)
           if(err.response) {
             this.errors = err.response.data.errors[0]
           }

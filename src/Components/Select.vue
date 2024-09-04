@@ -18,9 +18,14 @@
     </div>
     <ul v-else class="px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200">
       <li v-for="(item,i) in items" :key="item.id" @click="selectedValue.selectedItem = item; showList = false">
-        <div class="flex items-center ps-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-          <input :checked="selectedValue.selectedItem == item ? true : false" type="checkbox" value="" class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" />
-          <label for="checkbox-item-11" class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ item.name }}</label>
+        <div class="flex items-center justify-start pl-7 pss-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+          <!-- <input :checked="selectedValue.selectedItem == item ? true : false" type="checkbox" value="" class="w-4 h-4 mr-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 border-color" /> -->
+          <div v-show="selectedValue.selectedItem == item" class="w-5 h-5 -ml-7 mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+            </svg>
+          </div>
+          <label for="checkbox-item-11" class="w-full py-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">{{ item.name }}</label>
         </div>
       </li>
     </ul>
@@ -40,7 +45,7 @@ export default {
   props: {
     items: Object,
     label: String,
-    errors:  {
+    errors: {
       type: String,
       default: null,
     },

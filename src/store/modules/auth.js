@@ -104,6 +104,7 @@ const actions = {
   },
 
   async getAllUsers ({ commit }, credentials) {
+    console.log(credentials)
     return await axios
       .get('/users', {
         params: credentials
