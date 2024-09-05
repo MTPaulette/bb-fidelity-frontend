@@ -11,6 +11,8 @@
       </ul>
     </div>
 
+    {{ selectedFilters }}
+
     <!-- filters -->
     <div class="w-full h-auto">
       <ul class="flex flex-wrap items-center text-secondary gap-1.5 md:gap-2 py-4 md:py-6 px-2 md:px-4 text-xs">

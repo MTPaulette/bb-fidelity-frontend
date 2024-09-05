@@ -64,9 +64,9 @@ export default {
 
   methods: {
     clearFilters() {
-      if(this.reset) {
+      // if(this.reset) {
         this.q = ''
-      }
+      // }
     }
   }
 }

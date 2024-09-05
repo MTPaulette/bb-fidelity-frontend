@@ -47,7 +47,7 @@
             <div>
               <label for="action" class="label">Action</label>
               <select id="action" v-model="userInfos.malus" name="action" class="input">
-                <option disabled value=0>Choose an action</option>
+                <option disabled value=''>Choose an action</option>
                 <option value=0>Credit</option>
                 <option value=1>Debit</option>
               </select>

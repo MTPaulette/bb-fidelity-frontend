@@ -21,7 +21,11 @@
       <tbody>
         <tr v-for="service in services" :key="service.id" :class="[service.id == recentServiceId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-600/30': '']"  class="border-b border-color hover:bg-highlight">
           <th scope="row" class="px-4 py-3 whitespace-nowrap">
-              <p class="font-medium text-black-white">{{ service.name }}</p>
+            <p class="font-medium text-black-white uppercase hover:text-accentuate hover:underline">
+              <router-link :to="{ name: 'service.show', params: { id: service.id }}">
+                {{ service.name }}
+              </router-link>
+            </p>
           </th>
           <td class="px-4 py-2 whitespace-nowrap text-accentuate">{{ service.price }} XAF</td>
           <td class="px-4 py-2 whitespace-nowrap text-green-500">{{ service.credit }}</td>

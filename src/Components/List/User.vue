@@ -127,7 +127,11 @@
       <tbody>
         <tr v-for="user in users" :key="user.id" :class="[user.id == recentUserId ? 'border-purple-700 dark:border-purple-400 bg-purple-100 dark:bg-purple-600/30': '']"  class="border-b border-color hover:bg-highlight">
           <th scope="row" class="px-4 py-3 pr-3 whitespace-nowrap">
-            <p class="font-medium text-black-white uppercase">{{ user.name }}</p>
+            <p class="font-medium text-black-white uppercase hover:text-accentuate hover:underline">
+              <router-link :to="{ name: 'user.show', params: { id: user.id }}">
+                {{ user.name }}
+              </router-link>
+            </p>
             <p v-if="user.role_id != 3" class="font-light font-[roboto]">{{ user.email }}</p>
           </th>
           <td  class="px-2 py-1 text-center">

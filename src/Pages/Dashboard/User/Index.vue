@@ -4,10 +4,10 @@
     <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
     <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
       <div class="w-full md:w-auto">
-        <Search @search="search" :reset="reset" className="w-full md:w-auto" />
+        <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
       </div>
       <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
-        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="reset = !reset">
+        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
           Clear filters
         </button>
         <router-link class="flex justify-end" :to="{ name: 'user.create'}">
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div v-if="users">
-      <ListUser @newFilters="filteredUsers" :users="users.data" :reset="reset"/>
+      <ListUser @newFilters="filteredUsers" :users="users.data" :reset="resetVal"/>
       <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="users.links" @nextPage="nextPage" />
       </div>
@@ -67,7 +67,7 @@ export default {
         is_registered: null,
         q: '',
       },
-      reset: false,
+      resetVal: false,
     }
   },
 
@@ -92,7 +92,7 @@ export default {
 
     getAllUsers() {
       this.errors = null
-      this.reset = false,
+      this.resetVal = false,
       this.$store.dispatch("auth/getAllUsers", this.selectedFilters)
         .then((res) => {
           if(res) {
@@ -118,9 +118,16 @@ export default {
     },
 
     filteredUsers(selectedFilters) {
-      this.selectedFilters = selectedFilters
-      // this.getAllUsers()
+      this.selectedFilters.by = selectedFilters.by
+      this.selectedFilters.order = selectedFilters.order
+      this.selectedFilters.is_registered = selectedFilters.is_registered
     },
+
+    clearFilters() {
+      this.resetVal = !this.resetVal
+      console.log('sdfghj: '+this.resetVal)
+      this.selectedFilters.q = ''
+    }
   },
 }
 </script>

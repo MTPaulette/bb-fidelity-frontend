@@ -6,6 +6,8 @@
       <span class="dark:text-white" v-if="logs">{{ logs.length }}</span>
     </h5>
 
+    <!-- <table class="w-full text-sm text-left my-5 block h-auto max-h-[500px] over-y over-x">
+      <thead class="text-xs uppercase bg-secondary sticky top-0 z-40"> -->
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
         <tr>
@@ -34,10 +36,9 @@
               </span>
             </div>
           </th>
-          <th scope="col" class="px-4 py-1">Url</th>
           <th scope="col" class="px-4 py-1">
             <div class="flex">
-              <span>User ID</span>
+              <span class="whitespace-nowrap">Admin</span>
               <span v-if="selectedFilters.by != 'userId'" class="ml-2" @click="sortByUserId">
                 <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                   <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
@@ -60,6 +61,7 @@
               </span>
             </div>
           </th>
+          <th scope="col" class="px-4 py-1">Url</th>
           <th scope="col" class="px-4 py-1">
             <div class="flex">
               <span>Method</span>
@@ -114,33 +116,24 @@
               </span>
             </div>
           </th>
-          <th scope="col" class="px-4 py-1">Action</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="0">
         <tr v-for="log in logs" :key="log.id" class="border-b border-color hover:bg-highlight">
-          <td class="px-4 py-1 whitespace-nowrap">{{ log.description }}</td>
+          <!-- <td class="px-4 py-1 whitespace-nowrap">{{ log.description }}</td> -->
+          <td class="px-4 py-1 whitespace-nowrap"><p v-html="log.description" /></td>
+          <td class="px-4 py-1 text-black-white whitespace-nowrap">
+            <p class="text-black-white hover:text-accentuate hover:underline">
+              <router-link :to="{ name: 'user.show', params: { id: log.user_id }}">
+                {{ log.user_name }}
+              </router-link>
+            </p>
+          </td>
           <td class="px-4 py-1 whitespace-nowrap">{{ log.url }}</td>
-          <td class="px-4 py-1 text-black-white">{{ log.user_id }}</td>
           <td class="px-4 py-1">{{ log.method }}</td>
           <td class="px-4 py-1">{{ log.ip }}</td>
-          <td class="px-4 py-1">{{ log.agent }}</td>
+          <td class="px-4 py-1 whitespace-nowrap">{{ log.agent }}</td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(log.created_at) }}</td>
-          <td>
-            <div class="px-4 py-1 flex w-full">
-              <div v-if="log.role_id != 3">
-                <router-link to="#" class="btn-blue btn-extrasmall" title="see profil client">
-                  Profile
-                </router-link>
-              </div>
-              
-              <div v-if="log.role_id == 2" class="mx-2">
-                <router-link to="#" class="btn-extrasmall btn-light" title="see log history">
-                  History
-                </router-link>
-              </div>
-            </div>
-          </td>
         </tr>
       </tbody>
     </table>
@@ -162,9 +155,8 @@ export default {
   data() {
     return {
       selectedFilters: {
-        by: 'description',
-        asc: true,
-        is_registered: null,
+        by: 'created_at',
+        asc: false,
       },
     }
   },
@@ -192,8 +184,8 @@ export default {
   methods: {
     clearFilters() {
       if(this.reset) {
-        this.selectedFilters.by = 'description'
-        this.selectedFilters.asc = true
+        this.selectedFilters.by = 'created_at'
+        this.selectedFilters.asc = false
       }
     },
     sortByDescription() {

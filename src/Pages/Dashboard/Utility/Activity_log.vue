@@ -1,23 +1,21 @@
 <template>
   <div>
+    <div v-if="message !=''">
+      <FlashAlert :message="message" />
+    </div>
     <Breadcrumb link1="dashboard" link2="activity_log" />
     <h1 class="ml-3 my-6 sm:my-8 title"> Activity Log </h1>
     <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
       <div class="w-full md:w-auto">
-        <Search @search="search" :reset="reset" className="w-full md:w-auto" />
+        <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
       </div>
       <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
-        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="reset = !reset">
+        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
           Clear filters
         </button>
-        <router-link class="flex justify-end" :to="{ name: 'user.create'}">
-          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create log">
-            <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            <span class="ml-2">New log</span>
-          </button>
-        </router-link>
+        <div @click="toggleModal">
+          <ButtonLoading class="btn-base btn-danger-2 ms-2 whitespace-nowrap" label="Clear logs" type="button" :loading="loading" />
+        </div>
       </div>
     </div>
 
@@ -30,11 +28,12 @@
       </div>
     </div>
     <div v-if="logs">
-      <ListLog @newFilters="filteredActivity" :logs="logs.data" :reset="reset"/>
+      <ListLog @newFilters="filteredActivity" :logs="logs.data" :reset="resetVal"/>
       <div v-if="logs.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="logs.links" @nextPage="nextPage" />
       </div>
     </div>
+    <ConfirmModal :errors="errorPassword" :sending="sending" @confirm-delete="clearLogs" />
   </div>
 </template>
 
@@ -45,6 +44,9 @@ import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Empty from '@/Components/Empty.vue'
 import Search from '@/Components/Search.vue'
+import ButtonLoading from '@/Components/ButtonLoading.vue'
+import ConfirmModal from '@/Components/ConfirmModal.vue'
+import FlashAlert from '@/Components/FlashAlert.vue'
 
 export default {
   components: {
@@ -54,6 +56,9 @@ export default {
     Pagination,
     Empty,
     Search,
+    ButtonLoading,
+    ConfirmModal,
+    FlashAlert,
   },
 
   data() {
@@ -61,17 +66,20 @@ export default {
       logs: null,
       errors: null,
       selectedFilters: {
-        by: 'description',
-        order: 'asc',
+        by: 'created_at',
+        order: 'desc',
         q: '',
       },
-      reset: false,
+      resetVal: false,
+      loading: false,
+
+      message: '',
+      sending: false,
+      errorPassword: '',
     }
   },
 
   mounted() {
-    //this.getActivityLog()
-    
     this.$watch(
       () => this.selectedFilters,
       this.getActivityLog,
@@ -85,7 +93,6 @@ export default {
   methods: {
     search(q) {
       this.selectedFilters.q = q
-      // this.getActivityLog()
     },
 
     getActivityLog() {
@@ -116,9 +123,46 @@ export default {
     },
 
     filteredActivity(selectedFilters) {
-      this.selectedFilters = selectedFilters
-      // this.getActivityLog()
+      this.selectedFilters.by = selectedFilters.by
+      this.selectedFilters.order = selectedFilters.order
     },
+  
+    clearFilters() {
+      this.resetVal = !this.resetVal
+      console.log('activity: '+this.resetVal)
+      this.selectedFilters.q = ''
+    },
+
+    toggleModal() {
+      document.getElementById('confirm-button').click()
+    },
+
+    clearLogs(password) {
+      console.log('password: '+password)
+      this.errorPassword = ''
+      this.sending = true
+      this.$store.dispatch("utilities/clearLogs", {
+          password: password
+      })
+        .then((res) => {
+          console.log(res)
+          this.message = res.message
+          this.toggleModal()
+          setTimeout(() => {
+            this.message = ''
+            location.reload()
+          }, 5000)
+        })
+        .catch(err => {
+          if(err.response) {
+            if(err.response.data.password) {
+              this.errorPassword = err.response.data.password
+            }
+          }
+          console.log(err)
+        })
+        .finally(() => this.sending = false)
+    }
   },
 }
 </script>
