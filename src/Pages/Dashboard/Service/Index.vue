@@ -150,31 +150,36 @@
         </li>
 
         <!-- reset -->
-        <li @click="reset">
+        <li @click="resetFilter">
           <button type="button" class="font-medium text-sm hover:text-danger">Clear all</button>
         </li>
       </ul>
     </div>
 
+    <div class="flex flex-col-reverse md:flex-col">
+      <!-- Search by date -->
+      <div class="flex flex-col items-end text-start md:text-end mb-4">
+        <SearchByDate @search="searchByDate" :reset="resetVal" className="w-full md:w-auto" />
+      </div>
+
     <div class="flex flex-wrap gap-y-4 justify-between items-end py-2">
       <div class="w-full md:w-auto">
-        <Search @search="search" className="w-full md:w-auto" />
+        <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
       </div>
       <div class="flex md:flex-col space-y-3 items-center w-full md:w-auto justify-end md:justify-center md:space-y-0 md:space-x-3">
-      <!-- <div class="flex flex-col items-center ml-2 sm:ml-0 justify-center"> -->
-      <!-- <span class="mb-1 sm:mb-0 hidden whitespace-nowrap md:block">Display mode</span> -->
-      <div class="flex items-center gap-2 mt-3 sm:mt-0">
-        <button class="p-2 rounded-lg shadow-md hover:bg-highlight hover:text-black-white" title="card display" :class="cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-            <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-          </svg>
-        </button>
-        <button class="p-2 rounded-lg shadow-md hover:bg-highlight hover:text-black-white" title="table display" :class="!cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z" />
-          </svg>
-        </button>
+        <div class="flex items-center gap-2 mt-3 sm:mt-0">
+          <button class="p-2 rounded-lg shadow-md hover:bg-highlight hover:text-black-white" title="card display" :class="cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+              <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+            </svg>
+          </button>
+          <button class="p-2 rounded-lg shadow-md hover:bg-highlight hover:text-black-white" title="table display" :class="!cardDisplay?'bg-highlight text-black-white':''" @click="cardDisplay = !cardDisplay">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z" />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
     </div>
@@ -223,6 +228,7 @@ import Loading from '@/Components/Loading.vue'
 import Empty from '@/Components/Empty.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Search from '@/Components/Search.vue'
+import SearchByDate from '@/Components/SearchByDate.vue'
 
 
 import Agencies from '@/Database/Agencies.js'
@@ -239,6 +245,7 @@ export default {
     Empty,
     Pagination,
     Search,
+    SearchByDate,
   },
 
   data() {
@@ -260,6 +267,7 @@ export default {
         validity: '',
         service_type: '',
         q: '',
+        date: null,
       },
       showBy: false,
       showOrder: false,
@@ -267,6 +275,7 @@ export default {
       showService_type: false,
       showValidity: false,
       cardDisplay: true,
+      resetVal: false,
     }
   },
 
@@ -285,13 +294,15 @@ export default {
   },
   
   methods: {
-    reset() {
+    resetFilter() {
       this.selectedFilters.by = 'name'
       this.selectedFilters.order = 'asc'
       this.selectedFilters.agency = ''
       this.selectedFilters.validity = ''
       this.selectedFilters.service_type = ''
+      this.resetVal = !this.resetVal
       this.selectedFilters.q = ''
+      this.selectedFilters.date = ''
     },
     getAllServices() {
       this.errors = null
@@ -334,6 +345,10 @@ export default {
     search(q) {
       this.selectedFilters.q = q
     },
+    searchByDate(date){
+      this.selectedFilters.date = date
+    },
+
   },
 }
 </script>

@@ -2,23 +2,29 @@
   <div>
     <Breadcrumb link1="dashboard" link2="users" />
     <h1 class="ml-3 my-6 sm:my-8 title"> All users </h1>
-    <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
-      <div class="w-full md:w-auto">
-        <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
+    <div class="flex flex-col-reverse md:flex-col">
+      <!-- Search by date -->
+      <div class="flex flex-col items-end text-start md:text-end mb-4">
+        <SearchByDate @search="searchByDate" :reset="resetVal" className="w-full md:w-auto" />
       </div>
-      <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
-        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
-          Clear filters
-        </button>
-        <router-link class="flex justify-end" :to="{ name: 'user.create'}">
-          <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create user">
-            <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-            </svg>
-            <span class="ml-2">New user</span>
-            <!-- <span class="ml-2 hidden sm:inline">New user</span> -->
+      <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
+        <div class="w-full md:w-auto">
+          <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
+        </div>
+        <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
+          <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
+            Clear filters
           </button>
-        </router-link>
+          <router-link class="flex justify-end" :to="{ name: 'user.create'}">
+            <button type="button" class="flex items-center justify-center flex-shrink-0 btn-blue btn-base" title="create user">
+              <svg class="h-3.5 w-3.5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
+              </svg>
+              <span class="ml-2">New user</span>
+              <!-- <span class="ml-2 hidden sm:inline">New user</span> -->
+            </button>
+          </router-link>
+        </div>
       </div>
     </div>
 
@@ -46,6 +52,7 @@ import Loading from '@/Components/Loading.vue'
 import Pagination from '@/Components/PaginationTable.vue'
 import Empty from '@/Components/Empty.vue'
 import Search from '@/Components/Search.vue'
+import SearchByDate from '@/Components/SearchByDate.vue'
 
 export default {
   components: {
@@ -55,6 +62,7 @@ export default {
     Pagination,
     Empty,
     Search,
+    SearchByDate,
   },
 
   data() {
@@ -66,14 +74,13 @@ export default {
         order: 'asc',
         is_registered: null,
         q: '',
+        date: null,
       },
       resetVal: false,
     }
   },
 
   mounted() {
-    //this.getAllUsers()
-    
     this.$watch(
       () => this.selectedFilters,
       this.getAllUsers,
@@ -87,12 +94,13 @@ export default {
   methods: {
     search(q) {
       this.selectedFilters.q = q
-      // this.getAllUsers()
+    },
+    searchByDate(date){
+      this.selectedFilters.date = date
     },
 
     getAllUsers() {
       this.errors = null
-      this.resetVal = false,
       this.$store.dispatch("auth/getAllUsers", this.selectedFilters)
         .then((res) => {
           if(res) {
@@ -125,8 +133,8 @@ export default {
 
     clearFilters() {
       this.resetVal = !this.resetVal
-      console.log('sdfghj: '+this.resetVal)
       this.selectedFilters.q = ''
+      this.selectedFilters.date = ''
     }
   },
 }

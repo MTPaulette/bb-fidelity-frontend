@@ -9,6 +9,7 @@ const mutations = {}
 
 const actions = {
   async getActivityLog({ commit }, credentials) {
+    console.log(credentials)
     return await axios
       .get('/activity-log', {
         params: credentials

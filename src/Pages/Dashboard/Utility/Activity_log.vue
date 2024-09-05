@@ -5,20 +5,26 @@
     </div>
     <Breadcrumb link1="dashboard" link2="activity_log" />
     <h1 class="ml-3 my-6 sm:my-8 title"> Activity Log </h1>
-    <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
-      <div class="w-full md:w-auto">
-        <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
+    <div class="flex flex-col-reverse md:flex-col">
+      <!-- Search by date -->
+      <div class="flex flex-col items-end text-start md:text-end mb-4">
+        <SearchByDate @search="searchByDate" :reset="resetVal" className="w-full md:w-auto" />
       </div>
-      <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
-        <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
-          Clear filters
-        </button>
-        <div @click="toggleModal">
-          <ButtonLoading class="btn-base btn-danger-2 ms-2 whitespace-nowrap" label="Clear logs" type="button" :loading="loading" />
+
+      <div class="flex flex-wrap gap-y-4 justify-between items-center py-3">
+        <div class="w-full md:w-auto">
+          <Search @search="search" :reset="resetVal" className="w-full md:w-auto" />
+        </div>
+        <div class="flex space-y-3 items-center w-full md:w-auto justify-end md:space-y-0 md:space-x-3">
+          <button type="button" class="text-sm hover:text-danger btn-base" title="reset filter" @click="clearFilters">
+            Clear filters
+          </button>
+          <div @click="toggleModal">
+            <ButtonLoading class="btn-base btn-danger-2 ms-2 whitespace-nowrap" label="Clear logs" type="button" :loading="loading" />
+          </div>
         </div>
       </div>
     </div>
-
     <div v-if="!logs && !errors">
       <Loading />
     </div>
@@ -47,6 +53,7 @@ import Search from '@/Components/Search.vue'
 import ButtonLoading from '@/Components/ButtonLoading.vue'
 import ConfirmModal from '@/Components/ConfirmModal.vue'
 import FlashAlert from '@/Components/FlashAlert.vue'
+import SearchByDate from '@/Components/SearchByDate.vue'
 
 export default {
   components: {
@@ -59,6 +66,7 @@ export default {
     ButtonLoading,
     ConfirmModal,
     FlashAlert,
+    SearchByDate,
   },
 
   data() {
@@ -69,6 +77,7 @@ export default {
         by: 'created_at',
         order: 'desc',
         q: '',
+        date: null,
       },
       resetVal: false,
       loading: false,
@@ -93,6 +102,9 @@ export default {
   methods: {
     search(q) {
       this.selectedFilters.q = q
+    },
+    searchByDate(date){
+      this.selectedFilters.date = date
     },
 
     getActivityLog() {
@@ -129,8 +141,8 @@ export default {
   
     clearFilters() {
       this.resetVal = !this.resetVal
-      console.log('activity: '+this.resetVal)
       this.selectedFilters.q = ''
+      this.selectedFilters.date = ''
     },
 
     toggleModal() {

@@ -11,7 +11,7 @@
     <table class="w-full text-sm text-left my-5">
       <thead class="text-xs uppercase bg-secondary">
         <tr>
-          <th scope="col" class="px-4 py-1">
+          <th scope="col" class="px-4 py-3">
             <div class="flex">
               <span>Description</span>
               <span v-if="selectedFilters.by != 'description'" class="ml-2" @click="sortByDescription">
@@ -36,7 +36,7 @@
               </span>
             </div>
           </th>
-          <th scope="col" class="px-4 py-1">
+          <th scope="col" class="px-4 py-3">
             <div class="flex">
               <span class="whitespace-nowrap">Admin</span>
               <span v-if="selectedFilters.by != 'userId'" class="ml-2" @click="sortByUserId">
@@ -61,8 +61,8 @@
               </span>
             </div>
           </th>
-          <th scope="col" class="px-4 py-1">Url</th>
-          <th scope="col" class="px-4 py-1">
+          <th scope="col" class="px-4 py-3">Url</th>
+          <th scope="col" class="px-4 py-3">
             <div class="flex">
               <span>Method</span>
               <span v-if="selectedFilters.by != 'method'" class="ml-2" @click="sortByMethod">
@@ -87,9 +87,9 @@
               </span>
             </div>
           </th>
-          <th scope="col" class="px-4 py-1">Ip</th>
-          <th scope="col" class="px-4 py-1">Agent</th>
-          <th scope="col" class="px-4 py-1">
+          <th scope="col" class="px-4 py-3">Ip</th>
+          <th scope="col" class="px-4 py-3">Agent</th>
+          <th scope="col" class="px-4 py-3">
             <div class="flex">
               <span>Date</span>
               <span v-if="selectedFilters.by != 'created_at'" class="ml-2" @click="sortByDate">
