@@ -75,7 +75,7 @@ export default {
         })
         .then((res) => {
           const userRoleId = localStorage.getItem('user')
-          if(userRoleId != 1) {
+          if(userRoleId == 2) {
             return this.$router.push({ name: 'history' })
           } else {
             return this.$router.push({ name: 'services' })

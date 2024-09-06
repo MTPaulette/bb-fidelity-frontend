@@ -122,7 +122,10 @@ const router = createRouter({
           path: "/user/create",
           name: "user.create",
           component: UserCreate,
-          props: true
+          props: true,
+          meta: {
+            admin: true,
+          },
         },
         {
           path: "/user/:id/edit",
@@ -193,9 +196,6 @@ const router = createRouter({
           name: "activity_log",
           component: Activity_log,
           props: true,
-          meta: {
-            admin: true,
-          },
         },
       ],
     },
@@ -243,7 +243,7 @@ router.beforeEach((to, from) => {
   else {
     // check if the user is authenticated
     if (to.meta.admin) {
-      if( userRoleId != 1) {
+      if( userRoleId == 2) {
         return { name: 'forbidden'}
       }
     }

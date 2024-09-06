@@ -118,8 +118,9 @@
           </th>
         </tr>
       </thead>
-      <tbody class="0">
-        <tr v-for="log in logs" :key="log.id" class="border-b border-color hover:bg-highlight">
+      <tbody class="text-black-white">
+        <tr v-for="log in logs" :key="log.id" :class="[log.description.includes('failed') ? 'text-danger': '', log.description.includes('created') ? 'text-success': '']" class="border-b border-color hover:bg-highlight">
+        <!-- <tr v-for="log in logs" :key="log.id" class="border-b border-color hover:bg-highlight"> -->
           <!-- <td class="px-4 py-1 whitespace-nowrap">{{ log.description }}</td> -->
           <td class="px-4 py-1 whitespace-nowrap"><p v-html="log.description" /></td>
           <td class="px-4 py-1 text-black-white whitespace-nowrap">
