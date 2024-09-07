@@ -149,7 +149,7 @@ export default {
   props: {
     orderBy: {
       type: Array,
-      default: ['admin_name', 'agency', 'created_at', 'credit', 'debit', 'price', 'user_name', 'service_name', 'validity'],
+      default: ['admin_name', 'agency', 'created_at', 'credit', 'debit', 'price', 'service_name', 'user_name', 'user_balance', 'validity'],
     },
   },
   data() {

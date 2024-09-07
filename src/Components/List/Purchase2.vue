@@ -10,9 +10,11 @@
         <tr>
           <th scope="col" class="px-4 py-3">User Name</th>
           <th scope="col" class="px-4 py-3">Service Name</th>
+          <th scope="col" class="px-4 py-3">Pay Mode</th>
           <th scope="col" class="px-4 py-3">Price</th>
           <th scope="col" class="px-4 py-3">Credit Point</th>
           <th scope="col" class="px-4 py-3">Debit Point</th>
+          <th scope="col" class="px-4 py-3">User balance</th>
           <th scope="col" class="px-4 py-3">Validity</th>
           <th scope="col" class="px-4 py-3">Agency</th>
           <th scope="col" class="px-4 py-3 whitespace-nowrap">Created by <br/> (Admin name)</th>
@@ -35,9 +37,24 @@
               </router-link>
             </p>
           </td>
+          <td class="px-4 py-2 whitespace-nowrap">
+            <span v-if="purchase.by_cash">By cash</span>
+            <span v-else>By using Point</span>
+          </td>
           <td class="px-4 py-2 whitespace-nowrap text-accentuate">{{ purchase.price }} XAF</td>
-          <td class="px-4 py-2 whitespace-nowrap text-green-500">{{ purchase.credit }}</td>
-          <td class="px-4 py-2 whitespace-nowrap text-danger">{{ purchase.debit }}</td>
+          <td class="px-4 py-2 whitespace-nowrap text-black-white">
+            <div class="flex items-center">
+              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[purchase.credit > 0 ? 'bg-green-400' : 'bg-gray-400']" />
+              {{ purchase.credit }}
+            </div>
+          </td>
+          <td class="px-4 py-2 whitespace-nowrap text-black-white">
+            <div class="flex items-center">
+              <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[purchase.debit > 0 ? 'bg-red-700' : 'bg-gray-400']" />
+              {{ purchase.debit }}
+            </div>
+          </td>
+          <td class="px-4 py-2 whitespace-nowrap">{{ purchase.user_balance }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ purchase.validity }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ purchase.agency }}</td>
           <td class="px-4 py-2 whitespace-nowrap">
