@@ -13,6 +13,7 @@
           <th scope="col" class="px-4 py-3">Credit Point</th>
           <th scope="col" class="px-4 py-3">Debit Point</th>
           <th scope="col" class="px-4 py-3">Validity</th>
+          <th scope="col" class="px-4 py-3 whitespace-nowrap">Type of <br/> service</th>
           <th scope="col" class="px-4 py-3">Agency</th>
           <th scope="col" class="px-4 py-3 whitespace-nowrap">Created by <br/>(Admin name)</th>
           <th scope="col" class="px-4 py-3">Date</th>
@@ -32,6 +33,7 @@
           <td class="px-4 py-2 whitespace-nowrap text-green-500">{{ service.credit }}</td>
           <td class="px-4 py-2 whitespace-nowrap text-danger">{{ service.debit }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.validity }}</td>
+          <td class="px-4 py-2 whitespace-nowrap">{{ service.service_type }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.agency }}</td>
           <td class="px-4 py-2 whitespace-nowrap">
             <p class="font-medium text-black-white hover:text-accentuate hover:underline">

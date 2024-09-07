@@ -1,7 +1,7 @@
 <template>
   <div>
     <Breadcrumb link1="dashboard" link2="purchases" />
-    <h1 class="ml-3 my-6 sm:my-8 title"> All users of service <span v-if="purchases"><span v-if="purchases.data[0].user_name">{{purchases.data[0].user_name}}</span></span> </h1>
+    <h1 class="ml-3 my-6 sm:my-8 title"> All users of service  <span v-if="service_name">{{service_name}}</span> </h1>
 
 
     <!-- filters -->
@@ -85,6 +85,7 @@ export default {
         page: 1
       },
       resetVal: false,
+      service_name: null
     }
   },
 
@@ -115,6 +116,7 @@ export default {
       })
         .then((res) => {
           if(res) {
+            this.service_name = res.service_name
             this.purchases = res.purchases
           }
         })
