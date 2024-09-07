@@ -135,8 +135,6 @@ export default {
             }
           })
           .catch(err => {
-            console.log('err')
-            console.log(err)
             if(err) {
               this.errors = err.response.data.errors
             }

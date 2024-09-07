@@ -146,14 +146,12 @@ export default {
     },
 
     clearLogs(password) {
-      console.log('password: '+password)
       this.errorPassword = ''
       this.sending = true
       this.$store.dispatch("utilities/clearLogs", {
           password: password
       })
         .then((res) => {
-          console.log(res)
           this.message = res.message
           this.toggleModal()
           setTimeout(() => {
@@ -167,7 +165,6 @@ export default {
               this.errorPassword = err.response.data.password
             }
           }
-          console.log(err)
         })
         .finally(() => this.sending = false)
     }

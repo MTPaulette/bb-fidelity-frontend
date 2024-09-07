@@ -37,7 +37,6 @@ const actions = {
   },
 
   async getAllServicesOfUser ({ commit }, credentials) {
-    console.log(credentials)
     return await axios
       .get('/user/'+credentials.id+'/services', {
         params: credentials.selectedFilters
@@ -48,7 +47,6 @@ const actions = {
   },
 
   async getAllUsersOfService ({ commit }, credentials) {
-    console.log(credentials)
     return await axios
       .get('/service/'+credentials.id+'/users', {
         params: credentials.selectedFilters

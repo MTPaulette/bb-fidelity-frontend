@@ -117,7 +117,6 @@ export default {
     getAuthenticatedUser() {
     this.$store.dispatch("auth/getAuthenticatedUser")
         .then((res) => {
-          console.log(res.user.id)
           if(res) {
             this.id = res.user.id
             this.user = res.user
@@ -127,7 +126,6 @@ export default {
     },
     getAllServicesOfUser() {
       if(this.id) {
-      console.log('id '+this.id)
       this.errors = null
       this.$store.dispatch("purchases/getAllServicesOfUser", {
         id: this.id,

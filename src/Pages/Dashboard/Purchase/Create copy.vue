@@ -439,8 +439,6 @@ export default {
         .dispatch('purchases/createPurchase', this.purchase)
         .then((res) => {
           this.sending = false
-          console.log('res')
-          console.log(res)
           this.close()
           if(res) { 
             this.message = res.data.message

@@ -260,7 +260,6 @@ export default {
           .then((res) => {
             if(res) {
               this.users = res.users
-              console.log('users')
             }
           })
           .catch(err => {

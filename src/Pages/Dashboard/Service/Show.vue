@@ -174,7 +174,6 @@ export default {
               this.toggleModal()
             }
           }
-          console.log(err)
         })
         .finally(() => this.sending = false)
     }
