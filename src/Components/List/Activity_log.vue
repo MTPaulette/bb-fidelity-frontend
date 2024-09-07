@@ -3,7 +3,7 @@
   <div v-if="logs" class="overflow-x-auto relative">
     <h5 class="space-x-4">
       <span class="text-gray-500">Total logs:</span>
-      <span class="dark:text-white" v-if="logs">{{ logs.length }}</span>
+      <span class="dark:text-white" v-if="total">{{ total }}</span>
     </h5>
 
     <!-- <table class="w-full text-sm text-left my-5 block h-auto max-h-[500px] over-y over-x">
@@ -119,7 +119,7 @@
         </tr>
       </thead>
       <tbody class="text-black-white">
-        <tr v-for="log in logs" :key="log.id" :class="[log.description.includes('failed') ? 'text-danger': '', log.description.includes('created') ? 'text-success': '']" class="border-b border-color hover:bg-highlight">
+        <tr v-for="log in logs" :key="log.id" :class="[log.description.includes('failed') ? 'text-danger': '', log.description.includes('updated') ? 'text-accentuate': '']" class="border-b border-color hover:bg-highlight">
         <!-- <tr v-for="log in logs" :key="log.id" class="border-b border-color hover:bg-highlight"> -->
           <!-- <td class="px-4 py-1 whitespace-nowrap">{{ log.description }}</td> -->
           <td class="px-4 py-1 whitespace-nowrap"><p v-html="log.description" /></td>
@@ -152,6 +152,7 @@ export default {
   props: {
     logs: Object,
     reset: Boolean,
+    total: Number,
   },
   data() {
     return {

@@ -64,7 +64,14 @@
           Description: <br />
           <p class="mt-1 mb-3 text-secondary text-justify">{{ service.description }}</p>
         </div>
-        <p class="mb-3 text-xs font-light">Created at {{ service.created_at }}</p>
+        <p class="mb-3 text-xs font-light">
+          Created at {{ service.created_at }} by 
+          <span class="font-medium text-black-white hover:text-accentuate hover:underline">
+            <router-link :to="{ name: 'user.show', params: { id: service.user_id }}">
+              {{ service.user_name }}
+            </router-link>
+          </span>
+        </p>
         <p class="mb-3 text-xs font-light">Updated at {{ service.updated_at }}</p>
         
         <div class="flex items-center mt-4 md:mt-6">

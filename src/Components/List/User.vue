@@ -2,7 +2,7 @@
   <div v-if="users && recentUserId" class="overflow-x-auto relative">
     <h5 class="space-x-4">
       <span class="text-gray-500">Total users:</span>
-      <span class="dark:text-white" v-if="users">{{ users.length }}</span>
+      <span class="dark:text-white" v-if="total">{{ total }}</span>
     </h5>
 
     <table class="w-full text-sm text-left my-5">
@@ -94,6 +94,7 @@
               </span>
             </div>
           </th>
+          <th scope="col" class="px-4 py-3">Created by</th>
           <th scope="col" class="px-4 py-3">
             <div class="flex">
               <span>Date</span>
@@ -154,16 +155,13 @@
               {{ user.balance }} point(s)
             </div>
           </td>
-          <td class="px-4 py-3">
-            <div v-if="user.role_id==1">
-              Admin
-            </div>
-            <div v-else-if="user.role_id==3">
-              SuperAdmin
-            </div>
-            <div v-else>
-              Client
-            </div>
+          <td class="px-4 py-3 capitalize">{{ user.role_name }}</td>
+          <td class="px-4 py-2 whitespace-nowrap">
+            <p class="font-medium text-black-white hover:text-accentuate hover:underline">
+              <router-link :to="{ name: 'user.show', params: { id: user.user_id }}">
+                {{ user.user_name }}
+              </router-link>
+            </p>
           </td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(user.created_at) }}</td>
           <td>
@@ -197,6 +195,7 @@ export default {
   props: {
     users: Object,
     reset: Boolean,
+    total: Number,
   },
   data() {
     return {

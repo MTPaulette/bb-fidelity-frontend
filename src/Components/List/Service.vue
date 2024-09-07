@@ -2,7 +2,7 @@
   <div class="overflow-x-auto relative">
     <h5 class="space-x-4 py-3">
       <span class="text-gray-500">Total services:</span>
-      <span class="dark:text-white" v-if="services">{{ services.length }}</span>
+      <span class="dark:text-white" v-if="total">{{ total }}</span>
     </h5>
 
     <table class="w-full text-sm text-left my-5">
@@ -14,6 +14,7 @@
           <th scope="col" class="px-4 py-3">Debit Point</th>
           <th scope="col" class="px-4 py-3">Validity</th>
           <th scope="col" class="px-4 py-3">Agency</th>
+          <th scope="col" class="px-4 py-3 whitespace-nowrap">Created by <br/>(Admin name)</th>
           <th scope="col" class="px-4 py-3">Date</th>
           <th scope="col" class="px-4 py-3">Action</th>
         </tr>
@@ -32,6 +33,13 @@
           <td class="px-4 py-2 whitespace-nowrap text-danger">{{ service.debit }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.validity }}</td>
           <td class="px-4 py-2 whitespace-nowrap">{{ service.agency }}</td>
+          <td class="px-4 py-2 whitespace-nowrap">
+            <p class="font-medium text-black-white hover:text-accentuate hover:underline">
+              <router-link :to="{ name: 'user.show', params: { id: service.user_id }}">
+                {{ service.user_name }}
+              </router-link>
+            </p>
+          </td>
           <td class="px-4 py-2 text-black-white whitespace-nowrap">{{ formatDate(service.created_at) }}</td>
           <td>
             <div class="px-4 py-3 flex w-full">
@@ -59,6 +67,7 @@
 
   defineProps({
     services: Object,
-    recentServiceId: null
+    recentServiceId: null,
+    total: Number,
   })
 </script>

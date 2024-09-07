@@ -33,10 +33,6 @@
           <div class="mr-4 mt-2">
             <DarkMode />
           </div>
-          <!-- notification  -->
-          <div class="mr-4 mt-2">
-            <Notification />
-          </div>
           <!-- user's info dropdown menu -->
           <div>
             <LoggedUser :user="user" />
@@ -53,14 +49,12 @@
 import SearchBar from '@/Components/SearchBar.vue'
 import LoggedUser from '@/Components/LoggedUser.vue'
 import DarkMode from '@/Components/DarkMode.vue'
-import Notification from '@/Components/Notification/Index.vue'
 
 export default {
   components: {
     SearchBar,
     LoggedUser,
-    DarkMode,
-    Notification,
+    DarkMode
   },
   props: {
     user: Object

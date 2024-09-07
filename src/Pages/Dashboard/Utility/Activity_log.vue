@@ -34,7 +34,7 @@
       </div>
     </div>
     <div v-if="logs">
-      <ListLog @newFilters="filteredActivity" :logs="logs.data" :reset="resetVal"/>
+      <ListLog @newFilters="filteredActivity" :logs="logs.data" :reset="resetVal" :total="logs.total" />
       <div v-if="logs.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="logs.links" @nextPage="nextPage" />
       </div>
@@ -78,6 +78,7 @@ export default {
         order: 'desc',
         q: '',
         date: null,
+        page: 1,
       },
       resetVal: false,
       loading: false,
@@ -123,15 +124,9 @@ export default {
           }
         })
     },
-    nextPage (nb) {
-      this.$store.dispatch("utilities/getActivityLog", {
-        page: nb
-      })
-        .then((res) => {
-          if(res) {
-            this.logs = res.logs
-          }
-        })
+
+    nextPage(nb) {
+      this.selectedFilters.page = nb
     },
 
     filteredActivity(selectedFilters) {
@@ -143,6 +138,7 @@ export default {
       this.resetVal = !this.resetVal
       this.selectedFilters.q = ''
       this.selectedFilters.date = ''
+      this.selectedFilters.page = 1
     },
 
     toggleModal() {

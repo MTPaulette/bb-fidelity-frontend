@@ -6,9 +6,9 @@
   </button>
   <div id="user-dropdown" class="z-20 hidden my-4 overflow-x-hidden max-w-xs p-2 divide-y divide-[#dadce0] dropdown text-sm">
     <div v-if="user" class="px-4 py-3">
-      <p class="text-accentuate" v-if="user.role_id == 1"> Admin </p>
       <p class="font-light text-accentuate">{{ user.name }}</p>
       <p class="w-full truncate">{{ user.email }}</p>
+      <p class="text-black-white capitalize">{{ user.role_name}}</p>
     </div>
     <ul class="py-2" aria-labelledby="user-menu-button">
       <li v-if="user">

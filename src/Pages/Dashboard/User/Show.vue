@@ -30,18 +30,19 @@
           </div>
           <h5 class="text-xl font-medium text-black-white">{{ user.name }}</h5>
           <span class="text-sm text-blue-500 my-1">{{ user.email }}</span>
-          <div v-if="user.role_id != 1" class="flex items-center">
+          <div v-if="user.role_id == 2" class="flex items-center">
             <div class="inline-block w-4 h-4 mr-2 rounded-full" :class="[user.balance > 0 ? 'bg-green-400' : 'bg-red-700']" />
             {{ user.balance }} point(s)
           </div>
-          <p class="text-black-white"><span v-if="user.role_id == 1"> Admin (entreprise) <br /> </span> <span v-else>Client</span> since {{ formatDate(user.created_at) }}</p>
-          <div v-if="user.role_id != 1" class="flex items-center mt-4 md:mt-6">
-            <router-link :to="{ name: 'user.edit', params: { id: user.id }}" class="btn-base btn-blue">Edit</router-link>
-            <router-link :to="{ name: 'user.history', params: { id: user.id }}"  class="btn-base btn-light ms-2" title="see user history">
+          <p class="text-black-white capitalize"> {{ user.role_name }} since {{ formatDate(user.created_at) }}</p>
+          <div class="flex items-center mt-4 md:mt-6">
+            <router-link v-if="user.role_id == 2" :to="{ name: 'user.edit', params: { id: user.id }}" class="btn-base btn-blue">Edit</router-link>
+            <router-link v-if="user.role_id == 2" :to="{ name: 'user.history', params: { id: user.id }}"  class="btn-base btn-light ms-2" title="see user history">
               History
-            </router-link><div @click="toggleModal">
-            <ButtonLoading class="btn-base btn-danger-2 ms-2" label="Delete" type="button" :loading="loading" />
-          </div>
+            </router-link>
+            <div @click="toggleModal" v-if="user.role_id != 3">
+              <ButtonLoading class="btn-base btn-danger-2 ms-2" label="Delete" type="button" :loading="loading" />
+            </div>
           </div>
         </div>
       </div>

@@ -32,7 +32,14 @@
           <p>Debit Point: &nbsp;<span class="text-danger"> {{ service.debit }} Point(s) </span></p>
         </div>
         <p class="mb-1 text-secondary w-full h-12 overflow-hidden">{{ service.description }}</p>
-        <p class="mb-3 text-xs font-light">created since {{ formatDate(service.created_at) }}</p>
+        <p class="mb-3 text-xs font-light">
+          created since {{ formatDate(service.created_at) }} by 
+          <span class="font-medium text-black-white hover:text-accentuate hover:underline">
+            <router-link :to="{ name: 'user.show', params: { id: service.user_id }}">
+              {{ service.user_name }}
+            </router-link>
+          </span>
+        </p>
         <div class="flex items-center">
           <router-link :to="{ name: 'service.show', params: { id: service.id }}" class="btn-base btn-blue">
             <!-- <router-link :to="`service/${service.id}`" class="btn-base btn-blue"> -->

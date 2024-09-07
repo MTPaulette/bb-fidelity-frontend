@@ -37,7 +37,7 @@
       </div>
     </div>
     <div v-if="users">
-      <ListUser @newFilters="filteredUsers" :users="users.data" :reset="resetVal"/>
+      <ListUser @newFilters="filteredUsers" :users="users.data" :reset="resetVal" :total="users.total" />
       <div v-if="users.data.length" class="w-full flex mt-8 mb-12">
         <Pagination :links="users.links" @nextPage="nextPage" />
       </div>
@@ -75,6 +75,7 @@ export default {
         is_registered: null,
         q: '',
         date: null,
+        page: 1,
       },
       resetVal: false,
     }
@@ -114,15 +115,8 @@ export default {
           }
         })
     },
-    nextPage (nb) {
-      this.$store.dispatch("auth/getAllUsers", {
-        page: nb
-      })
-        .then((res) => {
-          if(res) {
-            this.users = res.users
-          }
-        })
+    nextPage(nb) {
+      this.selectedFilters.page = nb
     },
 
     filteredUsers(selectedFilters) {
@@ -135,6 +129,7 @@ export default {
       this.resetVal = !this.resetVal
       this.selectedFilters.q = ''
       this.selectedFilters.date = ''
+      this.selectedFilters.page = 1
     }
   },
 }
